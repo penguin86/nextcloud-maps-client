@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Nextcloud Maps Geofavorites for Android
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- Colors -->
+
+    <color name="primary">#ffffff</color>
+    <color name="accent">#121212</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="defaultBrand">#0082C9</color>
+
+    <color name="note_font_color_default">#202124</color>
+
+    <color name="appbar">@android:color/white</color>
+
+    <color name="defaultNoteColor">#F7EB96</color>
+    <color name="defaultNoteTint">#202124</color>
+    <color name="defaultNoteHintTint">#1A202124</color>
+
+</resources>

@@ -1,0 +1,31 @@
+<!--
+  ~ Nextcloud Maps Geofavorites for Android
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<vector
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:height="24dp"
+    android:width="24dp"
+    android:viewportHeight="16"
+    android:viewportWidth="16"
+    android:tint="#757575">
+    <path android:fillColor="#00000000"
+        android:pathData="m10.75,3.9862a5.5,5.5 0,0 1,2.563 6.1868,5.5 5.5,0 0,1 -5.3131,4.077 5.5,5.5 0,0 1,-5.3127 -4.077,5.5 5.5,0 0,1 2.5627,-6.1867"
+        android:strokeColor="#000" android:strokeLineCap="round" android:strokeWidth="2"/>
+    <path android:fillColor="#00000000"
+        android:pathData="m8,1.7637v5.972" android:strokeColor="#000"
+        android:strokeLineCap="round" android:strokeWidth="2"/>
+</vector>

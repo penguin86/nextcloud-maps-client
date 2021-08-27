@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Nextcloud Maps Geofavorites for Android
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_list_view"
+    android:background="@color/primary"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:toolbarId="@+id/toolbar" >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                app:contentInsetStartWithNavigation="0dp"
+                app:titleMarginStart="0dp"
+                tools:title="@string/app_name">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                </androidx.appcompat.widget.SearchView>
+
+            </androidx.appcompat.widget.Toolbar>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/home_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacer_2x"
+                android:layout_marginTop="@dimen/spacer_1hx"
+                android:layout_marginEnd="@dimen/spacer_2x"
+                android:layout_marginBottom="@dimen/spacer_1hx"
+                app:cardBackgroundColor="@color/appbar"
+                app:cardCornerRadius="@dimen/spacer_1x"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/menu_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:paddingStart="@dimen/spacer_1x"
+                        android:paddingTop="@dimen/spacer_2x"
+                        android:paddingEnd="@dimen/spacer_1x"
+                        android:paddingBottom="@dimen/spacer_2x"
+                        android:tint="?attr/colorAccent"
+                        android:src="@drawable/ic_menu_grey"/>
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/search_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="@dimen/spacer_1x"
+                        android:layout_marginEnd="@dimen/spacer_1x"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:gravity="start"
+                        android:lines="1"
+                        android:textSize="16sp"
+                        android:text="@string/search_in_all"/>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/sort_mode"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_gravity="center_vertical|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/list_mode"
+                        android:padding="@dimen/spacer_2x"
+                        android:tint="?attr/colorAccent"
+                        android:translationX="@dimen/spacer_1x"
+                        android:src="@drawable/ic_alphabetical_asc" />
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/view_mode"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_gravity="center_vertical|end"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/list_mode"
+                        android:padding="@dimen/spacer_2x"
+                        android:tint="?attr/colorAccent"
+                        android:translationX="@dimen/spacer_1x"
+                        android:src="@drawable/ic_view_module" />
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/spacer_1hx"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_note">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/defaultBrand"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

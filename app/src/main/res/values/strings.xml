@@ -1,0 +1,63 @@
+<!--
+  ~ Nextcloud Maps Geofavorites for Android
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- App strings -->
+    <string name="app_name">Nextcloud Maps Geobookmarks</string>
+    <string name="welcome">Welcome to Nextcloud Maps Geobookmarks</string>
+
+    <!-- Login Activity -->
+    <string name="choose_account">Choose account</string>
+
+    <!-- Geobookmarks list -->
+    <string name="new_geobookmark">New geobookmark</string>
+    <string name="about">About</string>
+    <string name="switch_account">Switch account</string>
+    <string name="list_mode">List</string>
+    <string name="search_in_all">Search by name</string>
+
+    <!-- Sort dialog -->
+    <string name="sort_by">Sort by</string>
+    <string name="menu_item_sort_by_title_a_z">A - Z</string>
+    <string name="menu_item_sort_by_date_newest_first">Newest first</string>
+    <string name="menu_item_sort_by_distance">Distance</string>
+
+    <!-- About -->
+    <string name="about_version_title">Version</string>
+    <string name="about_version">You are currently using &lt;strong>%1$s&lt;/strong></string>
+    <string name="about_source_title">Source code</string>
+    <string name="about_source">This project is hosted on GitHub: &lt;a href="%1$s">%1$s&lt;/a></string>
+    <string name="about_issues_title">Issues</string>
+    <string name="about_issues">You can report bugs, enhancement proposals and feature requests at the GitHub issue tracker: &lt;a href="%1$s">%1$s&lt;/a></string>
+    <string name="about_app_license_title">App license</string>
+    <string name="about_app_license">This application is licensed under the GNU GENERAL PUBLIC LICENSE v3+.</string>
+    <string name="about_app_license_button">View license</string>
+
+    <!-- Common strings -->
+    <string name="common_yes">Yes</string>
+    <string name="common_cancel">Cancel</string>
+
+    <!-- URLs -->
+    <string name="url_source" translatable="false">https://github.com/penguin86/nextcloud-maps-client</string>
+    <string name="url_issues" translatable="false">https://github.com/penguin86/nextcloud-maps-client/issues/new/choose</string>
+    <string name="url_license" translatable="false">https://raw.githubusercontent.com/penguin86/nextcloud-maps-client/master/LICENSE</string>
+
+    <!-- Settings -->
+    <string name="setting_sort_by">SETTING_SORT_BY</string>
+    <string name="setting_grid_view_enabled">SETTING_GRID_VIEW_ENABLED</string>
+
+</resources>
