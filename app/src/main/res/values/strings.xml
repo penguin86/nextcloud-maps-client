@@ -36,6 +36,13 @@
     <string name="menu_item_sort_by_date_newest_first">Newest first</string>
     <string name="menu_item_sort_by_distance">Distance</string>
 
+    <!-- Geobookmarks detail -->
+    <string name="name">Name</string>
+    <string name="description">Description</string>
+    <string name="created">Created</string>
+    <string name="coords">Coordinates</string>
+    <string name="location_permission_required">Location permission is required to create a geofavorite.</string>
+
     <!-- About -->
     <string name="about_version_title">Version</string>
     <string name="about_version">You are currently using &lt;strong>%1$s&lt;/strong></string>

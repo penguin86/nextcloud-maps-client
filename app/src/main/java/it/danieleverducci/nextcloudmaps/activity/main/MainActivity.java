@@ -64,9 +64,9 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     private static final int INTENT_ADD = 100;
     private static final int INTENT_EDIT = 200;
 
-    public static final String NAVIGATION_KEY_ADD_NOTE = "add";
-    public static final String NAVIGATION_KEY_SHOW_ABOUT = "about";
-    public static final String NAVIGATION_KEY_SWITCH_ACCOUNT = "switch_account";
+    private static final String NAVIGATION_KEY_ADD_GEOFAVORITE = "add";
+    private static final String NAVIGATION_KEY_SHOW_ABOUT = "about";
+    private static final String NAVIGATION_KEY_SWITCH_ACCOUNT = "switch_account";
 
     private SharedPreferences preferences;
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         swipeRefresh.setOnRefreshListener(() -> presenter.getGeofavorites());
 
         fab = findViewById(R.id.add);
-        fab.setOnClickListener(view -> add_note());
+        fab.setOnClickListener(view -> addGeofavorite());
 
         toolbar = findViewById(R.id.toolbar);
         homeToolbar = findViewById(R.id.home_toolbar);
@@ -177,8 +177,8 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
         navigationCommonAdapter = new NavigationAdapter(this, item -> {
             switch (item.id) {
-                case NAVIGATION_KEY_ADD_NOTE:
-                    add_note();
+                case NAVIGATION_KEY_ADD_GEOFAVORITE:
+                    addGeofavorite();
                     break;
                 case NAVIGATION_KEY_SHOW_ABOUT:
                     show_about();
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
             }
         });
 
-        navItems.add(new NavigationItem(NAVIGATION_KEY_ADD_NOTE, getString(R.string.new_geobookmark), R.drawable.ic_add));
+        navItems.add(new NavigationItem(NAVIGATION_KEY_ADD_GEOFAVORITE, getString(R.string.new_geobookmark), R.drawable.ic_add));
         navItems.add(new NavigationItem(NAVIGATION_KEY_SHOW_ABOUT, getString(R.string.about), R.drawable.ic_info_grey));
         navItems.add(new NavigationItem(NAVIGATION_KEY_SWITCH_ACCOUNT, getString(R.string.switch_account), R.drawable.ic_logout_grey));
         navigationCommonAdapter.setItems(navItems);
@@ -224,11 +224,9 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         }
     }
 
-    private void add_note() {
-        /*startActivityForResult(
-                new Intent(this, EditorActivity.class), INTENT_ADD);
-
-         */
+    private void addGeofavorite() {
+        startActivityForResult(
+                new Intent(this, GeofavoriteDetailActivity.class), INTENT_ADD);
     }
 
     private void show_about() {

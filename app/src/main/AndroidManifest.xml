@@ -21,6 +21,7 @@
     package="it.danieleverducci.nextcloudmaps">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <queries>
         <package android:name="com.nextcloud.client" />
@@ -45,6 +46,10 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activity.main.GeofavoriteDetailActivity"
+            android:theme="@style/AppTheme"/>
 
         <activity
             android:name=".activity.about.AboutActivity"

@@ -92,8 +92,8 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     public void onBindViewHolder(@NonNull RecyclerViewAdapter holder, int position) {
         Geofavorite geofavorite = geofavoriteListFiltered.get(position);
 
-        holder.tv_title.setText(Html.fromHtml(geofavorite.getName().trim()));
-        holder.tv_content.setText(geofavorite.getComment().trim());
+        holder.tv_title.setText(Html.fromHtml(geofavorite.getName()));
+        holder.tv_content.setText(geofavorite.getComment());
     }
 
     @Override
