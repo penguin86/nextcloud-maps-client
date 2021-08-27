@@ -25,12 +25,7 @@
 
     <color name="defaultBrand">#0082C9</color>
 
-    <color name="note_font_color_default">#202124</color>
-
     <color name="appbar">@android:color/white</color>
 
-    <color name="defaultNoteColor">#F7EB96</color>
-    <color name="defaultNoteTint">#202124</color>
-    <color name="defaultNoteHintTint">#1A202124</color>
-
+    <color name="defaultTint">#202124</color>
 </resources>

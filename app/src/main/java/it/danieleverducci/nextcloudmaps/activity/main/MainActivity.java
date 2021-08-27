@@ -19,6 +19,7 @@ package it.danieleverducci.nextcloudmaps.activity.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -50,13 +51,13 @@ import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.NavigationAdapter.NavigationItem;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment.OnSortingOrderListener;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
-import it.danieleverducci.nextcloudmaps.model.Note;
+import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static it.danieleverducci.nextcloudmaps.activity.main.NoteAdapter.*;
-import static it.danieleverducci.nextcloudmaps.activity.main.NoteAdapter.SORT_BY_CREATED;
-import static it.danieleverducci.nextcloudmaps.activity.main.NoteAdapter.SORT_BY_TITLE;
+import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.*;
+import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_CREATED;
+import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_TITLE;
 
 public class MainActivity extends AppCompatActivity implements MainView, OnSortingOrderListener {
 
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     private FloatingActionButton fab;
 
     private MainPresenter presenter;
-    private NoteAdapter noteAdapter;
+    private GeofavoriteAdapter geofavoriteAdapter;
     private ItemClickListener itemClickListener;
 
     NavigationAdapter navigationCommonAdapter;
@@ -103,21 +104,20 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         presenter = new MainPresenter(this);
 
         itemClickListener = ((view, position) -> {
-            Note note = noteAdapter.get(position);
-
-            /*Intent intent = new Intent(this, EditorActivity.class);
-            intent.putExtra("note", note);
-
-            startActivityForResult(intent, INTENT_EDIT);*/
+            Geofavorite geofavorite = geofavoriteAdapter.get(position);
+            Intent i = new Intent();
+            i.setAction(Intent.ACTION_VIEW);
+            i.setData(geofavorite.getGeoUri());
+            startActivity(i);
         });
 
-        noteAdapter = new NoteAdapter(getApplicationContext(), itemClickListener);
-        recyclerView.setAdapter(noteAdapter);
+        geofavoriteAdapter = new GeofavoriteAdapter(getApplicationContext(), itemClickListener);
+        recyclerView.setAdapter(geofavoriteAdapter);
 
-        noteAdapter.setSortRule(sortRule);
+        geofavoriteAdapter.setSortRule(sortRule);
 
         swipeRefresh = findViewById(R.id.swipe_refresh);
-        swipeRefresh.setOnRefreshListener(() -> presenter.getNotes());
+        swipeRefresh.setOnRefreshListener(() -> presenter.getGeofavorites());
 
         fab = findViewById(R.id.add);
         fab.setOnClickListener(view -> add_note());
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
             @Override
             public boolean onQueryTextChange(String query) {
-                noteAdapter.getFilter().filter(query);
+                geofavoriteAdapter.getFilter().filter(query);
                 return false;
             }
         });
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         homeToolbar.setOnClickListener(view -> updateToolbars(false));
 
         AppCompatImageView sortButton = findViewById(R.id.sort_mode);
-        sortButton.setOnClickListener(view -> openSortingOrderDialogFragment(getSupportFragmentManager(), noteAdapter.getSortRule()));
+        sortButton.setOnClickListener(view -> openSortingOrderDialogFragment(getSupportFragmentManager(), geofavoriteAdapter.getSortRule()));
 
         drawerLayout = findViewById(R.id.drawerLayout);
         AppCompatImageButton menuButton = findViewById(R.id.menu_button);
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         updateGridIcon(gridViewEnabled);
 
         mApi = new ApiProvider(getApplicationContext());
-        presenter.getNotes();
+        presenter.getGeofavorites();
     }
 
     private void setupNavigationMenu() {
@@ -218,9 +218,9 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_ADD && resultCode == RESULT_OK) {
-            presenter.getNotes();
+            presenter.getGeofavorites();
         } else if (requestCode == INTENT_EDIT && resultCode == RESULT_OK) {
-            presenter.getNotes();
+            presenter.getGeofavorites();
         }
     }
 
@@ -252,8 +252,8 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     }
 
     @Override
-    public void onGetResult(List<Note> note_list) {
-        noteAdapter.setNoteList(note_list);
+    public void onGetResult(List<Geofavorite> geofavorite_list) {
+        geofavoriteAdapter.setGeofavoriteList(geofavorite_list);
     }
 
     @Override
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
     @Override
     public void onSortingOrderChosen(int sortSelection) {
-        noteAdapter.setSortRule(sortSelection);
+        geofavoriteAdapter.setSortRule(sortSelection);
         updateSortingIcon(sortSelection);
 
         preferences.edit().putInt(getString(R.string.setting_sort_by), sortSelection).apply();

@@ -1,5 +1,5 @@
 /*
- * Nextcloud Notes Tutorial for Android
+ * Nextcloud Maps Geofavorites for Android
  *
  * @copyright Copyright (c) 2020 John Doe <john@doe.com>
  * @author John Doe <john@doe.com>

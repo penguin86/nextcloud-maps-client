@@ -1,5 +1,5 @@
 /*
- * Nextcloud Notes Tutorial for Android
+ * Nextcloud Maps Geofavorites for Android
  *
  * @copyright Copyright (c) 2020 John Doe <john@doe.com>
  * @author John Doe <john@doe.com>
@@ -22,11 +22,11 @@ package it.danieleverducci.nextcloudmaps.activity.main;
 
 import java.util.List;
 
-import it.danieleverducci.nextcloudmaps.model.Note;
+import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 
 public interface MainView {
     void showLoading();
     void hideLoading();
-    void onGetResult(List<Note> notes);
+    void onGetResult(List<Geofavorite> geofavorites);
     void onErrorLoading(String message);
 }

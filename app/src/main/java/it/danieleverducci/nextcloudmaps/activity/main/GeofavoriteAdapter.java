@@ -1,5 +1,5 @@
 /*
- * Nextcloud Notes Tutorial for Android
+ * Nextcloud Maps Geofavorites for Android
  *
  * @copyright Copyright (c) 2020 John Doe <john@doe.com>
  * @author John Doe <john@doe.com>
@@ -39,9 +39,9 @@ import java.util.Collections;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
-import it.danieleverducci.nextcloudmaps.model.Note;
+import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 
-public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.RecyclerViewAdapter> implements Filterable {
+public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.RecyclerViewAdapter> implements Filterable {
 
     public static final int SORT_BY_TITLE = 0;
     public static final int SORT_BY_CREATED = 1;
@@ -49,25 +49,25 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.RecyclerViewAd
     private Context context;
     private ItemClickListener itemClickListener;
 
-    private List<Note> noteList = new ArrayList<>();
-    private List<Note> noteListFiltered = new ArrayList<>();
+    private List<Geofavorite> geofavoriteList = new ArrayList<>();
+    private List<Geofavorite> geofavoriteListFiltered = new ArrayList<>();
     private int sortRule = SORT_BY_CREATED;
 
-    public NoteAdapter(Context context, ItemClickListener itemClickListener) {
+    public GeofavoriteAdapter(Context context, ItemClickListener itemClickListener) {
         this.context = context;
         this.itemClickListener = itemClickListener;
     }
 
-    public void setNoteList(@NonNull List<Note> noteList) {
-        this.noteList = noteList;
-        this.noteListFiltered = new ArrayList<>(noteList);
+    public void setGeofavoriteList(@NonNull List<Geofavorite> geofavoriteList) {
+        this.geofavoriteList = geofavoriteList;
+        this.geofavoriteListFiltered = new ArrayList<>(geofavoriteList);
 
         performSort();
         notifyDataSetChanged();
     }
 
-    public Note get(int position) {
-        return noteListFiltered.get(position);
+    public Geofavorite get(int position) {
+        return geofavoriteListFiltered.get(position);
     }
 
     public int getSortRule() {
@@ -90,16 +90,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.RecyclerViewAd
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter holder, int position) {
-        Note note = noteListFiltered.get(position);
+        Geofavorite geofavorite = geofavoriteListFiltered.get(position);
 
-        holder.tv_title.setText(Html.fromHtml(note.getTitle().trim()));
-        holder.tv_content.setText(note.getContent().trim());
-        holder.card_item.setCardBackgroundColor(context.getResources().getColor(R.color.defaultNoteColor));
+        holder.tv_title.setText(Html.fromHtml(geofavorite.getName().trim()));
+        holder.tv_content.setText(geofavorite.getComment().trim());
     }
 
     @Override
     public int getItemCount() {
-        return noteListFiltered.size();
+        return geofavoriteListFiltered.size();
     }
 
     @Override
@@ -112,29 +111,29 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.RecyclerViewAd
         // Run on Background thread.
         protected FilterResults performFiltering(CharSequence charSequence) {
             FilterResults filterResults = new FilterResults();
-            List <Note> filteredNotes = new ArrayList<>();
+            List <Geofavorite> filteredGeofavorites = new ArrayList<>();
 
             if (charSequence.toString().isEmpty()) {
-                filteredNotes.addAll(noteList);
+                filteredGeofavorites.addAll(geofavoriteList);
             } else {
-                for (Note note: noteList) {
+                for (Geofavorite geofavorite : geofavoriteList) {
                     String query = charSequence.toString().toLowerCase();
-                    if (note.getTitle().toLowerCase().contains(query)) {
-                        filteredNotes.add(note);
-                    } else if (note.getContent().toLowerCase().contains(query)) {
-                        filteredNotes.add(note);
+                    if (geofavorite.getName().toLowerCase().contains(query)) {
+                        filteredGeofavorites.add(geofavorite);
+                    } else if (geofavorite.getComment().toLowerCase().contains(query)) {
+                        filteredGeofavorites.add(geofavorite);
                     }
                 }
             }
 
-            filterResults.values = filteredNotes;
+            filterResults.values = filteredGeofavorites;
             return filterResults;
         }
         //Run on ui thread
         @Override
         protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            noteListFiltered.clear();
-            noteListFiltered.addAll((Collection<? extends Note>) filterResults.values);
+            geofavoriteListFiltered.clear();
+            geofavoriteListFiltered.addAll((Collection<? extends Geofavorite>) filterResults.values);
 
             performSort();
             notifyDataSetChanged();
@@ -142,7 +141,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.RecyclerViewAd
     };
 
     class RecyclerViewAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
-        CardView card_item;
         TextView tv_title, tv_content;
 
         ItemClickListener itemClickListener;
@@ -150,12 +148,11 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.RecyclerViewAd
         RecyclerViewAdapter(@NonNull View itemView, ItemClickListener itemClickListener) {
             super(itemView);
 
-            card_item = itemView.findViewById(R.id.card_item);
             tv_title = itemView.findViewById(R.id.title);
             tv_content = itemView.findViewById(R.id.content);
 
             this.itemClickListener = itemClickListener;
-            card_item.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 
             tv_content.setOnClickListener(this);
         }
@@ -168,9 +165,9 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.RecyclerViewAd
 
     private void performSort() {
         if (sortRule == SORT_BY_TITLE) {
-            Collections.sort(noteListFiltered, Note.ByTitleAZ);
+            Collections.sort(geofavoriteListFiltered, Geofavorite.ByTitleAZ);
         } else if (sortRule == SORT_BY_CREATED) {
-            Collections.sort(noteListFiltered, Note.ByLastCreated);
+            Collections.sort(geofavoriteListFiltered, Geofavorite.ByLastCreated);
         }
     }
 

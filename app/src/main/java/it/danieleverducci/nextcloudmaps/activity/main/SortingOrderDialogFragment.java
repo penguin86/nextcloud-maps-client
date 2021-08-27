@@ -1,5 +1,5 @@
 /*
- * Nextcloud Notes Tutorial for Android
+ * Nextcloud Maps Geofavorites for Android
  *
  * @copyright Copyright (c) 2020 John Doe <john@doe.com>
  * @author John Doe <john@doe.com>
@@ -76,7 +76,7 @@ public class SortingOrderDialogFragment extends DialogFragment {
         if (arguments == null) {
             throw new IllegalArgumentException("Arguments may not be null");
         }
-        mCurrentSortOrder = arguments.getInt(KEY_SORT_ORDER, NoteAdapter.SORT_BY_TITLE);
+        mCurrentSortOrder = arguments.getInt(KEY_SORT_ORDER, GeofavoriteAdapter.SORT_BY_TITLE);
     }
 
     @Override
@@ -99,13 +99,13 @@ public class SortingOrderDialogFragment extends DialogFragment {
 
         mTaggedViews = new View[4];
         mTaggedViews[0] = view.findViewById(R.id.sortByTitleAscending);
-        mTaggedViews[0].setTag(NoteAdapter.SORT_BY_TITLE);
+        mTaggedViews[0].setTag(GeofavoriteAdapter.SORT_BY_TITLE);
         mTaggedViews[1] = view.findViewById(R.id.sortByTitleAscendingText);
-        mTaggedViews[1].setTag(NoteAdapter.SORT_BY_TITLE);
+        mTaggedViews[1].setTag(GeofavoriteAdapter.SORT_BY_TITLE);
         mTaggedViews[2] = view.findViewById(R.id.sortByCreationDateDescending);
-        mTaggedViews[2].setTag(NoteAdapter.SORT_BY_CREATED);
+        mTaggedViews[2].setTag(GeofavoriteAdapter.SORT_BY_CREATED);
         mTaggedViews[3] = view.findViewById(R.id.sortByCreationDateDescendingText);
-        mTaggedViews[3].setTag(NoteAdapter.SORT_BY_CREATED);
+        mTaggedViews[3].setTag(GeofavoriteAdapter.SORT_BY_CREATED);
 
         setupActiveOrderSelection();
     }
@@ -121,10 +121,10 @@ public class SortingOrderDialogFragment extends DialogFragment {
             if (view instanceof ImageButton) {
                 Drawable normalDrawable = ((ImageButton) view).getDrawable();
                 Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
-                DrawableCompat.setTint(wrapDrawable, this.getResources().getColor(R.color.defaultNoteTint));
+                DrawableCompat.setTint(wrapDrawable, this.getResources().getColor(R.color.defaultTint));
             }
             if (view instanceof TextView) {
-                ((TextView)view).setTextColor(this.getResources().getColor(R.color.defaultNoteTint));
+                ((TextView)view).setTextColor(this.getResources().getColor(R.color.defaultTint));
                 ((TextView)view).setTypeface(Typeface.DEFAULT_BOLD);
             }
         }

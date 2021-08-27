@@ -1,5 +1,5 @@
 /*
- * Nextcloud Notes Tutorial for Android
+ * Nextcloud Maps Geofavorites for Android
  *
  * @copyright Copyright (c) 2020 John Doe <john@doe.com>
  * @author John Doe <john@doe.com>
@@ -22,7 +22,7 @@ package it.danieleverducci.nextcloudmaps.api;
 
 import java.util.List;
 
-import it.danieleverducci.nextcloudmaps.model.Note;
+import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -32,24 +32,24 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface API {
-    String mApiEndpoint = "/index.php/apps/notestutorial/api/0.1";
+    String mApiEndpoint = "/index.php/apps/maps/api/1.0";
 
-    @GET("/notes")
-    Call<List<Note>> getNotes();
+    @GET("/favorites")
+    Call<List<Geofavorite>> getGeofavorites();
 
-    @POST("/notes")
-    Call<Note> create(
-            @Body Note note
+    @POST("/favorites")
+    Call<Geofavorite> createGeofavorite (
+            @Body Geofavorite geofavorite
     );
 
-    @PUT("/notes/{id}")
-    Call<Note> updateNote(
+    @PUT("/favorites/{id}")
+    Call<Geofavorite> updateGeofavorite (
             @Path("id") int id,
-            @Body Note note
+            @Body Geofavorite geofavorite
     );
 
-    @DELETE("/notes/{id}")
-    Call<Note> deleteNote(
+    @DELETE("/favorites/{id}")
+    Call<Geofavorite> deleteGeofavorite (
             @Path("id") int id
     );
 }

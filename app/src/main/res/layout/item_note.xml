@@ -16,29 +16,28 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 
-<androidx.cardview.widget.CardView
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_item"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    android:layout_marginTop="4dp"
-    android:layout_marginBottom="4dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="1dp"
+    android:padding="12dp"
     android:clickable="true"
-    android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
-    tools:backgroundTint="@color/defaultNoteColor">
+    android:focusable="true">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:layout_marginRight="10dp"
+        android:src="@mipmap/ic_launcher"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/title"
@@ -46,10 +45,10 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="@dimen/note_font_size_item_title"
-            android:textColor="@color/note_font_color_default"
             android:textStyle="bold"
             android:singleLine="true"
             android:maxLines="1"
+            android:lines="1"
             android:ellipsize="end"
             tools:text="@tools:sample/lorem/random">
         </TextView>
@@ -60,11 +59,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:textSize="@dimen/note_font_size_item_content"
-            android:textColor="@color/note_font_color_default"
+            android:maxLines="2"
+            android:lines="2"
             tools:text="@tools:sample/lorem/random">
         </TextView>
 
     </LinearLayout>
 
 
-</androidx.cardview.widget.CardView>
+</LinearLayout>

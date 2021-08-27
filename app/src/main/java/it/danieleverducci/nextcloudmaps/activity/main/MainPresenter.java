@@ -1,5 +1,5 @@
 /*
- * Nextcloud Notes Tutorial for Android
+ * Nextcloud Maps Geofavorites for Android
  *
  * @copyright Copyright (c) 2020 John Doe <john@doe.com>
  * @author John Doe <john@doe.com>
@@ -20,13 +20,15 @@
 
 package it.danieleverducci.nextcloudmaps.activity.main;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
-import it.danieleverducci.nextcloudmaps.model.Note;
+import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -38,12 +40,12 @@ public class MainPresenter {
         this.view = view;
     }
 
-    public void getNotes() {
+    public void getGeofavorites() {
         view.showLoading();
-        Call<List<Note>> call = ApiProvider.getAPI().getNotes();
-        call.enqueue(new Callback<List<Note>>() {
+        Call<List<Geofavorite>> call = ApiProvider.getAPI().getGeofavorites();
+        call.enqueue(new Callback<List<Geofavorite>>() {
             @Override
-            public void onResponse(@NonNull Call<List<Note>> call, @NonNull Response<List<Note>> response) {
+            public void onResponse(@NonNull Call<List<Geofavorite>> call, @NonNull Response<List<Geofavorite>> response) {
                 ((AppCompatActivity) view).runOnUiThread(() -> {
                     view.hideLoading();
                     if (response.isSuccessful() && response.body() != null) {
@@ -53,7 +55,7 @@ public class MainPresenter {
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Note>> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<Geofavorite>> call, @NonNull Throwable t) {
                 ((AppCompatActivity) view).runOnUiThread(() -> {
                     view.hideLoading();
                     view.onErrorLoading(t.getLocalizedMessage());
