@@ -169,6 +169,13 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         updateGridIcon(gridViewEnabled);
 
         mApi = new ApiProvider(getApplicationContext());
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Update list
         presenter.getGeofavorites();
     }
 
