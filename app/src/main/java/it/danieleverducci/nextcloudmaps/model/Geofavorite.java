@@ -21,12 +21,18 @@
 package it.danieleverducci.nextcloudmaps.model;
 
 import android.net.Uri;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.databinding.BindingAdapter;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Date;
 
 public class Geofavorite implements Serializable {
     /**
@@ -48,6 +54,7 @@ public class Geofavorite implements Serializable {
     @SerializedName("id") private int id;
 
     @Expose
+    @Nullable
     @SerializedName("name") private String name;
 
     @Expose
@@ -57,15 +64,16 @@ public class Geofavorite implements Serializable {
     @SerializedName("date_created") private long dateCreated;
 
     @Expose
-    @SerializedName("lat") private float lat;
+    @SerializedName("lat") private double lat;
 
     @Expose
-    @SerializedName("lng") private float lng;
+    @SerializedName("lng") private double lng;
 
     @Expose
     @SerializedName("category") private String category;
 
     @Expose
+    @Nullable
     @SerializedName("comment") private String comment;
 
     public int getId() {
@@ -76,6 +84,7 @@ public class Geofavorite implements Serializable {
         this.id = id;
     }
 
+    @Nullable
     public String getName() {
         return name;
     }
@@ -100,19 +109,19 @@ public class Geofavorite implements Serializable {
         this.dateCreated = dateCreated;
     }
 
-    public float getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public float getLng() {
+    public double getLng() {
         return lng;
     }
 
-    public void setLng(float lng) {
+    public void setLng(double lng) {
         this.lng = lng;
     }
 
@@ -124,6 +133,7 @@ public class Geofavorite implements Serializable {
         this.category = category;
     }
 
+    @Nullable
     public String getComment() {
         return comment;
     }
@@ -140,4 +150,18 @@ public class Geofavorite implements Serializable {
         return Uri.parse("geo:" + this.lat + "," + this.lng + "(" + this.name + ")");
     }
 
+    @BindingAdapter("formatDate")
+    public static void formatDate(@NonNull TextView textView, long timestamp) {
+        textView.setText((new Date(timestamp)).toString());
+    }
+
+    public boolean valid() {
+        return getLat() != 0 && getLng() != 0 && getName() != null && getName().length() > 0;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "[" + getName() + " (" + getLat() + "," + getLng() + ")]";
+    }
 }

@@ -25,6 +25,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,24 +35,85 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.api.ApiProvider;
+import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
+import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GeofavoriteDetailActivity extends AppCompatActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
+    public static final String TAG = "GeofavDetail";
     public static final String ARG_GEOFAVORITE_ID = "geofavid";
     private static final int PERMISSION_REQUEST_CODE = 9999;
+
+    private ActivityGeofavoriteDetailBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_geofavorite_detail);
+        binding = ActivityGeofavoriteDetailBinding.inflate(getLayoutInflater());
+        setContentView(binding.root);
 
         int id = getIntent().getIntExtra(ARG_GEOFAVORITE_ID, 0);
         if (id == 0) {
-            // New geofavorite: precompile location
+            // New geofavorite
+            Geofavorite gf = new Geofavorite();
+            gf.setDateCreated(System.currentTimeMillis());
+            gf.setDateModified(System.currentTimeMillis());
+            binding.setGeofavorite(gf);
+            // Precompile location
             getLocation();
+        } else {
+            // TODO: Load geofavorite from cache for edit
         }
 
+    }
+
+    /**
+     * Called when the submit button is clicked
+     * @param v The button
+     */
+    public void onSubmit(View v) {
+        saveGeofavorite();
+    }
+
+    /**
+     * Checks fields and sends updated geofavorite to Nextcloud instance
+     */
+    private void saveGeofavorite() {
+        Geofavorite gf = binding.getGeofavorite();
+        gf.setName(binding.nameEt.getText().toString());
+        gf.setComment(binding.descriptionEt.getText().toString());
+        gf.setDateModified(System.currentTimeMillis());
+
+        if (!gf.valid()) {
+            Toast.makeText(GeofavoriteDetailActivity.this, R.string.incomplete_geofavorite, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Call<Geofavorite> call;
+        if (gf.getId() == 0) {
+            // New geofavorite
+            call = ApiProvider.getAPI().createGeofavorite(gf);
+        } else {
+            // Update existing geofavorite
+            call = ApiProvider.getAPI().updateGeofavorite(gf.getId(), gf);
+        }
+        call.enqueue(new Callback<Geofavorite>() {
+            @Override
+            public void onResponse(Call<Geofavorite> call, Response<Geofavorite> response) {
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<Geofavorite> call, Throwable t) {
+                Toast.makeText(GeofavoriteDetailActivity.this, R.string.error_saving_geofavorite, Toast.LENGTH_SHORT).show();
+                Log.e(TAG, "Unable to update geofavorite: " + t.getMessage());
+            }
+        });
     }
 
     /**
@@ -73,7 +136,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             updateLocationField(lastKnown);
         // Register for location updates in case the user moves before saving
         locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER, 5000, 10, this
+                LocationManager.GPS_PROVIDER, 1000, 10, this
         );
     }
 
@@ -82,7 +145,9 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
      * @param location to set in the geofavorite
      */
     private void updateLocationField(Location location) {
-        Log.d("Location", location.toString());
+        binding.getGeofavorite().setLat(location.getLatitude());
+        binding.getGeofavorite().setLng(location.getLongitude());
+        binding.notifyChange();
     }
 
 
