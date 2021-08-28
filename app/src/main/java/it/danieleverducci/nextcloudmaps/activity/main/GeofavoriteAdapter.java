@@ -118,9 +118,9 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
             } else {
                 for (Geofavorite geofavorite : geofavoriteList) {
                     String query = charSequence.toString().toLowerCase();
-                    if (geofavorite.getName().toLowerCase().contains(query)) {
+                    if (geofavorite.getName() != null && geofavorite.getName().toLowerCase().contains(query)) {
                         filteredGeofavorites.add(geofavorite);
-                    } else if (geofavorite.getComment().toLowerCase().contains(query)) {
+                    } else if (geofavorite.getComment() != null && geofavorite.getComment().toLowerCase().contains(query)) {
                         filteredGeofavorites.add(geofavorite);
                     }
                 }
