@@ -17,7 +17,7 @@
 
 <resources>
     <!-- App strings -->
-    <string name="app_name">Nextcloud Maps Geobookmarks</string>
+    <string name="app_name">Maps Geobookmarks</string>
     <string name="welcome">Welcome to Nextcloud Maps Geobookmarks</string>
 
     <!-- Login Activity -->
