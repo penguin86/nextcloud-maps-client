@@ -145,7 +145,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-                app:spanCount="2"
+                app:spanCount="1"
                 tools:itemCount="3"
                 tools:listitem="@layout/item_note">
             </androidx.recyclerview.widget.RecyclerView>

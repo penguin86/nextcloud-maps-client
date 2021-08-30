@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         int sortRule = preferences.getInt(getString(R.string.setting_sort_by), SORT_BY_CREATED);
-        boolean gridViewEnabled = preferences.getBoolean(getString(R.string.setting_grid_view_enabled), true);
+        boolean gridViewEnabled = preferences.getBoolean(getString(R.string.setting_grid_view_enabled), false);
 
         recyclerView = findViewById(R.id.recycler_view);
         layoutManager = new StaggeredGridLayoutManager(gridViewEnabled ? 2 : 1, StaggeredGridLayoutManager.VERTICAL);
