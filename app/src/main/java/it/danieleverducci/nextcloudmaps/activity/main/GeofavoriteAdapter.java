@@ -84,7 +84,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     @NonNull
     @Override
     public RecyclerViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_note, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_geofav, parent, false);
         return new RecyclerViewAdapter(view, itemClickListener);
     }
 

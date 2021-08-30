@@ -147,7 +147,7 @@
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 app:spanCount="1"
                 tools:itemCount="3"
-                tools:listitem="@layout/item_note">
+                tools:listitem="@layout/item_geofav">
             </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.core.widget.NestedScrollView>
