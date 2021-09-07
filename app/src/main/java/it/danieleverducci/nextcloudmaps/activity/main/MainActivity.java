@@ -19,9 +19,9 @@ package it.danieleverducci.nextcloudmaps.activity.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -47,6 +47,7 @@ import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.about.AboutActivity;
+import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.NavigationAdapter.NavigationItem;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment.OnSortingOrderListener;
@@ -103,13 +104,28 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
         presenter = new MainPresenter(this);
 
-        itemClickListener = ((view, position) -> {
-            Geofavorite geofavorite = geofavoriteAdapter.get(position);
-            Intent i = new Intent();
-            i.setAction(Intent.ACTION_VIEW);
-            i.setData(geofavorite.getGeoUri());
-            startActivity(i);
-        });
+        itemClickListener = new ItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Geofavorite geofavorite = geofavoriteAdapter.get(position);
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_VIEW);
+                i.setData(geofavorite.getGeoUri());
+                startActivity(i);
+            }
+
+            @Override
+            public void onItemShareClick(Geofavorite item) {
+                Intent i = new Intent();
+                i.setAction(Intent.ACTION_SEND);
+                i.setType("text/plain");
+                String shareMessage = getString(R.string.share_message)
+                        .replace("{lat}", ""+item.getLat())
+                        .replace("{lng}", ""+item.getLng());
+                i.putExtra(Intent.EXTRA_TEXT, shareMessage );
+                startActivity(Intent.createChooser(i, getString(R.string.share_via)));
+            }
+        };
 
         geofavoriteAdapter = new GeofavoriteAdapter(getApplicationContext(), itemClickListener);
         recyclerView.setAdapter(geofavoriteAdapter);

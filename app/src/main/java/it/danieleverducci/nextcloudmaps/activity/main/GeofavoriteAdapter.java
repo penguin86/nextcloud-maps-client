@@ -21,16 +21,17 @@
 package it.danieleverducci.nextcloudmaps.activity.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ import java.util.List;
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 
-public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.RecyclerViewAdapter> implements Filterable {
+public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.GeofavoriteViewHolder> implements Filterable {
 
     public static final int SORT_BY_TITLE = 0;
     public static final int SORT_BY_CREATED = 1;
@@ -83,13 +84,13 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
     @NonNull
     @Override
-    public RecyclerViewAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GeofavoriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_geofav, parent, false);
-        return new RecyclerViewAdapter(view, itemClickListener);
+        return new GeofavoriteViewHolder(view, itemClickListener);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter holder, int position) {
+    public void onBindViewHolder(@NonNull GeofavoriteViewHolder holder, int position) {
         Geofavorite geofavorite = geofavoriteListFiltered.get(position);
 
         holder.tv_title.setText(Html.fromHtml(geofavorite.getName()));
@@ -140,26 +141,42 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         }
     };
 
-    class RecyclerViewAdapter extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_title, tv_content;
+        ImageView bt_context_menu;
+        ImageView bt_share;
 
         ItemClickListener itemClickListener;
 
-        RecyclerViewAdapter(@NonNull View itemView, ItemClickListener itemClickListener) {
+
+        GeofavoriteViewHolder(@NonNull View itemView, ItemClickListener itemClickListener) {
             super(itemView);
 
             tv_title = itemView.findViewById(R.id.title);
             tv_content = itemView.findViewById(R.id.content);
+            bt_context_menu = itemView.findViewById(R.id.geofav_context_menu_bt);
+            bt_share = itemView.findViewById(R.id.geofav_share_bt);
 
             this.itemClickListener = itemClickListener;
             itemView.setOnClickListener(this);
 
-            tv_content.setOnClickListener(this);
+            bt_context_menu.setOnClickListener(this);
+            bt_share.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            itemClickListener.onItemClick(view, getAdapterPosition());
+            switch (view.getId()) {
+                case R.id.geofav_context_menu_bt:
+                    openContextMenu(view);
+                    break;
+                case R.id.geofav_share_bt:
+                    if (itemClickListener != null)
+                        itemClickListener.onItemShareClick(get(getAdapterPosition()));
+                    break;
+                default:
+                    itemClickListener.onItemClick(view, getAdapterPosition());
+            }
         }
     }
 
@@ -171,7 +188,16 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         }
     }
 
+    private void openContextMenu(View v) {
+        //.showContextMenuForChild(v);
+    }
+
     public interface ItemClickListener {
         void onItemClick(View view, int position);
+        void onItemShareClick(Geofavorite item);
+    }
+
+    public interface ContextMenuClickListener {
+        void onContextMenuClick();
     }
 }

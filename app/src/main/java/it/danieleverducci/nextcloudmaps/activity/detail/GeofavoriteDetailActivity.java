@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package it.danieleverducci.nextcloudmaps.activity.main;
+package it.danieleverducci.nextcloudmaps.activity.detail;
 
 import android.Manifest;
 import android.content.Context;
@@ -25,7 +25,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
