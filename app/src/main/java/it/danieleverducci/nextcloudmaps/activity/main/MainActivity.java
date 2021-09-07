@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
     private MainPresenter presenter;
     private GeofavoriteAdapter geofavoriteAdapter;
-    private ItemClickListener itemClickListener;
+    private ItemClickListener rvItemClickListener;
 
     NavigationAdapter navigationCommonAdapter;
 
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
         presenter = new MainPresenter(this);
 
-        itemClickListener = new ItemClickListener() {
+        rvItemClickListener = new ItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Geofavorite geofavorite = geofavoriteAdapter.get(position);
@@ -127,10 +127,11 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
             }
         };
 
-        geofavoriteAdapter = new GeofavoriteAdapter(getApplicationContext(), itemClickListener);
+        geofavoriteAdapter = new GeofavoriteAdapter(getApplicationContext(), rvItemClickListener);
         recyclerView.setAdapter(geofavoriteAdapter);
-
         geofavoriteAdapter.setSortRule(sortRule);
+
+        registerForContextMenu(recyclerView);
 
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnRefreshListener(() -> presenter.getGeofavorites());

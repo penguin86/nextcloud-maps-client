@@ -23,7 +23,9 @@ package it.danieleverducci.nextcloudmaps.activity.main;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
@@ -141,7 +143,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         }
     };
 
-    class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
         TextView tv_title, tv_content;
         ImageView bt_context_menu;
         ImageView bt_share;
@@ -178,6 +180,12 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
                     itemClickListener.onItemClick(view, getAdapterPosition());
             }
         }
+
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+            MenuInflater menuInflater = new MenuInflater(context);
+            menuInflater.inflate(R.menu.list_context_menu, menu);
+        }
     }
 
     private void performSort() {
@@ -189,6 +197,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     }
 
     private void openContextMenu(View v) {
+        v.showContextMenu();
         //.showContextMenuForChild(v);
     }
 

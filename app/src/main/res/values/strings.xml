@@ -31,6 +31,8 @@
     <string name="search_in_all">Search by name</string>
     <string name="share_via">Share via</string>
     <string name="share_message">Check out this place: {lat}°N, {lng}°E</string>
+    <string name="list_context_menu_detail">Details</string>
+    <string name="list_context_menu_delete">Delete</string>
 
     <!-- Sort dialog -->
     <string name="sort_by">Sort by</string>
