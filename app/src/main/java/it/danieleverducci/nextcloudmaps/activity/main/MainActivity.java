@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -103,8 +104,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
         rvItemClickListener = new ItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                Geofavorite geofavorite = geofavoriteAdapter.get(position);
+            public void onItemClick(Geofavorite geofavorite) {
                 Intent i = new Intent();
                 i.setAction(Intent.ACTION_VIEW);
                 i.setData(geofavorite.getGeoUri());
@@ -122,13 +122,21 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
                 i.putExtra(Intent.EXTRA_TEXT, shareMessage );
                 startActivity(Intent.createChooser(i, getString(R.string.share_via)));
             }
+
+            @Override
+            public void onItemDetailsClick(Geofavorite item) {
+                Log.d("MENU", "Details "+item.getName());
+            }
+
+            @Override
+            public void onItemDeleteClick(Geofavorite item) {
+                Log.d("MENU", "Delete "+item.getName());
+            }
         };
 
         geofavoriteAdapter = new GeofavoriteAdapter(getApplicationContext(), rvItemClickListener);
         recyclerView.setAdapter(geofavoriteAdapter);
         geofavoriteAdapter.setSortRule(sortRule);
-
-        registerForContextMenu(recyclerView);
 
         swipeRefresh = findViewById(R.id.swipe_refresh);
         swipeRefresh.setOnRefreshListener(() -> presenter.getGeofavorites());

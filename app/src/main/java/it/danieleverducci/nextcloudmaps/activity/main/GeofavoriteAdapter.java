@@ -23,14 +23,18 @@ package it.danieleverducci.nextcloudmaps.activity.main;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,6 +50,8 @@ import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 
 public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.GeofavoriteViewHolder> implements Filterable {
 
+    public static final String TAG = "GeofavoriteAdapter";
+
     public static final int SORT_BY_TITLE = 0;
     public static final int SORT_BY_CREATED = 1;
 
@@ -55,6 +61,9 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     private List<Geofavorite> geofavoriteList = new ArrayList<>();
     private List<Geofavorite> geofavoriteListFiltered = new ArrayList<>();
     private int sortRule = SORT_BY_CREATED;
+
+    // Contains the position of the element containing the overflow menu clicked
+    private int overflowMenuSelectedPosition = -1;
 
     public GeofavoriteAdapter(Context context, ItemClickListener itemClickListener) {
         this.context = context;
@@ -143,7 +152,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         }
     };
 
-    class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnCreateContextMenuListener {
+    class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_title, tv_content;
         ImageView bt_context_menu;
         ImageView bt_share;
@@ -170,21 +179,16 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.geofav_context_menu_bt:
-                    openContextMenu(view);
+                    onOverflowIconClicked(view, getAdapterPosition());
                     break;
                 case R.id.geofav_share_bt:
                     if (itemClickListener != null)
                         itemClickListener.onItemShareClick(get(getAdapterPosition()));
                     break;
                 default:
-                    itemClickListener.onItemClick(view, getAdapterPosition());
+                    if (itemClickListener != null)
+                        itemClickListener.onItemClick(get(getAdapterPosition()));
             }
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            MenuInflater menuInflater = new MenuInflater(context);
-            menuInflater.inflate(R.menu.list_context_menu, menu);
         }
     }
 
@@ -196,17 +200,37 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         }
     }
 
-    private void openContextMenu(View v) {
-        v.showContextMenu();
-        //.showContextMenuForChild(v);
+
+    private void onOverflowIconClicked(View view, int position) {
+        // Save selected item
+        overflowMenuSelectedPosition = position;
+        // Open menu
+        PopupMenu popup = new PopupMenu(context, view);
+        popup.inflate(R.menu.list_context_menu);
+        popup.setOnMenuItemClickListener(this::optionsItemSelected);
+        popup.show();
+    }
+
+    private boolean optionsItemSelected(MenuItem item) {
+        if (overflowMenuSelectedPosition < 0) {
+            Log.e(TAG, "No overflow menu selected position saved!");
+            return false;
+        }
+        Geofavorite gf = get(overflowMenuSelectedPosition);
+        overflowMenuSelectedPosition = -1;
+        if (item.getItemId() == R.id.list_context_menu_detail && itemClickListener != null)
+            itemClickListener.onItemDetailsClick(gf);
+        if (item.getItemId() == R.id.list_context_menu_delete)
+            itemClickListener.onItemDeleteClick(gf);
+        return true;
     }
 
     public interface ItemClickListener {
-        void onItemClick(View view, int position);
+        void onItemClick(Geofavorite item);
         void onItemShareClick(Geofavorite item);
+        void onItemDetailsClick(Geofavorite item);
+        void onItemDeleteClick(Geofavorite item);
     }
 
-    public interface ContextMenuClickListener {
-        void onContextMenuClick();
-    }
+
 }
