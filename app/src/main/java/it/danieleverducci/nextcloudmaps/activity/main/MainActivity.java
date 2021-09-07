@@ -17,6 +17,7 @@
 
 package it.danieleverducci.nextcloudmaps.activity.main;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
@@ -130,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
             @Override
             public void onItemDeleteClick(Geofavorite item) {
-                Log.d("MENU", "Delete "+item.getName());
+                showGeofavoriteDeteleDialog(item);
             }
         };
 
@@ -316,6 +318,24 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     public void updateGridIcon(boolean gridEnabled) {
         AppCompatImageView viewButton = findViewById(R.id.view_mode);
         viewButton.setImageResource(gridEnabled ? R.drawable.ic_view_list : R.drawable.ic_view_module);
+    }
+
+    private void showGeofavoriteDeteleDialog(Geofavorite item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setMessage(R.string.dialog_delete_message)
+                .setTitle(getString(R.string.dialog_delete_title).replace("{name}", item.getName()))
+                .setPositiveButton(R.string.dialog_delete_delete, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        presenter.deleteGeofavorite(item.getId());
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.dialog_delete_cancel, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        builder.create();
     }
 
 }
