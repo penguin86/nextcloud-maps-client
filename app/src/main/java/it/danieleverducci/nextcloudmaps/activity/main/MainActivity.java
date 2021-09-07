@@ -51,7 +51,6 @@ import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivit
 import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.NavigationAdapter.NavigationItem;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment.OnSortingOrderListener;
-import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 
 import static android.view.View.GONE;
@@ -85,8 +84,6 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     private ItemClickListener rvItemClickListener;
 
     NavigationAdapter navigationCommonAdapter;
-
-    private ApiProvider mApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -184,8 +181,6 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
         updateSortingIcon(sortRule);
         updateGridIcon(gridViewEnabled);
-
-        mApi = new ApiProvider(getApplicationContext());
     }
 
     @Override

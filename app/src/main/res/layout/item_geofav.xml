@@ -21,7 +21,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="90dp"
+    android:gravity="center_vertical"
     android:padding="12dp"
     android:clickable="true"
     android:focusable="true">
@@ -59,7 +60,7 @@
             android:layout_marginTop="5dp"
             android:textSize="@dimen/note_font_size_item_content"
             android:maxLines="2"
-            android:lines="2"
+            android:gravity="center_vertical"
             tools:text="@tools:sample/lorem/random">
         </TextView>
 
