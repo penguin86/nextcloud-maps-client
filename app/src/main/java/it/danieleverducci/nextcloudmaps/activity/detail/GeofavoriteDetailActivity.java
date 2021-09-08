@@ -44,7 +44,7 @@ import retrofit2.Response;
 public class GeofavoriteDetailActivity extends AppCompatActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public static final String TAG = "GeofavDetail";
-    public static final String ARG_GEOFAVORITE_ID = "geofavid";
+    public static final String ARG_GEOFAVORITE = "geofav";
     private static final int PERMISSION_REQUEST_CODE = 9999;
 
     private ActivityGeofavoriteDetailBinding binding;
@@ -56,8 +56,11 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         binding = ActivityGeofavoriteDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.root);
 
-        int id = getIntent().getIntExtra(ARG_GEOFAVORITE_ID, 0);
-        if (id == 0) {
+        if (getIntent().hasExtra(ARG_GEOFAVORITE)) {
+            // Opening geofavorite from list
+            Geofavorite gfFromList = (Geofavorite) getIntent().getSerializableExtra(ARG_GEOFAVORITE);
+            binding.setGeofavorite(gfFromList);
+        } else {
             // New geofavorite
             Geofavorite gf = new Geofavorite();
             gf.setDateCreated(System.currentTimeMillis());
@@ -65,8 +68,6 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             binding.setGeofavorite(gf);
             // Precompile location
             getLocation();
-        } else {
-            // TODO: Load geofavorite from cache for edit
         }
 
     }

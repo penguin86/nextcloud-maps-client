@@ -48,12 +48,12 @@ public class ApiProvider {
         initSsoApi(new NextcloudAPI.ApiConnectedListener() {
             @Override
             public void onConnected() {
-                // Ignore..
+                Log.d(TAG, "Connected to Nextcloud instance");
             }
 
             @Override
             public void onError(Exception ex) {
-                // Ignore...
+                Log.d(TAG, "Unable to connect to Nextcloud instance: " + ex.toString());
             }
         });
     }

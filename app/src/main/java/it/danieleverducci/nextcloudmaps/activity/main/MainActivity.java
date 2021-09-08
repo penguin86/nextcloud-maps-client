@@ -22,8 +22,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -127,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
             @Override
             public void onItemDetailsClick(Geofavorite item) {
-                Log.d("MENU", "Details "+item.getName());
+                showGeofavoriteDetailActivity(item);
             }
 
             @Override
@@ -336,6 +334,12 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
                     }
                 });
         builder.create();
+    }
+
+    private void showGeofavoriteDetailActivity(Geofavorite item) {
+        Intent i = new Intent(this, GeofavoriteDetailActivity.class);
+        i.putExtra(GeofavoriteDetailActivity.ARG_GEOFAVORITE, item);
+        startActivity(i);
     }
 
 }
