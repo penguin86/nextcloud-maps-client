@@ -37,6 +37,7 @@
     <string name="dialog_delete_message">You are about to delete geobookmark {name}. Proceed?</string>
     <string name="dialog_delete_delete">Delete</string>
     <string name="dialog_delete_cancel">Maintain</string>
+    <string name="list_geofavorite_deleted">Geofavorite deleted</string>
 
     <!-- Sort dialog -->
     <string name="sort_by">Sort by</string>

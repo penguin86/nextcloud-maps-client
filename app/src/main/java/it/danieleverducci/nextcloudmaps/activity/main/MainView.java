@@ -28,5 +28,6 @@ public interface MainView {
     void showLoading();
     void hideLoading();
     void onGetResult(List<Geofavorite> geofavorites);
+    void onGeofavoriteDeleted(int id);
     void onErrorLoading(String message);
 }

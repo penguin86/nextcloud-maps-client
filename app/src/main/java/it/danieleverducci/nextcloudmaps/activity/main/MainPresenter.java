@@ -66,24 +66,18 @@ public class MainPresenter {
 
     public void deleteGeofavorite(int id) {
         view.showLoading();
-        Call<List<Geofavorite>> call = ApiProvider.getAPI().getGeofavorites();
-        call.enqueue(new Callback<List<Geofavorite>>() {
+        Call<Geofavorite> call = ApiProvider.getAPI().deleteGeofavorite(id);
+        call.enqueue(new Callback<Geofavorite>() {
             @Override
-            public void onResponse(@NonNull Call<List<Geofavorite>> call, @NonNull Response<List<Geofavorite>> response) {
-                ((AppCompatActivity) view).runOnUiThread(() -> {
-                    view.hideLoading();
-                    if (response.isSuccessful() && response.body() != null) {
-                        view.onGetResult(response.body());
-                    }
-                });
+            public void onResponse(Call<Geofavorite> call, Response<Geofavorite> response) {
+                view.hideLoading();
+                view.onGeofavoriteDeleted(id);
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<Geofavorite>> call, @NonNull Throwable t) {
-                ((AppCompatActivity) view).runOnUiThread(() -> {
-                    view.hideLoading();
-                    view.onErrorLoading(t.getLocalizedMessage());
-                });
+            public void onFailure(Call<Geofavorite> call, Throwable t) {
+                view.hideLoading();
+                view.onErrorLoading(t.getLocalizedMessage());
             }
         });
     }

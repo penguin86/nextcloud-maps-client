@@ -282,6 +282,15 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     }
 
     @Override
+    public void onGeofavoriteDeleted(int id) {
+        // Update list
+        runOnUiThread(() -> {
+            geofavoriteAdapter.removeById(id);
+            Toast.makeText(MainActivity.this, R.string.list_geofavorite_deleted, Toast.LENGTH_LONG).show();
+        });
+    }
+
+    @Override
     public void onErrorLoading(String message) {
         Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
     }
@@ -320,12 +329,13 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
     private void showGeofavoriteDeteleDialog(Geofavorite item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage(R.string.dialog_delete_message)
-                .setTitle(getString(R.string.dialog_delete_title).replace("{name}", item.getName()))
+        builder.setMessage(getString(R.string.dialog_delete_message).replace("{name}", item.getName()))
+                .setTitle(R.string.dialog_delete_title)
                 .setPositiveButton(R.string.dialog_delete_delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         presenter.deleteGeofavorite(item.getId());
                         dialog.dismiss();
+                        // Callback is onGeofavoriteDeleted
                     }
                 })
                 .setNegativeButton(R.string.dialog_delete_cancel, new DialogInterface.OnClickListener() {
@@ -333,7 +343,8 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
                         dialog.dismiss();
                     }
                 });
-        builder.create();
+        AlertDialog ad = builder.create();
+        ad.show();
     }
 
     private void showGeofavoriteDetailActivity(Geofavorite item) {

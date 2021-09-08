@@ -82,6 +82,17 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         return geofavoriteListFiltered.get(position);
     }
 
+    public void removeById(int id) {
+        for (Geofavorite g : geofavoriteList) {
+            if (g.getId() == id) {
+                geofavoriteList.remove(g);
+                geofavoriteListFiltered.remove(g);
+                break;
+            }
+        }
+        notifyDataSetChanged();
+    }
+
     public int getSortRule() {
         return sortRule;
     }
