@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.5661458333333333" />
+        <entry key="app/src/main/res/layout/activity_geofavorite_detail.xml" value="0.4" />
         <entry key="app/src/main/res/layout/activity_list_view.xml" value="0.5307291666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.5307291666666667" />
         <entry key="app/src/main/res/layout/item_geofav.xml" value="0.5307291666666667" />

@@ -25,6 +25,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 
 import com.google.gson.annotations.Expose;
@@ -90,13 +92,13 @@ public class Geofavorite implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (!name.equals(this.name))
+            this.name = name;
     }
 
     public long getDateModified() {
         return dateModified;
     }
-
     public void setDateModified(long dateModified) {
         this.dateModified = dateModified;
     }
@@ -104,7 +106,6 @@ public class Geofavorite implements Serializable {
     public long getDateCreated() {
         return dateCreated;
     }
-
     public void setDateCreated(long dateCreated) {
         this.dateCreated = dateCreated;
     }
@@ -112,7 +113,6 @@ public class Geofavorite implements Serializable {
     public double getLat() {
         return lat;
     }
-
     public void setLat(double lat) {
         this.lat = lat;
     }
@@ -120,7 +120,6 @@ public class Geofavorite implements Serializable {
     public double getLng() {
         return lng;
     }
-
     public void setLng(double lng) {
         this.lng = lng;
     }
@@ -128,7 +127,6 @@ public class Geofavorite implements Serializable {
     public String getCategory() {
         return category;
     }
-
     public void setCategory(String category) {
         this.category = category;
     }
@@ -137,22 +135,18 @@ public class Geofavorite implements Serializable {
     public String getComment() {
         return comment;
     }
-
     public void setComment(String comment) {
         this.comment = comment;
     }
 
     public static Comparator<Geofavorite> ByTitleAZ = (note, t1) -> note.name.compareTo(t1.name);
-
     public static Comparator<Geofavorite> ByLastCreated = (note, t1) -> t1.id - note.id;
 
+    public String getCoordinatesString() {
+        return this.lat + " N, " + this.lng + " E";
+    }
     public Uri getGeoUri() {
         return Uri.parse("geo:" + this.lat + "," + this.lng + "(" + this.name + ")");
-    }
-
-    @BindingAdapter("formatDate")
-    public static void formatDate(@NonNull TextView textView, long timestamp) {
-        textView.setText((new Date(timestamp)).toString());
     }
 
     public boolean valid() {

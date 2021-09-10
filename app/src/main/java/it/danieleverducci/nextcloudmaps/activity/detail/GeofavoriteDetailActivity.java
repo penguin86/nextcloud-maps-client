@@ -20,11 +20,14 @@ package it.danieleverducci.nextcloudmaps.activity.detail;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -32,6 +35,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+
+import java.util.Date;
 
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
@@ -44,31 +49,37 @@ import retrofit2.Response;
 public class GeofavoriteDetailActivity extends AppCompatActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public static final String TAG = "GeofavDetail";
+    public static final String DEFAULT_CATEGORY = "Personal";
+    public static final int MINIMUM_ACCEPTABLE_ACCURACY = 50;  // In meters
     public static final String ARG_GEOFAVORITE = "geofav";
     private static final int PERMISSION_REQUEST_CODE = 9999;
 
-    private ActivityGeofavoriteDetailBinding binding;
+    private ViewHolder mViewHolder;
+    private Geofavorite mGeofavorite;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityGeofavoriteDetailBinding.inflate(getLayoutInflater());
-        setContentView(binding.root);
+        mViewHolder = new ViewHolder(getLayoutInflater());
+        mViewHolder.setOnSubmitListener(this::saveGeofavorite);
+        setContentView(mViewHolder.getRootView());
 
         if (getIntent().hasExtra(ARG_GEOFAVORITE)) {
             // Opening geofavorite from list
-            Geofavorite gfFromList = (Geofavorite) getIntent().getSerializableExtra(ARG_GEOFAVORITE);
-            binding.setGeofavorite(gfFromList);
+            mGeofavorite = (Geofavorite) getIntent().getSerializableExtra(ARG_GEOFAVORITE);
+            mViewHolder.hideAccuracy();
         } else {
             // New geofavorite
-            Geofavorite gf = new Geofavorite();
-            gf.setDateCreated(System.currentTimeMillis());
-            gf.setDateModified(System.currentTimeMillis());
-            binding.setGeofavorite(gf);
+            mGeofavorite = new Geofavorite();
+            mGeofavorite.setCategory(DEFAULT_CATEGORY);
+            mGeofavorite.setDateCreated(System.currentTimeMillis());
+            mGeofavorite.setDateModified(System.currentTimeMillis());
             // Precompile location
             getLocation();
         }
+
+        mViewHolder.updateView(mGeofavorite);
 
     }
 
@@ -84,23 +95,20 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
      * Checks fields and sends updated geofavorite to Nextcloud instance
      */
     private void saveGeofavorite() {
-        Geofavorite gf = binding.getGeofavorite();
-        gf.setName(binding.nameEt.getText().toString());
-        gf.setComment(binding.descriptionEt.getText().toString());
-        gf.setDateModified(System.currentTimeMillis());
+        mViewHolder.updateModel(mGeofavorite);
 
-        if (!gf.valid()) {
+        if (!mGeofavorite.valid()) {
             Toast.makeText(GeofavoriteDetailActivity.this, R.string.incomplete_geofavorite, Toast.LENGTH_SHORT).show();
             return;
         }
 
         Call<Geofavorite> call;
-        if (gf.getId() == 0) {
+        if (mGeofavorite.getId() == 0) {
             // New geofavorite
-            call = ApiProvider.getAPI().createGeofavorite(gf);
+            call = ApiProvider.getAPI().createGeofavorite(mGeofavorite);
         } else {
             // Update existing geofavorite
-            call = ApiProvider.getAPI().updateGeofavorite(gf.getId(), gf);
+            call = ApiProvider.getAPI().updateGeofavorite(mGeofavorite.getId(), mGeofavorite);
         }
         call.enqueue(new Callback<Geofavorite>() {
             @Override
@@ -145,9 +153,12 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
      * @param location to set in the geofavorite
      */
     private void updateLocationField(Location location) {
-        binding.getGeofavorite().setLat(location.getLatitude());
-        binding.getGeofavorite().setLng(location.getLongitude());
-        binding.notifyChange();
+        // Update model
+        mGeofavorite.setLat(location.getLatitude());
+        mGeofavorite.setLng(location.getLongitude());
+        // Update view
+        mViewHolder.updateViewCoords(mGeofavorite.getCoordinatesString());
+        mViewHolder.setAccuracy(location.getAccuracy());
     }
 
 
@@ -184,5 +195,69 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
                 finish();
             }
         }
+    }
+
+
+
+    private class ViewHolder implements View.OnClickListener {
+        private final ActivityGeofavoriteDetailBinding binding;
+        private OnSubmitListener listener;
+
+        public ViewHolder(LayoutInflater inflater) {
+            this.binding = ActivityGeofavoriteDetailBinding.inflate(inflater);
+            this.binding.submitBt.setOnClickListener(this);
+        }
+
+        public View getRootView() {
+            return this.binding.root;
+        }
+
+        public void updateView(Geofavorite item) {
+            binding.nameEt.setText(item.getName());
+            binding.descriptionEt.setText(item.getComment());
+            binding.createdTv.setText(new Date(item.getDateCreated() * 1000).toString());
+            binding.modifiedTv.setText(new Date(item.getDateModified() * 1000).toString());
+            binding.categoryTv.setText(item.getCategory()); // TODO: Category spinner from existing categories
+            binding.coordsTv.setText(item.getCoordinatesString());
+        }
+
+        public void updateViewCoords(String coords) {
+            binding.coordsTv.setText(coords);
+        }
+
+        public void updateModel(Geofavorite item) {
+            item.setName(binding.nameEt.getText().toString());
+            item.setComment(binding.descriptionEt.getText().toString());
+            item.setDateModified(System.currentTimeMillis() / 1000);
+        }
+
+        public void setAccuracy(float accuracy) {
+            binding.accuracyTv.setText(getString(R.string.accuracy).replace("{accuracy}", ((int)accuracy) + ""));
+            // Color the accuracy background with a scale from red (MINIMUM_ACCEPTABLE_ACCURACY) to green (0 meters)
+            float red = accuracy / MINIMUM_ACCEPTABLE_ACCURACY;
+            if (red > 1.0f) red = 1.0f;
+            float green = 1.0f - red;
+            if (Build.VERSION.SDK_INT >= 26)
+                binding.accuracyTv.setBackgroundColor(Color.rgb(red, green, 0.0f));
+        }
+
+        public void hideAccuracy() {
+            binding.accuracyTv.setVisibility(View.GONE);
+        }
+
+        public void setOnSubmitListener(OnSubmitListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.submit_bt && this.listener != null) {
+                this.listener.onSubmit();
+            }
+        }
+    }
+
+    protected interface OnSubmitListener {
+        void onSubmit();
     }
 }

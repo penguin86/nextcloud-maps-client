@@ -49,7 +49,10 @@
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="created">Created</string>
+    <string name="modified">Modified</string>
+    <string name="category">Category</string>
     <string name="coords">Coordinates</string>
+    <string name="accuracy">Accuracy: {accuracy} m</string>
     <string name="location_permission_required">Location permission is required to create a geofavorite.</string>
     <string name="confirm">Save</string>
     <string name="error_saving_geofavorite">Unable to save geofavorite</string>

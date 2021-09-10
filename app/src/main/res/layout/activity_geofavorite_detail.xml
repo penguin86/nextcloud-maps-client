@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="geofavorite"
-            type="it.danieleverducci.nextcloudmaps.model.Geofavorite"/>
-    </data>
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -41,8 +35,7 @@
                     android:lines="1"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:ellipsize="end"
-                    android:text="@{geofavorite.name}"/>
+                    android:ellipsize="end"/>
 
                 <EditText
                     android:id="@+id/description_et"
@@ -51,9 +44,10 @@
                     android:ems="10"
                     android:gravity="start|top"
                     android:inputType="textMultiLine"
+                    android:lines="5"
+                    android:maxLines="10"
                     android:hint="@string/description"
-                    android:ellipsize="end"
-                    android:text="@{geofavorite.comment}" />
+                    android:ellipsize="end" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -66,8 +60,33 @@
                     android:id="@+id/created_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="textEnd"
-                    app:formatDate="@{geofavorite.dateCreated}" />
+                    android:textAlignment="textEnd" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:text="@string/modified" />
+
+                <TextView
+                    android:id="@+id/modified_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textStyle="bold"
+                    android:text="@string/category" />
+
+                <TextView
+                    android:id="@+id/category_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -80,8 +99,17 @@
                     android:id="@+id/coords_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="textEnd"
-                    android:text="@{geofavorite.lat +` °N, ` + geofavorite.lng + ` °E`}" />
+                    android:textAlignment="textEnd" />
+
+                <TextView
+                    android:id="@+id/accuracy_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:text="@string/accuracy"
+                    android:textColor="@android:color/white"
+                    android:background="@android:color/darker_gray"/>
 
                 <Button
                     android:id="@+id/submit_bt"
