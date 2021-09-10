@@ -50,6 +50,11 @@ public class MainPresenter {
                     view.hideLoading();
                     if (response.isSuccessful() && response.body() != null) {
                         view.onGetResult(response.body());
+                    } else {
+                        ((AppCompatActivity) view).runOnUiThread(() -> {
+                            view.hideLoading();
+                            view.onErrorLoading(response.raw().message());
+                        });
                     }
                 });
             }

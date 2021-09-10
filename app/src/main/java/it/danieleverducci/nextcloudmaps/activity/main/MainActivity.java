@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
     private static final int INTENT_ADD = 100;
     private static final int INTENT_EDIT = 200;
+
+    private static final String TAG = "MainActivity";
 
     private static final String NAVIGATION_KEY_ADD_GEOFAVORITE = "add";
     private static final String NAVIGATION_KEY_SHOW_ABOUT = "about";
@@ -292,7 +295,8 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
     @Override
     public void onErrorLoading(String message) {
-        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, R.string.list_geofavorite_connection_error, Toast.LENGTH_LONG).show();
+        Log.e(TAG, "Unable to obtain geofavorites list: " + message);
     }
 
     @Override

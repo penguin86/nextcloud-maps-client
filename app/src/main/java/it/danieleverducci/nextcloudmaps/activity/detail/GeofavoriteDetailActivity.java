@@ -113,15 +113,24 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         call.enqueue(new Callback<Geofavorite>() {
             @Override
             public void onResponse(Call<Geofavorite> call, Response<Geofavorite> response) {
-                finish();
+                if (response.isSuccessful())
+                    finish();
+                else
+                    onGeofavoriteSaveFailed();
             }
 
             @Override
             public void onFailure(Call<Geofavorite> call, Throwable t) {
-                Toast.makeText(GeofavoriteDetailActivity.this, R.string.error_saving_geofavorite, Toast.LENGTH_SHORT).show();
+                onGeofavoriteSaveFailed();
                 Log.e(TAG, "Unable to update geofavorite: " + t.getMessage());
             }
         });
+    }
+
+    private void onGeofavoriteSaveFailed() {
+        runOnUiThread(() ->
+            Toast.makeText(GeofavoriteDetailActivity.this, R.string.error_saving_geofavorite, Toast.LENGTH_SHORT).show()
+        );
     }
 
     /**
