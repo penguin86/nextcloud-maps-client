@@ -9,3 +9,4 @@ A new geobookmark can be created on current location.
 
 This work is heavily based on [matiasdelellis's Nextcloud SSO example](https://github.com/matiasdelellis/app-tutorial-android) to implement [Nextcloud single sign on](https://github.com/nextcloud/Android-SingleSignOn).
 
+![Screenshot 1](fastlane/metadata/android/en-US/images/phoneScreenshots/1.png) ![Screenshot 1](fastlane/metadata/android/en-US/images/phoneScreenshots/2.png)
