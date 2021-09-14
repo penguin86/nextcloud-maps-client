@@ -34,6 +34,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.preference.PreferenceManager;
 
@@ -42,6 +43,7 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.overlay.IconOverlay;
+import org.osmdroid.views.overlay.Marker;
 import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.OverlayItem;
 
@@ -283,12 +285,11 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             mapController.setCenter(position);
 
             // Set pin
-            /*
-            ArrayList<OverlayItem> pins = new ArrayList();
-            pins.add(new OverlayItem(item.getName(), item.getComment(), position));
-            Overlay overlay = new IconOverlay(pins);
-            binding.map.getOverlays().add(pins);
-             */
+            Marker startMarker = new Marker(binding.map);
+            startMarker.setPosition(position);
+            startMarker.setIcon(AppCompatResources.getDrawable(GeofavoriteDetailActivity.this, R.drawable.ic_map_pin));
+            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            binding.map.getOverlays().add(startMarker);
         }
 
         public void updateViewCoords(String coords) {
