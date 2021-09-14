@@ -12,13 +12,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/map"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:padding="50dp"
-                app:srcCompat="@drawable/ic_app"
-                android:background="@color/defaultBrand" />
+                android:layout_height="200dp">
+                <org.osmdroid.views.MapView
+                    android:id="@+id/map"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="false"
+                    android:clickable="false"/>
+                <View
+                    android:id="@+id/map_bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+            </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

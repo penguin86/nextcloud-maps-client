@@ -71,4 +71,8 @@ dependencies {
 
     // Nextcloud SSO
     implementation "com.github.nextcloud:Android-SingleSignOn:0.5.6"
+
+    // OSMDroid
+    compile 'org.osmdroid:osmdroid-android:6.1.10'
+
 }
