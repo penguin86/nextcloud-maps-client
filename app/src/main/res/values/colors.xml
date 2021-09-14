@@ -22,9 +22,13 @@
     <color name="accent">#121212</color>
     <color name="transparent">#00000000</color>
     <color name="defaultBrand">#0082C9</color>
+    <color name="defaultBrandAlpha">#550082C9</color>
     <color name="appbar">@android:color/white</color>
     <color name="defaultTint">#202124</color>
 
     <!-- List Colors -->
     <color name="list_text">#aaa</color>
+
+    <!-- Generic Colors -->
+    <color name="white">#fff</color>
 </resources>

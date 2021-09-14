@@ -42,12 +42,8 @@ import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
-import org.osmdroid.views.overlay.IconOverlay;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.Overlay;
-import org.osmdroid.views.overlay.OverlayItem;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import it.danieleverducci.nextcloudmaps.R;
@@ -78,7 +74,13 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
 
         mViewHolder = new ViewHolder(getLayoutInflater());
+        setContentView(mViewHolder.getRootView());
         mViewHolder.setOnSubmitListener(new OnSubmitListener() {
+            @Override
+            public void onBackPressed() {
+                finish();
+            }
+
             @Override
             public void onSubmit() {
                 saveGeofavorite();
@@ -89,7 +91,6 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
                 Toast.makeText(GeofavoriteDetailActivity.this, "TODO: Open map activity with pin", Toast.LENGTH_SHORT).show();
             }
         });
-        setContentView(mViewHolder.getRootView());
 
         if (getIntent().hasExtra(ARG_GEOFAVORITE)) {
             // Opening geofavorite from list
@@ -210,7 +211,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         mGeofavorite.setLat(location.getLatitude());
         mGeofavorite.setLng(location.getLongitude());
         // Update view
-        mViewHolder.updateViewCoords(mGeofavorite.getCoordinatesString());
+        mViewHolder.updateViewCoords(mGeofavorite);
         mViewHolder.setAccuracy(location.getAccuracy());
     }
 
@@ -255,15 +256,23 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
     private class ViewHolder implements View.OnClickListener {
         private final ActivityGeofavoriteDetailBinding binding;
         private OnSubmitListener listener;
+        private Marker mapMarker;
 
         public ViewHolder(LayoutInflater inflater) {
             this.binding = ActivityGeofavoriteDetailBinding.inflate(inflater);
             this.binding.submitBt.setOnClickListener(this);
             this.binding.mapBt.setOnClickListener(this);
+            this.binding.backBt.setOnClickListener(this);
 
             // Set map properties
             this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
             this.binding.map.setMultiTouchControls(true);
+
+            // Create marker
+            mapMarker = new Marker(binding.map);
+            mapMarker.setIcon(AppCompatResources.getDrawable(GeofavoriteDetailActivity.this, R.drawable.ic_map_pin));
+            mapMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
+            binding.map.getOverlays().add(mapMarker);
         }
 
         public View getRootView() {
@@ -276,6 +285,10 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             binding.createdTv.setText(new Date(item.getDateCreated() * 1000).toString());
             binding.modifiedTv.setText(new Date(item.getDateModified() * 1000).toString());
             binding.categoryTv.setText(item.getCategory()); // TODO: Category spinner from existing categories
+            updateViewCoords(item);
+        }
+
+        public void updateViewCoords(Geofavorite item) {
             binding.coordsTv.setText(item.getCoordinatesString());
 
             // Center map
@@ -285,15 +298,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             mapController.setCenter(position);
 
             // Set pin
-            Marker startMarker = new Marker(binding.map);
-            startMarker.setPosition(position);
-            startMarker.setIcon(AppCompatResources.getDrawable(GeofavoriteDetailActivity.this, R.drawable.ic_map_pin));
-            startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            binding.map.getOverlays().add(startMarker);
-        }
-
-        public void updateViewCoords(String coords) {
-            binding.coordsTv.setText(coords);
+            mapMarker.setPosition(position);
         }
 
         public void updateModel(Geofavorite item) {
@@ -336,11 +341,15 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             if (v.getId() == R.id.map_bt && this.listener != null) {
                 this.listener.onMapClicked();
             }
+            if (v.getId() == R.id.back_bt && this.listener != null) {
+                this.listener.onBackPressed();
+            }
         }
     }
 
     protected interface OnSubmitListener {
         void onSubmit();
         void onMapClicked();
+        void onBackPressed();
     }
 }
