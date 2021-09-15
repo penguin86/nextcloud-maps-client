@@ -280,6 +280,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         }
 
         public void updateView(Geofavorite item) {
+            binding.collapsingToolbar.setTitle(item.getName() != null ? item.getName() : getString(R.string.new_geobookmark));
             binding.nameEt.setText(item.getName());
             binding.descriptionEt.setText(item.getComment());
             binding.createdTv.setText(new Date(item.getDateCreated() * 1000).toString());
