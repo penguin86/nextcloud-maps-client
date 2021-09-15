@@ -31,7 +31,7 @@
     <string name="search_in_all">Search by name</string>
     <string name="share_via">Share via</string>
     <string name="share_message">Check out this place: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
-    <string name="list_context_menu_detail">Details</string>
+    <string name="list_context_menu_share">Share</string>
     <string name="list_context_menu_delete">Delete</string>
     <string name="dialog_delete_title">Delete geobookmark</string>
     <string name="dialog_delete_message">You are about to delete geobookmark {name}. Proceed?</string>

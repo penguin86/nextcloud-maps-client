@@ -32,6 +32,10 @@ import androidx.databinding.BindingAdapter;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.threeten.bp.Instant;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.ZoneId;
+
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.Date;
@@ -102,10 +106,17 @@ public class Geofavorite implements Serializable {
     public void setDateModified(long dateModified) {
         this.dateModified = dateModified;
     }
+    public LocalDate getLocalDateModified() {
+        return Instant.ofEpochSecond(getDateCreated()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
 
     public long getDateCreated() {
         return dateCreated;
     }
+    public LocalDate getLocalDateCreated() {
+        return Instant.ofEpochSecond(getDateCreated()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
     public void setDateCreated(long dateCreated) {
         this.dateCreated = dateCreated;
     }

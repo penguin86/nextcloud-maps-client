@@ -54,6 +54,7 @@ import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.NavigationAdapter.NavigationItem;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment.OnSortingOrderListener;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -107,28 +108,18 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
 
         rvItemClickListener = new ItemClickListener() {
             @Override
-            public void onItemClick(Geofavorite geofavorite) {
-                Intent i = new Intent();
-                i.setAction(Intent.ACTION_VIEW);
-                i.setData(geofavorite.getGeoUri());
-                startActivity(i);
+            public void onItemClick(Geofavorite item) {
+                showGeofavoriteDetailActivity(item);
             }
 
             @Override
             public void onItemShareClick(Geofavorite item) {
-                Intent i = new Intent();
-                i.setAction(Intent.ACTION_SEND);
-                i.setType("text/plain");
-                String shareMessage = getString(R.string.share_message)
-                        .replace("{lat}", ""+item.getLat())
-                        .replace("{lng}", ""+item.getLng());
-                i.putExtra(Intent.EXTRA_TEXT, shareMessage );
-                startActivity(Intent.createChooser(i, getString(R.string.share_via)));
+                startActivity(Intent.createChooser(IntentGenerator.newShareIntent(MainActivity.this, item), getString(R.string.share_via)));
             }
 
             @Override
-            public void onItemDetailsClick(Geofavorite item) {
-                showGeofavoriteDetailActivity(item);
+            public void onItemNavClick(Geofavorite item) {
+                startActivity(IntentGenerator.newGeoUriIntent(MainActivity.this, item));
             }
 
             @Override

@@ -19,6 +19,7 @@ package it.danieleverducci.nextcloudmaps.activity.detail;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -43,13 +44,17 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.overlay.Marker;
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
 
 import java.util.Date;
 
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -82,6 +87,21 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             }
 
             @Override
+            public void onActionIconShareClicked() {
+                startActivity(Intent.createChooser(IntentGenerator.newShareIntent(GeofavoriteDetailActivity.this, mGeofavorite), getString(R.string.share_via)));
+            }
+
+            @Override
+            public void onActionIconNavClicked() {
+                startActivity(IntentGenerator.newGeoUriIntent(GeofavoriteDetailActivity.this, mGeofavorite));
+            }
+
+            @Override
+            public void onActionIconDeleteClicked() {
+                // TODO
+            }
+
+            @Override
             public void onSubmit() {
                 saveGeofavorite();
             }
@@ -102,6 +122,8 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             mGeofavorite.setCategory(DEFAULT_CATEGORY);
             mGeofavorite.setDateCreated(System.currentTimeMillis());
             mGeofavorite.setDateModified(System.currentTimeMillis());
+            mViewHolder.hideActions();
+
             // Precompile location
             getLocation();
         }
@@ -255,6 +277,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
 
     private class ViewHolder implements View.OnClickListener {
         private final ActivityGeofavoriteDetailBinding binding;
+        private DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
         private OnSubmitListener listener;
         private Marker mapMarker;
 
@@ -263,6 +286,9 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             this.binding.submitBt.setOnClickListener(this);
             this.binding.mapBt.setOnClickListener(this);
             this.binding.backBt.setOnClickListener(this);
+            this.binding.actionIconShare.setOnClickListener(this);
+            this.binding.actionIconDelete.setOnClickListener(this);
+            this.binding.actionIconNav.setOnClickListener(this);
 
             // Set map properties
             this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
@@ -283,8 +309,8 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             binding.collapsingToolbar.setTitle(item.getName() != null ? item.getName() : getString(R.string.new_geobookmark));
             binding.nameEt.setText(item.getName());
             binding.descriptionEt.setText(item.getComment());
-            binding.createdTv.setText(new Date(item.getDateCreated() * 1000).toString());
-            binding.modifiedTv.setText(new Date(item.getDateModified() * 1000).toString());
+            binding.createdTv.setText(item.getLocalDateCreated().format(dateFormatter));
+            binding.modifiedTv.setText(item.getLocalDateCreated().format(dateFormatter));
             binding.categoryTv.setText(item.getCategory()); // TODO: Category spinner from existing categories
             updateViewCoords(item);
         }
@@ -322,6 +348,10 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             binding.accuracyTv.setVisibility(View.GONE);
         }
 
+        public void hideActions() {
+            binding.actionIcons.setVisibility(View.GONE);
+        }
+
         public void setOnSubmitListener(OnSubmitListener listener) {
             this.listener = listener;
         }
@@ -345,6 +375,17 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             if (v.getId() == R.id.back_bt && this.listener != null) {
                 this.listener.onBackPressed();
             }
+
+            // Actions
+            if (v.getId() == R.id.action_icon_share && this.listener != null) {
+                this.listener.onActionIconShareClicked();
+            }
+            if (v.getId() == R.id.action_icon_nav && this.listener != null) {
+                this.listener.onActionIconNavClicked();
+            }
+            if (v.getId() == R.id.action_icon_delete && this.listener != null) {
+                this.listener.onActionIconDeleteClicked();
+            }
         }
     }
 
@@ -352,5 +393,8 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         void onSubmit();
         void onMapClicked();
         void onBackPressed();
+        void onActionIconShareClicked();
+        void onActionIconNavClicked();
+        void onActionIconDeleteClicked();
     }
 }

@@ -27,7 +27,8 @@
     <color name="defaultTint">#202124</color>
 
     <!-- List Colors -->
-    <color name="list_text">#aaa</color>
+    <color name="text_color">#333333</color>
+    <color name="secondary_text_color">#666666</color>
 
     <!-- Generic Colors -->
     <color name="white">#fff</color>

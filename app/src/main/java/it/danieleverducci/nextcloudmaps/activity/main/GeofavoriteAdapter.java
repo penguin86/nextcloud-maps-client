@@ -21,13 +21,9 @@
 package it.danieleverducci.nextcloudmaps.activity.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.text.Html;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,6 +35,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.format.FormatStyle;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -57,6 +56,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
     private Context context;
     private ItemClickListener itemClickListener;
+    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
 
     private List<Geofavorite> geofavoriteList = new ArrayList<>();
     private List<Geofavorite> geofavoriteListFiltered = new ArrayList<>();
@@ -117,6 +117,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
         holder.tv_title.setText(Html.fromHtml(geofavorite.getName()));
         holder.tv_content.setText(geofavorite.getComment());
+        holder.tv_date.setText(geofavorite.getLocalDateCreated().format(dateFormatter));
     }
 
     @Override
@@ -164,9 +165,9 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     };
 
     class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tv_title, tv_content;
+        TextView tv_title, tv_content, tv_date;
         ImageView bt_context_menu;
-        ImageView bt_share;
+        ImageView bt_nav;
 
         ItemClickListener itemClickListener;
 
@@ -176,14 +177,15 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
             tv_title = itemView.findViewById(R.id.title);
             tv_content = itemView.findViewById(R.id.content);
+            tv_date = itemView.findViewById(R.id.date);
             bt_context_menu = itemView.findViewById(R.id.geofav_context_menu_bt);
-            bt_share = itemView.findViewById(R.id.geofav_share_bt);
+            bt_nav = itemView.findViewById(R.id.geofav_nav_bt);
 
             this.itemClickListener = itemClickListener;
             itemView.setOnClickListener(this);
 
             bt_context_menu.setOnClickListener(this);
-            bt_share.setOnClickListener(this);
+            bt_nav.setOnClickListener(this);
         }
 
         @Override
@@ -192,9 +194,9 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
                 case R.id.geofav_context_menu_bt:
                     onOverflowIconClicked(view, getAdapterPosition());
                     break;
-                case R.id.geofav_share_bt:
+                case R.id.geofav_nav_bt:
                     if (itemClickListener != null)
-                        itemClickListener.onItemShareClick(get(getAdapterPosition()));
+                        itemClickListener.onItemNavClick(get(getAdapterPosition()));
                     break;
                 default:
                     if (itemClickListener != null)
@@ -229,9 +231,9 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         }
         Geofavorite gf = get(overflowMenuSelectedPosition);
         overflowMenuSelectedPosition = -1;
-        if (item.getItemId() == R.id.list_context_menu_detail && itemClickListener != null)
-            itemClickListener.onItemDetailsClick(gf);
-        if (item.getItemId() == R.id.list_context_menu_delete)
+        if (item.getItemId() == R.id.list_context_menu_share && itemClickListener != null)
+            itemClickListener.onItemShareClick(gf);
+        if (item.getItemId() == R.id.list_context_menu_delete && itemClickListener != null)
             itemClickListener.onItemDeleteClick(gf);
         return true;
     }
@@ -239,7 +241,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     public interface ItemClickListener {
         void onItemClick(Geofavorite item);
         void onItemShareClick(Geofavorite item);
-        void onItemDetailsClick(Geofavorite item);
+        void onItemNavClick(Geofavorite item);
         void onItemDeleteClick(Geofavorite item);
     }
 

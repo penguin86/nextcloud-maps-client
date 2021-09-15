@@ -28,14 +28,12 @@
     <dimen name="drawer_header_logo_size">42dp</dimen>
 
     <!-- Font Sizes -->
-    <dimen name="note_font_size_item_title">18sp</dimen>
-    <dimen name="note_font_size_item_content">14sp</dimen>
-
     <dimen name="zero">0dp</dimen>
     <dimen name="standard_margin">16dp</dimen>
     <dimen name="standard_half_margin">8dp</dimen>
     <dimen name="standard_padding">16dp</dimen>
     <dimen name="standard_half_padding">8dp</dimen>
     <dimen name="two_line_primary_text_size">16sp</dimen>
+    <dimen name="two_line_secondary_text_size">12sp</dimen>
 
 </resources>
