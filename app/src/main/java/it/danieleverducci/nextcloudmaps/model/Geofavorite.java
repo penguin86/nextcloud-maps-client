@@ -20,14 +20,11 @@
 
 package it.danieleverducci.nextcloudmaps.model;
 
+import android.graphics.Color;
 import android.net.Uri;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.databinding.BaseObservable;
-import androidx.databinding.Bindable;
-import androidx.databinding.BindingAdapter;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -38,9 +35,10 @@ import org.threeten.bp.ZoneId;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.Date;
 
 public class Geofavorite implements Serializable {
+    public static final String DEFAULT_CATEGORY = "Personal";
+
     /**
      * JSON Definition:
      *     {
@@ -162,6 +160,27 @@ public class Geofavorite implements Serializable {
 
     public boolean valid() {
         return getLat() != 0 && getLng() != 0 && getName() != null && getName().length() > 0;
+    }
+
+    /**
+     * Based on Nextcloud Maps's getLetterColor util.
+     * Assigns a color to a category based on its two first letters.
+     *
+     * @see "https://github.com/nextcloud/maps/blob/master/src/utils.js"
+     * @return the generated color or null for the default category
+     */
+    public int categoryColor() {
+        // If category is default, return null: will be used Nextcloud's accent
+        if (this.category.equals(DEFAULT_CATEGORY))
+            return 0;
+
+        float letter1Index = this.category.toLowerCase().charAt(0);
+        float letter2Index = this.category.toLowerCase().charAt(1);
+        float letterCoef = ((letter1Index * letter2Index) % 100) / 100;
+        float h = letterCoef * 360;
+        float s = 75 + letterCoef * 10;
+        float l = 50 + letterCoef * 10;
+        return Color.HSVToColor( new float[]{ Math.round(h), Math.round(s), Math.round(l) });
     }
 
     @NonNull

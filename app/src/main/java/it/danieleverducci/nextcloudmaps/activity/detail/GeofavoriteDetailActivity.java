@@ -62,7 +62,6 @@ import retrofit2.Response;
 public class GeofavoriteDetailActivity extends AppCompatActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public static final String TAG = "GeofavDetail";
-    public static final String DEFAULT_CATEGORY = "Personal";
     public static final int MINIMUM_ACCEPTABLE_ACCURACY = 50;  // In meters
     public static final String ARG_GEOFAVORITE = "geofav";
     private static final int PERMISSION_REQUEST_CODE = 9999;
@@ -120,7 +119,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         } else {
             // New geofavorite
             mGeofavorite = new Geofavorite();
-            mGeofavorite.setCategory(DEFAULT_CATEGORY);
+            mGeofavorite.setCategory(Geofavorite.DEFAULT_CATEGORY);
             mGeofavorite.setDateCreated(System.currentTimeMillis() / 1000);
             mGeofavorite.setDateModified(System.currentTimeMillis() / 1000);
             mViewHolder.hideActions();
