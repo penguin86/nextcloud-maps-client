@@ -108,7 +108,8 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
 
             @Override
             public void onMapClicked() {
-                Toast.makeText(GeofavoriteDetailActivity.this, "TODO: Open map activity with pin", Toast.LENGTH_SHORT).show();
+                // TODO: Open map activity with pin
+                startActivity(IntentGenerator.newGeoUriIntent(GeofavoriteDetailActivity.this, mGeofavorite));
             }
         });
 
@@ -120,8 +121,8 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             // New geofavorite
             mGeofavorite = new Geofavorite();
             mGeofavorite.setCategory(DEFAULT_CATEGORY);
-            mGeofavorite.setDateCreated(System.currentTimeMillis());
-            mGeofavorite.setDateModified(System.currentTimeMillis());
+            mGeofavorite.setDateCreated(System.currentTimeMillis() / 1000);
+            mGeofavorite.setDateModified(System.currentTimeMillis() / 1000);
             mViewHolder.hideActions();
 
             // Precompile location
