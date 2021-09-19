@@ -25,6 +25,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatImageButton;
@@ -35,6 +36,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -61,8 +63,9 @@ import static android.view.View.VISIBLE;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.*;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_CREATED;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_TITLE;
+import androidx.lifecycle.Observer;
 
-public class MainActivity extends AppCompatActivity implements MainView, OnSortingOrderListener {
+public class MainActivity extends AppCompatActivity implements OnSortingOrderListener {
 
     private static final int INTENT_ADD = 100;
     private static final int INTENT_EDIT = 200;
@@ -84,9 +87,9 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     private StaggeredGridLayoutManager layoutManager;
     private FloatingActionButton fab;
 
-    private MainPresenter presenter;
     private GeofavoriteAdapter geofavoriteAdapter;
     private ItemClickListener rvItemClickListener;
+    private MainActivityViewModel mMainActivityViewModel;
 
     NavigationAdapter navigationCommonAdapter;
 
@@ -95,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mMainActivityViewModel.init();
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         int sortRule = preferences.getInt(getString(R.string.setting_sort_by), SORT_BY_CREATED);
@@ -103,8 +108,6 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         recyclerView = findViewById(R.id.recycler_view);
         layoutManager = new StaggeredGridLayoutManager(gridViewEnabled ? 2 : 1, StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-
-        presenter = new MainPresenter(this);
 
         rvItemClickListener = new ItemClickListener() {
             @Override
@@ -133,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         geofavoriteAdapter.setSortRule(sortRule);
 
         swipeRefresh = findViewById(R.id.swipe_refresh);
-        swipeRefresh.setOnRefreshListener(() -> presenter.getGeofavorites());
+        swipeRefresh.setOnRefreshListener(() -> updateGeofavorites());
 
         fab = findViewById(R.id.add);
         fab.setOnClickListener(view -> addGeofavorite());
@@ -190,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         super.onStart();
 
         // Update list
-        presenter.getGeofavorites();
+        mMainActivityViewModel.getGeofavorites().observe(this, this);
     }
 
     private void setupNavigationMenu() {
@@ -239,9 +242,9 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == INTENT_ADD && resultCode == RESULT_OK) {
-            presenter.getGeofavorites();
+            mMainActivityViewModel.getGeofavorites().observe(this, this);
         } else if (requestCode == INTENT_EDIT && resultCode == RESULT_OK) {
-            presenter.getGeofavorites();
+            mMainActivityViewModel.getGeofavorites().observe(this, this);
         }
     }
 
@@ -260,35 +263,12 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         startActivity(intent);
     }
 
-    @Override
-    public void showLoading() {
-        swipeRefresh.setRefreshing(true);
-    }
 
-    @Override
-    public void hideLoading() {
-        swipeRefresh.setRefreshing(false);
-    }
-
-    @Override
-    public void onGetResult(List<Geofavorite> geofavorite_list) {
-        geofavoriteAdapter.setGeofavoriteList(geofavorite_list);
-    }
-
-    @Override
-    public void onGeofavoriteDeleted(int id) {
-        // Update list
-        runOnUiThread(() -> {
-            geofavoriteAdapter.removeById(id);
-            Toast.makeText(MainActivity.this, R.string.list_geofavorite_deleted, Toast.LENGTH_LONG).show();
-        });
-    }
-
-    @Override
-    public void onErrorLoading(String message) {
-        Toast.makeText(MainActivity.this, R.string.list_geofavorite_connection_error, Toast.LENGTH_LONG).show();
-        Log.e(TAG, "Unable to obtain geofavorites list: " + message);
-    }
+//    @Override
+//    public void onErrorLoading(String message) {
+//        Toast.makeText(MainActivity.this, R.string.list_geofavorite_connection_error, Toast.LENGTH_LONG).show();
+//        Log.e(TAG, "Unable to obtain geofavorites list: " + message);
+//    }
 
     @Override
     public void onSortingOrderChosen(int sortSelection) {
@@ -328,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
                 .setTitle(R.string.dialog_delete_title)
                 .setPositiveButton(R.string.dialog_delete_delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        presenter.deleteGeofavorite(item.getId());
+                        // TODO presenter.deleteGeofavorite(item.getId());
                         dialog.dismiss();
                         // Callback is onGeofavoriteDeleted
                     }
@@ -346,6 +326,28 @@ public class MainActivity extends AppCompatActivity implements MainView, OnSorti
         Intent i = new Intent(this, GeofavoriteDetailActivity.class);
         i.putExtra(GeofavoriteDetailActivity.ARG_GEOFAVORITE, item);
         startActivity(i);
+    }
+
+    private void updateGeofavorites() {
+        mMainActivityViewModel.getGeofavorites().observe(this, new Observer<List<Geofavorite>>() {
+            @Override
+            public void onChanged(List<Geofavorite> geofavorites) {
+                geofavoriteAdapter.setGeofavoriteList(geofavorites);
+            }
+        });
+
+        // TODO: è possibile registrare un solo listener?
+        mMainActivityViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if(aBoolean){
+                    swipeRefresh.setRefreshing(true);
+                }
+                else{
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+        });
     }
 
 }
