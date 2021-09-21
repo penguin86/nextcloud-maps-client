@@ -57,6 +57,7 @@
     <string name="location_permission_required">Location permission is required to create a geofavorite.</string>
     <string name="confirm">Save</string>
     <string name="error_saving_geofavorite">Unable to save geofavorite</string>
+    <string name="geofavorite_saved">Geofavorite saved</string>
     <string name="incomplete_geofavorite">Incomplete geofavorite: Name and GPS coordinates are mandatory</string>
 
     <!-- About -->

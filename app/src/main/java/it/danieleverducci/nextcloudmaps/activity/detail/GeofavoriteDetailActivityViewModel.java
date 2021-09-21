@@ -1,15 +1,13 @@
-package it.danieleverducci.nextcloudmaps.activity.main;
+package it.danieleverducci.nextcloudmaps.activity.detail;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import java.util.List;
-
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.repository.GeofavoriteRepository;
 
-public class MainActivityViewModel extends ViewModel implements GeofavoriteRepository.OnFinished {
+public class GeofavoriteDetailActivityViewModel extends ViewModel implements GeofavoriteRepository.OnFinished {
     private GeofavoriteRepository mRepo;
     private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>();
     private MutableLiveData<Boolean> mIsFailed = new MutableLiveData<>();
@@ -19,18 +17,14 @@ public class MainActivityViewModel extends ViewModel implements GeofavoriteRepos
         mRepo.setOnFinishedListener(this);
     }
 
-    public LiveData<List<Geofavorite>> getGeofavorites(){
-        mRepo.updateGeofavorites();
-        return mRepo.getGeofavorites();
+    public Geofavorite getGeofavorite(int id) {
+        return mRepo.getGeofavorite(id);
     }
 
-    public void updateGeofavorites() {
-        mRepo.updateGeofavorites();
+    public void saveGeofavorite(Geofavorite geofav) {
+        mRepo.saveGeofavorite(geofav);
     }
 
-    public void deleteGeofavorite(Geofavorite geofav) {
-        mRepo.deleteGeofavorite(geofav);
-    }
 
     public LiveData<Boolean> getIsUpdating(){
         return mIsUpdating;

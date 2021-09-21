@@ -10,7 +10,7 @@
         <entry key="app/src/main/res/drawable/ic_nav.xml" value="0.6083333333333333" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.8828125" />
         <entry key="app/src/main/res/layout/activity_geofavorite_detail.xml" value="0.4" />
-        <entry key="app/src/main/res/layout/activity_list_view.xml" value="0.5307291666666667" />
+        <entry key="app/src/main/res/layout/activity_list_view.xml" value="0.4" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.5307291666666667" />
         <entry key="app/src/main/res/layout/item_geofav.xml" value="0.5307291666666667" />
         <entry key="app/src/main/res/menu/list_context_menu.xml" value="0.41944444444444445" />

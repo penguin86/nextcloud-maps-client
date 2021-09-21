@@ -206,6 +206,13 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd" />
 
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:visibility="gone"/>
+
                 <Button
                     android:id="@+id/submit_bt"
                     style="@style/Widget.AppCompat.Button.Colored"

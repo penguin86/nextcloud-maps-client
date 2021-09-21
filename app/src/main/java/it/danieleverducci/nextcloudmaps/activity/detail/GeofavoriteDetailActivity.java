@@ -37,6 +37,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
 import org.osmdroid.api.IMapController;
@@ -48,9 +50,11 @@ import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
 import java.util.Date;
+import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
+import it.danieleverducci.nextcloudmaps.activity.main.MainActivityViewModel;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
@@ -68,6 +72,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
 
     private ViewHolder mViewHolder;
     private Geofavorite mGeofavorite;
+    private GeofavoriteDetailActivityViewModel mViewModel;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -112,9 +117,31 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             }
         });
 
-        if (getIntent().hasExtra(ARG_GEOFAVORITE)) {
+        mViewModel = new ViewModelProvider(this).get(GeofavoriteDetailActivityViewModel.class);
+        mViewModel.init();
+        mViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean updating) {
+                mViewHolder.setUpdating(updating);
+            }
+        });
+        mViewModel.getIsFailed().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean failed) {
+                if(failed){
+                    Toast.makeText(GeofavoriteDetailActivity.this, R.string.error_saving_geofavorite, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(GeofavoriteDetailActivity.this, R.string.geofavorite_saved, Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            }
+        });
+
+        if (getIntent().hasExtra(ARG_GEOFAVORITE) && getIntent().getIntExtra(ARG_GEOFAVORITE, 0) != 0) {
             // Opening geofavorite from list
-            mGeofavorite = (Geofavorite) getIntent().getSerializableExtra(ARG_GEOFAVORITE);
+            mGeofavorite = mViewModel.getGeofavorite(
+                    getIntent().getIntExtra(ARG_GEOFAVORITE, 0)
+            );
             mViewHolder.hideAccuracy();
         } else {
             // New geofavorite
@@ -169,35 +196,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             return;
         }
 
-        Call<Geofavorite> call;
-        if (mGeofavorite.getId() == 0) {
-            // New geofavorite
-            call = ApiProvider.getAPI().createGeofavorite(mGeofavorite);
-        } else {
-            // Update existing geofavorite
-            call = ApiProvider.getAPI().updateGeofavorite(mGeofavorite.getId(), mGeofavorite);
-        }
-        call.enqueue(new Callback<Geofavorite>() {
-            @Override
-            public void onResponse(Call<Geofavorite> call, Response<Geofavorite> response) {
-                if (response.isSuccessful())
-                    finish();
-                else
-                    onGeofavoriteSaveFailed();
-            }
-
-            @Override
-            public void onFailure(Call<Geofavorite> call, Throwable t) {
-                onGeofavoriteSaveFailed();
-                Log.e(TAG, "Unable to update geofavorite: " + t.getMessage());
-            }
-        });
-    }
-
-    private void onGeofavoriteSaveFailed() {
-        runOnUiThread(() ->
-            Toast.makeText(GeofavoriteDetailActivity.this, R.string.error_saving_geofavorite, Toast.LENGTH_SHORT).show()
-        );
+        mViewModel.saveGeofavorite(mGeofavorite);
     }
 
     /**
@@ -332,6 +331,10 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             item.setName(binding.nameEt.getText().toString());
             item.setComment(binding.descriptionEt.getText().toString());
             item.setDateModified(System.currentTimeMillis() / 1000);
+        }
+
+        public void setUpdating(boolean updating) {
+            binding.progress.setVisibility(updating ? View.VISIBLE : View.GONE);
         }
 
         public void setAccuracy(float accuracy) {

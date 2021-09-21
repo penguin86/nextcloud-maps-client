@@ -67,9 +67,6 @@ import androidx.lifecycle.Observer;
 
 public class MainActivity extends AppCompatActivity implements OnSortingOrderListener {
 
-    private static final int INTENT_ADD = 100;
-    private static final int INTENT_EDIT = 200;
-
     private static final String TAG = "MainActivity";
 
     private static final String NAVIGATION_KEY_ADD_GEOFAVORITE = "add";
@@ -98,8 +95,6 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mMainActivityViewModel.init();
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         int sortRule = preferences.getInt(getString(R.string.setting_sort_by), SORT_BY_CREATED);
@@ -135,8 +130,39 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         recyclerView.setAdapter(geofavoriteAdapter);
         geofavoriteAdapter.setSortRule(sortRule);
 
+
+        mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        mMainActivityViewModel.init();
+        mMainActivityViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if(aBoolean){
+                    swipeRefresh.setRefreshing(true);
+                }
+                else{
+                    swipeRefresh.setRefreshing(false);
+                }
+            }
+        });
+        mMainActivityViewModel.getIsFailed().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if(aBoolean){
+                    Toast.makeText(MainActivity.this, R.string.list_geofavorite_connection_error, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        mMainActivityViewModel.getGeofavorites().observe(this, new Observer<List<Geofavorite>>() {
+            @Override
+            public void onChanged(List<Geofavorite> geofavorites) {
+                geofavoriteAdapter.setGeofavoriteList(geofavorites);
+            }
+        });
+        mMainActivityViewModel.updateGeofavorites();
+
         swipeRefresh = findViewById(R.id.swipe_refresh);
-        swipeRefresh.setOnRefreshListener(() -> updateGeofavorites());
+        swipeRefresh.setOnRefreshListener(() ->
+                mMainActivityViewModel.updateGeofavorites());
 
         fab = findViewById(R.id.add);
         fab.setOnClickListener(view -> addGeofavorite());
@@ -188,14 +214,6 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         updateGridIcon(gridViewEnabled);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        // Update list
-        mMainActivityViewModel.getGeofavorites().observe(this, this);
-    }
-
     private void setupNavigationMenu() {
         ArrayList<NavigationItem> navItems = new ArrayList<>();
 
@@ -238,19 +256,10 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         SortingOrderDialogFragment.newInstance(sortOrder).show(fragmentTransaction, SortingOrderDialogFragment.SORTING_ORDER_FRAGMENT);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == INTENT_ADD && resultCode == RESULT_OK) {
-            mMainActivityViewModel.getGeofavorites().observe(this, this);
-        } else if (requestCode == INTENT_EDIT && resultCode == RESULT_OK) {
-            mMainActivityViewModel.getGeofavorites().observe(this, this);
-        }
-    }
-
     private void addGeofavorite() {
-        startActivityForResult(
-                new Intent(this, GeofavoriteDetailActivity.class), INTENT_ADD);
+        startActivity(
+                new Intent(this, GeofavoriteDetailActivity.class)
+        );
     }
 
     private void show_about() {
@@ -262,13 +271,6 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
     }
-
-
-//    @Override
-//    public void onErrorLoading(String message) {
-//        Toast.makeText(MainActivity.this, R.string.list_geofavorite_connection_error, Toast.LENGTH_LONG).show();
-//        Log.e(TAG, "Unable to obtain geofavorites list: " + message);
-//    }
 
     @Override
     public void onSortingOrderChosen(int sortSelection) {
@@ -308,9 +310,8 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
                 .setTitle(R.string.dialog_delete_title)
                 .setPositiveButton(R.string.dialog_delete_delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // TODO presenter.deleteGeofavorite(item.getId());
+                        mMainActivityViewModel.deleteGeofavorite(item);
                         dialog.dismiss();
-                        // Callback is onGeofavoriteDeleted
                     }
                 })
                 .setNegativeButton(R.string.dialog_delete_cancel, new DialogInterface.OnClickListener() {
@@ -324,30 +325,8 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
 
     private void showGeofavoriteDetailActivity(Geofavorite item) {
         Intent i = new Intent(this, GeofavoriteDetailActivity.class);
-        i.putExtra(GeofavoriteDetailActivity.ARG_GEOFAVORITE, item);
+        i.putExtra(GeofavoriteDetailActivity.ARG_GEOFAVORITE, item.getId());
         startActivity(i);
-    }
-
-    private void updateGeofavorites() {
-        mMainActivityViewModel.getGeofavorites().observe(this, new Observer<List<Geofavorite>>() {
-            @Override
-            public void onChanged(List<Geofavorite> geofavorites) {
-                geofavoriteAdapter.setGeofavoriteList(geofavorites);
-            }
-        });
-
-        // TODO: è possibile registrare un solo listener?
-        mMainActivityViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                if(aBoolean){
-                    swipeRefresh.setRefreshing(true);
-                }
-                else{
-                    swipeRefresh.setRefreshing(false);
-                }
-            }
-        });
     }
 
 }
