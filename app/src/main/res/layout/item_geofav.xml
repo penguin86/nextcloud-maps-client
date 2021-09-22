@@ -30,7 +30,7 @@
         android:id="@+id/tv_category"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="4dp"
         android:layout_weight="0"
         android:background="@drawable/category_listitem_background"
         android:gravity="center"
@@ -42,7 +42,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_weight="1">
 
