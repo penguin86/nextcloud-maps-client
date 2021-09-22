@@ -11,6 +11,7 @@ import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.SingleLiveEvent;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -20,9 +21,11 @@ import retrofit2.Response;
  */
 public class GeofavoriteRepository {
 
+    private static final String TAG = "GeofavoriteRepository";
     private static GeofavoriteRepository instance;
     private MutableLiveData<List<Geofavorite>> mGeofavorites;
-    private OnFinished listener;
+    private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(false);
+    private SingleLiveEvent<Boolean> mOnFinished = new SingleLiveEvent<>();
 
     public static GeofavoriteRepository getInstance() {
         if(instance == null){
@@ -39,8 +42,16 @@ public class GeofavoriteRepository {
         return mGeofavorites;
     }
 
+    public MutableLiveData<Boolean> isUpdating() {
+        return mIsUpdating;
+    }
+
+    public SingleLiveEvent<Boolean> onFinished() {
+        return mOnFinished;
+    }
+
     public void updateGeofavorites() {
-        if (listener != null) listener.onLoading();
+        mIsUpdating.postValue(true);
         // Obtain geofavorites
         Call<List<Geofavorite>> call = ApiProvider.getAPI().getGeofavorites();
         call.enqueue(new Callback<List<Geofavorite>>() {
@@ -48,7 +59,8 @@ public class GeofavoriteRepository {
             public void onResponse(@NonNull Call<List<Geofavorite>> call, @NonNull Response<List<Geofavorite>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mGeofavorites.postValue(response.body());
-                    if (listener != null) listener.onSuccess();
+                    mIsUpdating.postValue(false);
+                    mOnFinished.postValue(true);
                 } else {
                     onFailure(call, new Throwable("Dataset is empty"));
                 }
@@ -56,7 +68,8 @@ public class GeofavoriteRepository {
 
             @Override
             public void onFailure(@NonNull Call<List<Geofavorite>> call, @NonNull Throwable t) {
-                if (listener != null) listener.onFailure();
+                mIsUpdating.postValue(false);
+                mOnFinished.postValue(false);
             }
         });
     }
@@ -70,6 +83,7 @@ public class GeofavoriteRepository {
     }
 
     public void saveGeofavorite(Geofavorite geofav) {
+        mIsUpdating.postValue(true);
         Call<Geofavorite> call;
         if (geofav.getId() == 0) {
             // New geofavorite
@@ -88,21 +102,25 @@ public class GeofavoriteRepository {
                     }
                     geofavs.add(geofav);
                     mGeofavorites.postValue(geofavs);
-                    if (listener != null) listener.onSuccess();
-                } else if (listener != null) {
-                    listener.onFailure();
+                    mIsUpdating.postValue(false);
+                    mOnFinished.postValue(true);
+                } else {
+                    mIsUpdating.postValue(false);
+                    mOnFinished.postValue(false);
                 }
             }
 
             @Override
             public void onFailure(Call<Geofavorite> call, Throwable t) {
-                if (listener != null) listener.onFailure();
+                Log.e(TAG, t.getMessage());
+                mIsUpdating.postValue(false);
+                mOnFinished.postValue(false);
             }
         });
     }
 
     public void deleteGeofavorite(Geofavorite geofav) {
-        if (listener != null) listener.onLoading();
+        mIsUpdating.postValue(true);
         // Delete Geofavorite
         Call<Geofavorite> call = ApiProvider.getAPI().deleteGeofavorite(geofav.getId());
         call.enqueue(new Callback<Geofavorite>() {
@@ -111,29 +129,21 @@ public class GeofavoriteRepository {
                 List<Geofavorite> geofavs = mGeofavorites.getValue();
                 if (geofavs.remove(geofav)) {
                     mGeofavorites.postValue(geofavs);
-                    if (listener != null) listener.onSuccess();
+                    mIsUpdating.postValue(false);
+                    mOnFinished.postValue(true);
                 } else {
                     // Should never happen
-                    if (listener != null) listener.onFailure();
+                    mIsUpdating.postValue(false);
+                    mOnFinished.postValue(false);
                 }
             }
 
             @Override
             public void onFailure(Call<Geofavorite> call, Throwable t) {
-                if (listener != null) listener.onFailure();
+                mIsUpdating.postValue(false);
+                mOnFinished.postValue(false);
             }
         });
     }
-
-    public void setOnFinishedListener(OnFinished listener) {
-        this.listener = listener;
-    }
-
-    public interface OnFinished {
-        void onLoading();
-        void onSuccess();
-        void onFailure();
-    }
-
 
 }

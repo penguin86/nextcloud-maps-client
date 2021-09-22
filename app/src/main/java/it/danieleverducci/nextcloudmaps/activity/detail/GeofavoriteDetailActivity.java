@@ -125,14 +125,14 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
                 mViewHolder.setUpdating(updating);
             }
         });
-        mViewModel.getIsFailed().observe(this, new Observer<Boolean>() {
+        mViewModel.getOnFinished().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(@Nullable Boolean failed) {
-                if(failed){
-                    Toast.makeText(GeofavoriteDetailActivity.this, R.string.error_saving_geofavorite, Toast.LENGTH_SHORT).show();
-                } else {
+            public void onChanged(@Nullable Boolean success) {
+                if(success){
                     Toast.makeText(GeofavoriteDetailActivity.this, R.string.geofavorite_saved, Toast.LENGTH_SHORT).show();
                     finish();
+                } else {
+                    Toast.makeText(GeofavoriteDetailActivity.this, R.string.error_saving_geofavorite, Toast.LENGTH_SHORT).show();
                 }
             }
         });

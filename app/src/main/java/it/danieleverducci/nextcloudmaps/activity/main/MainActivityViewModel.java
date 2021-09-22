@@ -9,14 +9,11 @@ import java.util.List;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.repository.GeofavoriteRepository;
 
-public class MainActivityViewModel extends ViewModel implements GeofavoriteRepository.OnFinished {
+public class MainActivityViewModel extends ViewModel {
     private GeofavoriteRepository mRepo;
-    private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>();
-    private MutableLiveData<Boolean> mIsFailed = new MutableLiveData<>();
 
     public void init() {
         mRepo = GeofavoriteRepository.getInstance();
-        mRepo.setOnFinishedListener(this);
     }
 
     public LiveData<List<Geofavorite>> getGeofavorites(){
@@ -33,26 +30,11 @@ public class MainActivityViewModel extends ViewModel implements GeofavoriteRepos
     }
 
     public LiveData<Boolean> getIsUpdating(){
-        return mIsUpdating;
+        return mRepo.isUpdating();
     }
 
-    public LiveData<Boolean> getIsFailed(){
-        return mIsFailed;
+    public LiveData<Boolean> getOnFinished(){
+        return mRepo.onFinished();
     }
 
-    @Override
-    public void onLoading() {
-        mIsUpdating.postValue(true);
-    }
-    @Override
-    public void onSuccess() {
-        mIsUpdating.postValue(false);
-        mIsFailed.postValue(false);
-    }
-
-    @Override
-    public void onFailure() {
-        mIsUpdating.postValue(false);
-        mIsFailed.postValue(true);
-    }
 }

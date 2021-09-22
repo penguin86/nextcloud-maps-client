@@ -144,10 +144,10 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
                 }
             }
         });
-        mMainActivityViewModel.getIsFailed().observe(this, new Observer<Boolean>() {
+        mMainActivityViewModel.getOnFinished().observe(this, new Observer<Boolean>() {
             @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                if(aBoolean){
+            public void onChanged(@Nullable Boolean success) {
+                if(!success){
                     Toast.makeText(MainActivity.this, R.string.list_geofavorite_connection_error, Toast.LENGTH_LONG).show();
                 }
             }
