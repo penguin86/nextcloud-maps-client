@@ -26,13 +26,17 @@
     android:clickable="true"
     android:focusable="true">
 
-    <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginStart="12dp"
-        android:contentDescription="@null"
         android:layout_weight="0"
-        android:src="@mipmap/ic_launcher"/>
+        android:background="@drawable/category_listitem_background"
+        android:gravity="center"
+        android:textSize="28dp"
+        android:textAllCaps="true"
+        android:textColor="@color/white"/>
 
     <LinearLayout
         android:orientation="vertical"

@@ -21,6 +21,7 @@
 package it.danieleverducci.nextcloudmaps.activity.main;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,7 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.threeten.bp.format.DateTimeFormatter;
@@ -104,6 +106,9 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     public void onBindViewHolder(@NonNull GeofavoriteViewHolder holder, int position) {
         Geofavorite geofavorite = geofavoriteListFiltered.get(position);
 
+        holder.tv_category.setText(geofavorite.categoryLetter());
+        holder.tv_category_background.setTint(
+                geofavorite.categoryColor() == 0 ? context.getColor(R.color.defaultBrand) : geofavorite.categoryColor());
         holder.tv_title.setText(Html.fromHtml(geofavorite.getName()));
         holder.tv_content.setText(geofavorite.getComment());
         holder.tv_date.setText(geofavorite.getLocalDateCreated().format(dateFormatter));
@@ -154,9 +159,10 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     };
 
     class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView tv_title, tv_content, tv_date;
+        TextView tv_category, tv_title, tv_content, tv_date;
         ImageView bt_context_menu;
         ImageView bt_nav;
+        Drawable tv_category_background;
 
         ItemClickListener itemClickListener;
 
@@ -164,11 +170,13 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         GeofavoriteViewHolder(@NonNull View itemView, ItemClickListener itemClickListener) {
             super(itemView);
 
+            tv_category = itemView.findViewById(R.id.tv_category);
             tv_title = itemView.findViewById(R.id.title);
             tv_content = itemView.findViewById(R.id.content);
             tv_date = itemView.findViewById(R.id.date);
             bt_context_menu = itemView.findViewById(R.id.geofav_context_menu_bt);
             bt_nav = itemView.findViewById(R.id.geofav_nav_bt);
+            tv_category_background = DrawableCompat.wrap(tv_category.getBackground());
 
             this.itemClickListener = itemClickListener;
             itemView.setOnClickListener(this);

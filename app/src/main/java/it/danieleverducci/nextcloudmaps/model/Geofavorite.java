@@ -183,6 +183,14 @@ public class Geofavorite implements Serializable {
         return Color.HSVToColor( new float[]{ Math.round(h), Math.round(s), Math.round(l) });
     }
 
+    public String categoryLetter() {
+        if (category == null || category.length() == 0)
+            return "";
+        if (category.equals(DEFAULT_CATEGORY))
+            return "\u2022";
+        return category.substring(0,1);
+    }
+
     @NonNull
     @Override
     public String toString() {

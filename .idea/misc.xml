@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.5661458333333333" />
+        <entry key="app/src/main/res/drawable/category_listitem_background.xml" value="0.35104166666666664" />
         <entry key="app/src/main/res/drawable/floating_semitransparent_button_background.xml" value="0.512962962962963" />
         <entry key="app/src/main/res/drawable/ic_map_pin.xml" value="0.6425925925925926" />
         <entry key="app/src/main/res/drawable/ic_more.xml" value="0.6166666666666667" />
