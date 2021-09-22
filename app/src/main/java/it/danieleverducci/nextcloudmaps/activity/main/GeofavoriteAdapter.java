@@ -55,6 +55,8 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
     public static final int SORT_BY_TITLE = 0;
     public static final int SORT_BY_CREATED = 1;
+    public static final int SORT_BY_CATEGORY = 2;
+    public static final int SORT_BY_DISTANCE = 3;
 
     private Context context;
     private ItemClickListener itemClickListener;
@@ -207,6 +209,10 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
             Collections.sort(geofavoriteListFiltered, Geofavorite.ByTitleAZ);
         } else if (sortRule == SORT_BY_CREATED) {
             Collections.sort(geofavoriteListFiltered, Geofavorite.ByLastCreated);
+        } else if (sortRule == SORT_BY_CATEGORY) {
+            Collections.sort(geofavoriteListFiltered, Geofavorite.ByCategory);
+        } else if (sortRule == SORT_BY_DISTANCE) {
+            Collections.sort(geofavoriteListFiltered, Geofavorite.ByDistance);
         }
     }
 

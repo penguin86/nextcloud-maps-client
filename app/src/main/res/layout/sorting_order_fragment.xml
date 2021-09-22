@@ -111,6 +111,77 @@
 
             </TableRow>
 
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_half_margin">
+
+                <ImageButton
+                    android:id="@+id/sortByCategoryAscending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:paddingStart="@dimen/standard_padding"
+                    android:paddingTop="@dimen/standard_half_padding"
+                    android:paddingEnd="@dimen/standard_half_padding"
+                    android:paddingBottom="@dimen/standard_half_padding"
+                    android:contentDescription="@string/menu_item_sort_by_category_a_z"
+                    android:src="@drawable/ic_category_asc"/>
+
+                <TextView
+                    android:id="@+id/sortByCategoryAscendingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="middle"
+                    android:paddingStart="@dimen/zero"
+                    android:paddingTop="@dimen/standard_half_padding"
+                    android:paddingEnd="@dimen/standard_half_padding"
+                    android:paddingBottom="@dimen/standard_half_padding"
+                    android:singleLine="true"
+                    android:text="@string/menu_item_sort_by_category_a_z"
+                    android:textSize="@dimen/two_line_primary_text_size" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_half_margin"
+                android:visibility="gone">  <!-- TODO: complete sorting by distance -->
+
+                <ImageButton
+                    android:id="@+id/sortByDistanceAscending"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/transparent"
+                    android:paddingStart="@dimen/standard_padding"
+                    android:paddingTop="@dimen/standard_half_padding"
+                    android:paddingEnd="@dimen/standard_half_padding"
+                    android:paddingBottom="@dimen/standard_half_padding"
+                    android:contentDescription="@string/menu_item_sort_by_distance_nearest_first"
+                    android:src="@drawable/ic_distance_asc"/>
+
+                <TextView
+                    android:id="@+id/sortByDistanceAscendingText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:ellipsize="middle"
+                    android:paddingStart="@dimen/zero"
+                    android:paddingTop="@dimen/standard_half_padding"
+                    android:paddingEnd="@dimen/standard_half_padding"
+                    android:paddingBottom="@dimen/standard_half_padding"
+                    android:singleLine="true"
+                    android:text="@string/menu_item_sort_by_distance_nearest_first"
+                    android:textSize="@dimen/two_line_primary_text_size" />
+
+            </TableRow>
+
         </TableLayout>
 
     </ScrollView>

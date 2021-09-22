@@ -44,7 +44,8 @@
     <string name="sort_by">Sort by</string>
     <string name="menu_item_sort_by_title_a_z">A - Z</string>
     <string name="menu_item_sort_by_date_newest_first">Newest first</string>
-    <string name="menu_item_sort_by_distance">Distance</string>
+    <string name="menu_item_sort_by_category_a_z">Category</string>
+    <string name="menu_item_sort_by_distance_nearest_first">Distance</string>
 
     <!-- Geobookmarks detail -->
     <string name="name">Name</string>

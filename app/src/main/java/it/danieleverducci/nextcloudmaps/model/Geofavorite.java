@@ -38,6 +38,7 @@ import java.util.Comparator;
 
 public class Geofavorite implements Serializable {
     public static final String DEFAULT_CATEGORY = "Personal";
+    private static final double EARTH_RADIUS = 6371; // https://en.wikipedia.org/wiki/Earth_radius
 
     /**
      * JSON Definition:
@@ -148,18 +149,40 @@ public class Geofavorite implements Serializable {
         this.comment = comment;
     }
 
+    /**
+     * Comparators for list order
+     */
     public static Comparator<Geofavorite> ByTitleAZ = (gf0, gf1) -> gf0.name.compareTo(gf1.name);
     public static Comparator<Geofavorite> ByLastCreated = (gf0, gf1) -> (int) (gf1.dateCreated - gf0.dateCreated);
+    public static Comparator<Geofavorite> ByCategory = (gf0, gf1) -> gf0.category.compareTo(gf1.category);
+    public static Comparator<Geofavorite> ByDistance = (gf0, gf1) -> 0; // (int) ((gf1.getDistanceFrom(userPosition) - gf0.getDistanceFrom(userPosition)) * 1000);
 
     public String getCoordinatesString() {
         return this.lat + " N, " + this.lng + " E";
     }
+
     public Uri getGeoUri() {
         return Uri.parse("geo:" + this.lat + "," + this.lng + "(" + this.name + ")");
     }
 
     public boolean valid() {
         return getLat() != 0 && getLng() != 0 && getName() != null && getName().length() > 0;
+    }
+
+    /**
+     * Returns the distance between the current Geofavorite and the provided one, in kilometers.
+     * @param other Geovavorite
+     * @return the distance in kilometers
+     */
+    public double getDistanceFrom(Geofavorite other) {
+        double latDistance = (other.lat-lat) * Math.PI / 180;
+        double lonDistance = (other.lng-lng) * Math.PI / 180;
+        double a =
+                Math.sin(latDistance / 2) * Math.sin(latDistance / 2) +
+                Math.cos(lat * Math.PI / 180) * Math.cos(other.lat * Math.PI / 180) *
+                Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        return EARTH_RADIUS * c;
     }
 
     /**
@@ -196,4 +219,5 @@ public class Geofavorite implements Serializable {
     public String toString() {
         return "[" + getName() + " (" + getLat() + "," + getLng() + ")]";
     }
+
 }

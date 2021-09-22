@@ -289,6 +289,12 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
             case SORT_BY_CREATED:
                 sortButton.setImageResource(R.drawable.ic_modification_asc);
                 break;
+            case SORT_BY_CATEGORY:
+                sortButton.setImageResource(R.drawable.ic_category_asc);
+                break;
+            case SORT_BY_DISTANCE:
+                sortButton.setImageResource(R.drawable.ic_distance_asc);
+                break;
         }
     }
 

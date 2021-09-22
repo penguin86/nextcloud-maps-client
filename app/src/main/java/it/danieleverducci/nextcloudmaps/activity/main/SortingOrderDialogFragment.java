@@ -91,13 +91,14 @@ public class SortingOrderDialogFragment extends DialogFragment {
 
     /**
      * find all relevant UI elements and set their values.
+     * TODO: this is REALLY ugly.
      *
      * @param view the parent view
      */
     private void setupDialogElements(View view) {
         mCancel = view.findViewById(R.id.cancel);
 
-        mTaggedViews = new View[4];
+        mTaggedViews = new View[8];
         mTaggedViews[0] = view.findViewById(R.id.sortByTitleAscending);
         mTaggedViews[0].setTag(GeofavoriteAdapter.SORT_BY_TITLE);
         mTaggedViews[1] = view.findViewById(R.id.sortByTitleAscendingText);
@@ -106,6 +107,14 @@ public class SortingOrderDialogFragment extends DialogFragment {
         mTaggedViews[2].setTag(GeofavoriteAdapter.SORT_BY_CREATED);
         mTaggedViews[3] = view.findViewById(R.id.sortByCreationDateDescendingText);
         mTaggedViews[3].setTag(GeofavoriteAdapter.SORT_BY_CREATED);
+        mTaggedViews[4] = view.findViewById(R.id.sortByCategoryAscending);
+        mTaggedViews[4].setTag(GeofavoriteAdapter.SORT_BY_CATEGORY);
+        mTaggedViews[5] = view.findViewById(R.id.sortByCategoryAscendingText);
+        mTaggedViews[5].setTag(GeofavoriteAdapter.SORT_BY_CATEGORY);
+        mTaggedViews[6] = view.findViewById(R.id.sortByDistanceAscending);
+        mTaggedViews[6].setTag(GeofavoriteAdapter.SORT_BY_DISTANCE);
+        mTaggedViews[7] = view.findViewById(R.id.sortByDistanceAscendingText);
+        mTaggedViews[7].setTag(GeofavoriteAdapter.SORT_BY_DISTANCE);
 
         setupActiveOrderSelection();
     }
