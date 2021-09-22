@@ -166,7 +166,10 @@ public class Geofavorite implements Serializable {
     }
 
     public boolean valid() {
-        return getLat() != 0 && getLng() != 0 && getName() != null && getName().length() > 0;
+        return
+                getLat() != 0 && getLng() != 0 &&
+                getName() != null && getName().length() > 0 &&
+                getCategory() != null && getCategory().length() > 0;
     }
 
     /**

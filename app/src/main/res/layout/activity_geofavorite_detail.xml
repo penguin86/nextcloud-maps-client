@@ -138,7 +138,8 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Title"
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/ic_edit"
-                    android:drawablePadding="5dp"/>
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/defaultBrand"/>
 
                 <EditText
                     android:id="@+id/description_et"
@@ -152,7 +153,23 @@
                     android:background="@android:color/transparent"
                     android:drawableLeft="@drawable/ic_edit"
                     android:drawablePadding="5dp"
+                    android:drawableTint="@color/defaultBrand"
                     android:hint="@string/description"/>
+
+                <AutoCompleteTextView
+                    android:id="@+id/category_at"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:background="@android:color/transparent"
+                    android:drawableLeft="@drawable/ic_category_asc"
+                    android:drawablePadding="5dp"
+                    android:drawableTint="@color/defaultBrand"
+                    android:hint="@string/category"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -176,19 +193,6 @@
 
                 <TextView
                     android:id="@+id/modified_tv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="textEnd" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:textStyle="bold"
-                    android:text="@string/category" />
-
-                <TextView
-                    android:id="@+id/category_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="textEnd" />

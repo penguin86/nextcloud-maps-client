@@ -59,7 +59,7 @@
     <string name="confirm">Save</string>
     <string name="error_saving_geofavorite">Unable to save geofavorite</string>
     <string name="geofavorite_saved">Geofavorite saved</string>
-    <string name="incomplete_geofavorite">Incomplete geofavorite: Name and GPS coordinates are mandatory</string>
+    <string name="incomplete_geofavorite">Incomplete geofavorite: Name and category are mandatory</string>
 
     <!-- About -->
     <string name="about_version_title">Version</string>

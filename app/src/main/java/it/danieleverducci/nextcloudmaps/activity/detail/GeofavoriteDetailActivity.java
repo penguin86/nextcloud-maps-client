@@ -50,6 +50,7 @@ import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
@@ -119,6 +120,12 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
 
         mViewModel = new ViewModelProvider(this).get(GeofavoriteDetailActivityViewModel.class);
         mViewModel.init();
+        mViewModel.getCategories().observe(this, new Observer<HashSet<String>>() {
+            @Override
+            public void onChanged(HashSet<String> categories) {
+                mViewHolder.setCategories(categories);
+            }
+        });
         mViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean updating) {
@@ -280,7 +287,9 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         private OnSubmitListener listener;
         private Marker mapMarker;
 
+
         public ViewHolder(LayoutInflater inflater) {
+
             this.binding = ActivityGeofavoriteDetailBinding.inflate(inflater);
             this.binding.submitBt.setOnClickListener(this);
             this.binding.mapBt.setOnClickListener(this);
@@ -288,6 +297,11 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             this.binding.actionIconShare.setOnClickListener(this);
             this.binding.actionIconDelete.setOnClickListener(this);
             this.binding.actionIconNav.setOnClickListener(this);
+
+            // Set categories adapter
+            CategoriesSpinnerAdapter categoriesAdapter = new CategoriesSpinnerAdapter(binding.root.getContext());
+            this.binding.categoryAt.setAdapter(categoriesAdapter);
+            this.binding.categoryAt.setText(Geofavorite.DEFAULT_CATEGORY);
 
             // Set map properties
             this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
@@ -310,7 +324,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             binding.descriptionEt.setText(item.getComment());
             binding.createdTv.setText(item.getLocalDateCreated().format(dateFormatter));
             binding.modifiedTv.setText(item.getLocalDateCreated().format(dateFormatter));
-            binding.categoryTv.setText(item.getCategory()); // TODO: Category spinner from existing categories
+            binding.categoryAt.setText(item.getCategory());
             updateViewCoords(item);
         }
 
@@ -330,6 +344,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         public void updateModel(Geofavorite item) {
             item.setName(binding.nameEt.getText().toString());
             item.setComment(binding.descriptionEt.getText().toString());
+            item.setCategory(binding.categoryAt.getText().toString());
             item.setDateModified(System.currentTimeMillis() / 1000);
         }
 
@@ -345,6 +360,10 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             float green = 1.0f - red;
             if (Build.VERSION.SDK_INT >= 26)
                 binding.accuracyTv.setBackgroundColor(Color.rgb(red, green, 0.0f));
+        }
+
+        public void setCategories(HashSet<String> categories) {
+            ((CategoriesSpinnerAdapter)binding.categoryAt.getAdapter()).setCategoriesList(categories);
         }
 
         public void hideAccuracy() {

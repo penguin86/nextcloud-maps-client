@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
@@ -24,6 +25,7 @@ public class GeofavoriteRepository {
     private static final String TAG = "GeofavoriteRepository";
     private static GeofavoriteRepository instance;
     private MutableLiveData<List<Geofavorite>> mGeofavorites;
+    private MutableLiveData<HashSet<String>> mCategories = new MutableLiveData<HashSet<String>>();
     private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(false);
     private SingleLiveEvent<Boolean> mOnFinished = new SingleLiveEvent<>();
 
@@ -40,6 +42,10 @@ public class GeofavoriteRepository {
             mGeofavorites.setValue(new ArrayList<>());
         }
         return mGeofavorites;
+    }
+
+    public MutableLiveData<HashSet<String>> getCategories() {
+        return mCategories;
     }
 
     public MutableLiveData<Boolean> isUpdating() {
@@ -59,6 +65,7 @@ public class GeofavoriteRepository {
             public void onResponse(@NonNull Call<List<Geofavorite>> call, @NonNull Response<List<Geofavorite>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     mGeofavorites.postValue(response.body());
+                    updateCategories(response.body());
                     mIsUpdating.postValue(false);
                     mOnFinished.postValue(true);
                 } else {
@@ -144,6 +151,14 @@ public class GeofavoriteRepository {
                 mOnFinished.postValue(false);
             }
         });
+    }
+
+    private void updateCategories(List<Geofavorite> geofavs) {
+        HashSet<String> categories = new HashSet<>();
+        for (Geofavorite g : geofavs) {
+            categories.add(g.getCategory());
+        }
+        mCategories.postValue(categories);
     }
 
 }

@@ -2,6 +2,9 @@
 
 # Nextcloud Maps Geobookmarks Android app
 
+[<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" height="80">](https://play.google.com/store/apps/details?id=it.danieleverducci.nextcloudmaps)
+[<img src="https://raw.githubusercontent.com/andOTP/andOTP/master/assets/badges/get-it-on-github.png" height="80">](https://github.com/penguin86/nextcloud-maps-client/releases/latest)
+
 Android app to show your Nextcloud Maps geobookmarks list. Geobookmarks can be opened in all apps supporting geo links (i.e. Google Maps, Organic Maps etc...).
 A new geobookmark can be created on current location.
 

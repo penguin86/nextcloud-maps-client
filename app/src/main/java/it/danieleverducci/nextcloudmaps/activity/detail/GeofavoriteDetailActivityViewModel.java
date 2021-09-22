@@ -4,6 +4,10 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.repository.GeofavoriteRepository;
 
@@ -22,6 +26,9 @@ public class GeofavoriteDetailActivityViewModel extends ViewModel {
         mRepo.saveGeofavorite(geofav);
     }
 
+    public LiveData<HashSet<String>> getCategories(){
+        return mRepo.getCategories();
+    }
 
     public LiveData<Boolean> getIsUpdating(){
         return mRepo.isUpdating();
