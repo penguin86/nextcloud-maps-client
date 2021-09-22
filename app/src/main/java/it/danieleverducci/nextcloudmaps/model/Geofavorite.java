@@ -148,8 +148,8 @@ public class Geofavorite implements Serializable {
         this.comment = comment;
     }
 
-    public static Comparator<Geofavorite> ByTitleAZ = (note, t1) -> note.name.compareTo(t1.name);
-    public static Comparator<Geofavorite> ByLastCreated = (note, t1) -> t1.id - note.id;
+    public static Comparator<Geofavorite> ByTitleAZ = (gf0, gf1) -> gf0.name.compareTo(gf1.name);
+    public static Comparator<Geofavorite> ByLastCreated = (gf0, gf1) -> (int) (gf1.dateCreated - gf0.dateCreated);
 
     public String getCoordinatesString() {
         return this.lat + " N, " + this.lng + " E";
