@@ -1,0 +1,1 @@
+Added geofavorite detail and deletion
