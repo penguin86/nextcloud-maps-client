@@ -41,11 +41,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 
-import org.osmdroid.api.IMapController;
-import org.osmdroid.config.Configuration;
-import org.osmdroid.util.GeoPoint;
-import org.osmdroid.views.CustomZoomButtonsController;
-import org.osmdroid.views.overlay.Marker;
+
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
@@ -80,8 +76,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         super.onCreate(savedInstanceState);
 
         // OSMDroid config
-        Configuration.getInstance().load(getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+
 
         mViewHolder = new ViewHolder(getLayoutInflater());
         setContentView(mViewHolder.getRootView());
@@ -170,16 +165,12 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
     protected void onResume() {
         super.onResume();
         // OSMDroid config
-        Configuration.getInstance().load(getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         mViewHolder.onResume();
     }
 
     @Override
     protected void onPause() {
         // OSMDroid config
-        Configuration.getInstance().save(getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
         mViewHolder.onPause();
         super.onPause();
     }
@@ -285,7 +276,6 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         private final ActivityGeofavoriteDetailBinding binding;
         private DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
         private OnSubmitListener listener;
-        private Marker mapMarker;
 
 
         public ViewHolder(LayoutInflater inflater) {
@@ -304,14 +294,8 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             this.binding.categoryAt.setText(Geofavorite.DEFAULT_CATEGORY);
 
             // Set map properties
-            this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
-            this.binding.map.setMultiTouchControls(true);
 
             // Create marker
-            mapMarker = new Marker(binding.map);
-            mapMarker.setIcon(AppCompatResources.getDrawable(GeofavoriteDetailActivity.this, R.drawable.ic_map_pin));
-            mapMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-            binding.map.getOverlays().add(mapMarker);
         }
 
         public View getRootView() {
@@ -331,14 +315,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         public void updateViewCoords(Geofavorite item) {
             binding.coordsTv.setText(item.getCoordinatesString());
 
-            // Center map
-            GeoPoint position = new GeoPoint(item.getLat(), item.getLng());
-            IMapController mapController = binding.map.getController();
-            mapController.setZoom(19.0f);
-            mapController.setCenter(position);
 
-            // Set pin
-            mapMarker.setPosition(position);
         }
 
         public void updateModel(Geofavorite item) {
@@ -379,11 +356,9 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         }
 
         public void onResume() {
-            binding.map.onResume();
         }
 
         public void onPause() {
-            binding.map.onPause();
         }
 
         @Override

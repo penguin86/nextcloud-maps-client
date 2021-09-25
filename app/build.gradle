@@ -73,7 +73,7 @@ dependencies {
     implementation "com.github.nextcloud:Android-SingleSignOn:0.5.6"
 
     // OSMDroid
-    implementation 'org.osmdroid:osmdroid-android:6.1.10'
+    //implementation 'org.osmdroid:osmdroid-android:6.1.10'
 
     //Threeten-Backport (ports Java 8 Date API on Java 6+)
     implementation 'org.threeten:threetenbp:1.5.1'
