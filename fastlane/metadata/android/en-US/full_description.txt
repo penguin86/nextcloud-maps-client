@@ -3,4 +3,4 @@ Geobookmarks can be opened in all apps supporting geo links (i.e. Google Maps, O
 A new geobookmark can be created on current location.
 
 Requires Maps app to be installed on the Nextcloud instance.
-As per Nextcloud's guidelines, the login is implemented using Nextcloud's Single Sign On module and thus requires Nextcloud Files app installed.
+As per Nextcloud's guidelines, the login is implemented using Nextcloud's Single Sign On module and thus requires Nextcloud app installed.
