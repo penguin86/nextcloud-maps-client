@@ -17,5 +17,3 @@ This work is heavily based on [matiasdelellis's Nextcloud SSO example](https://g
 
 ![Screenshot 1](screenshots/1.png)      ![Screenshot 1](screenshots/2.png)
 
-Download it from [the releases page](https://github.com/penguin86/nextcloud-maps-client/releases)
-

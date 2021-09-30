@@ -59,6 +59,7 @@ import it.danieleverducci.nextcloudmaps.activity.main.MainActivityViewModel;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -158,8 +159,19 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             mGeofavorite.setDateModified(System.currentTimeMillis() / 1000);
             mViewHolder.hideActions();
 
-            // Precompile location
-            getLocation();
+            if (getIntent().getData() != null) {
+                // Opened by external generic intent: parse URI
+                try {
+                    double[] coords = GeoUriParser.parseUri(getIntent().getData());
+                    mGeofavorite.setLat(coords[0]);
+                    mGeofavorite.setLng(coords[1]);
+                } catch (IllegalArgumentException e) {
+                    Toast.makeText(this, R.string.error_unsupported_uri, Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                // Precompile location with current one
+                getLocation();
+            }
         }
 
         mViewHolder.updateView(mGeofavorite);
