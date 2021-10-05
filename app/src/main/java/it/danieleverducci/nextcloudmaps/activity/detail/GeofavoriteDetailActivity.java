@@ -167,6 +167,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
                     mGeofavorite.setLng(coords[1]);
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(this, R.string.error_unsupported_uri, Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             } else {
                 // Precompile location with current one

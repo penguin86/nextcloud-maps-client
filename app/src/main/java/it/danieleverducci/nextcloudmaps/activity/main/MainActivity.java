@@ -56,6 +56,7 @@ import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.NavigationAdapter.NavigationItem;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment.OnSortingOrderListener;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
 
 import static android.view.View.GONE;
