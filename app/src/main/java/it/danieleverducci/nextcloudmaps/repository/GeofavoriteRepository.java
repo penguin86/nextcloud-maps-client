@@ -107,7 +107,7 @@ public class GeofavoriteRepository {
                     if (geofav.getId() != 0) {
                         geofavs.remove(geofav);
                     }
-                    geofavs.add(geofav);
+                    geofavs.add(response.body());
                     mGeofavorites.postValue(geofavs);
                     mIsUpdating.postValue(false);
                     mOnFinished.postValue(true);
