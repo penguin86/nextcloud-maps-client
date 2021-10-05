@@ -115,6 +115,20 @@
                 android:layout_height="wrap_content"
                 android:padding="10dp"
                 android:text="@string/about_issues" />
+
+            <TextView
+                style="?android:attr/listSeparatorTextViewStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/about_maps_title" />
+
+            <TextView
+                android:id="@+id/about_maps"
+                style="?android:attr/editTextPreferenceStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/about_maps" />
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>

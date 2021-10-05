@@ -154,7 +154,7 @@ public class Geofavorite implements Serializable {
      */
     public static Comparator<Geofavorite> ByTitleAZ = (gf0, gf1) -> gf0.name.compareTo(gf1.name);
     public static Comparator<Geofavorite> ByLastCreated = (gf0, gf1) -> (int) (gf1.dateCreated - gf0.dateCreated);
-    public static Comparator<Geofavorite> ByCategory = (gf0, gf1) -> gf0.category.compareTo(gf1.category);
+    public static Comparator<Geofavorite> ByCategory = (gf0, gf1) -> (gf0.category + gf0.name).compareTo(gf1.category + gf1.name);
     public static Comparator<Geofavorite> ByDistance = (gf0, gf1) -> 0; // (int) ((gf1.getDistanceFrom(userPosition) - gf0.getDistanceFrom(userPosition)) * 1000);
 
     public String getCoordinatesString() {
