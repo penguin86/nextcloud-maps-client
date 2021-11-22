@@ -43,6 +43,7 @@ import androidx.preference.PreferenceManager;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
+import org.osmdroid.config.IConfigurationProvider;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.overlay.Marker;
@@ -53,6 +54,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivityViewModel;
@@ -81,8 +83,10 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         super.onCreate(savedInstanceState);
 
         // OSMDroid config
-        Configuration.getInstance().load(getApplicationContext(),
+        IConfigurationProvider osmdroidConfig = Configuration.getInstance();
+        osmdroidConfig.load(getApplicationContext(),
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
+        osmdroidConfig.setUserAgentValue(BuildConfig.APPLICATION_ID);
 
         mViewHolder = new ViewHolder(getLayoutInflater());
         setContentView(mViewHolder.getRootView());
