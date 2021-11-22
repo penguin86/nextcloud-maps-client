@@ -62,6 +62,10 @@ public class AboutActivity extends AppCompatActivity {
         TextView tvIssues = findViewById(R.id.about_issues);
         tvIssues.setText(Html.fromHtml(getString(R.string.about_issues, getString(R.string.url_issues))));
         tvIssues.setOnClickListener(view -> openUtl(getString(R.string.url_issues)));
+
+        TextView tvMaps = findViewById(R.id.about_maps);
+        tvMaps.setText(Html.fromHtml(getString(R.string.about_maps)));
+        tvMaps.setOnClickListener(view -> openUtl(getString(R.string.url_maps)));
     }
 
     @Override

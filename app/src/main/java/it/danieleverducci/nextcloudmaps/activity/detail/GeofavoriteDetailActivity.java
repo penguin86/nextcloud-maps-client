@@ -169,6 +169,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
                     double[] coords = GeoUriParser.parseUri(getIntent().getData());
                     mGeofavorite.setLat(coords[0]);
                     mGeofavorite.setLng(coords[1]);
+                    mViewHolder.hideAccuracy();
                 } catch (IllegalArgumentException e) {
                     Toast.makeText(this, R.string.error_unsupported_uri, Toast.LENGTH_SHORT).show();
                     finish();
@@ -323,6 +324,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             // Set map properties
             this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
             this.binding.map.setMultiTouchControls(true);
+//            this.binding.map.setTilesScaledToDpi(true);
 
             // Create marker
             mapMarker = new Marker(binding.map);
