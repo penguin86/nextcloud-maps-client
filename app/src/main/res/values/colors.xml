@@ -32,4 +32,5 @@
 
     <!-- Generic Colors -->
     <color name="white">#fff</color>
+    <color name="whiteAlpha">#cfff</color>
 </resources>

@@ -2,6 +2,7 @@ package it.danieleverducci.nextcloudmaps.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;

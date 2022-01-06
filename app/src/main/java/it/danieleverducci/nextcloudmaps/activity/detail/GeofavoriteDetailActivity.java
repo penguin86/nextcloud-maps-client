@@ -27,7 +27,6 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -50,22 +49,14 @@ import org.osmdroid.views.overlay.Marker;
 import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
-import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
-import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
-import it.danieleverducci.nextcloudmaps.activity.main.MainActivityViewModel;
-import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class GeofavoriteDetailActivity extends AppCompatActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 

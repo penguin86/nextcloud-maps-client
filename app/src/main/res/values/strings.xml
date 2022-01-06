@@ -89,4 +89,8 @@
     <string name="setting_sort_by">SETTING_SORT_BY</string>
     <string name="setting_grid_view_enabled">SETTING_GRID_VIEW_ENABLED</string>
 
+    <!-- Menu -->
+    <string name="new_geobookmark_gps">New from current position</string>
+    <string name="new_geobookmark_map">New from map</string>
+
 </resources>

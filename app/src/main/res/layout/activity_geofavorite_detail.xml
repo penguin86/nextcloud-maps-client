@@ -53,8 +53,20 @@
                         android:id="@+id/back_bt"
                         android:layout_width="?attr/actionBarSize"
                         android:layout_height="?attr/actionBarSize"
+                        android:layout_gravity="start"
                         android:padding="16dp"
                         android:src="@drawable/ic_back_grey"
+                        app:tint="@color/white"
+                        android:background="@drawable/floating_semitransparent_button_background"/>
+
+                    <!-- Manual position button -->
+                    <ImageView
+                        android:id="@+id/manual_pos_bt"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
+                        android:layout_gravity="end"
+                        android:padding="16dp"
+                        android:src="@drawable/ic_manual_pos"
                         app:tint="@color/white"
                         android:background="@drawable/floating_semitransparent_button_background"/>
 

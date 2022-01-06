@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -55,6 +56,7 @@ import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivit
 import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.NavigationAdapter.NavigationItem;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment.OnSortingOrderListener;
+import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
@@ -70,7 +72,8 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
 
     private static final String TAG = "MainActivity";
 
-    private static final String NAVIGATION_KEY_ADD_GEOFAVORITE = "add";
+    private static final String NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_GPS = "add_from_gps";
+    private static final String NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_MAP = "add_from_map";
     private static final String NAVIGATION_KEY_SHOW_ABOUT = "about";
     private static final String NAVIGATION_KEY_SWITCH_ACCOUNT = "switch_account";
 
@@ -88,6 +91,8 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
     private GeofavoriteAdapter geofavoriteAdapter;
     private ItemClickListener rvItemClickListener;
     private MainActivityViewModel mMainActivityViewModel;
+
+    private boolean isFabOpen = false;
 
     NavigationAdapter navigationCommonAdapter;
 
@@ -165,8 +170,14 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         swipeRefresh.setOnRefreshListener(() ->
                 mMainActivityViewModel.updateGeofavorites());
 
-        fab = findViewById(R.id.add);
-        fab.setOnClickListener(view -> addGeofavorite());
+        fab = findViewById(R.id.open_fab);
+        fab.setOnClickListener(view -> openFab(!this.isFabOpen));
+
+        fab = findViewById(R.id.add_from_gps);
+        fab.setOnClickListener(view -> addGeofavoriteFromGps());
+
+        fab = findViewById(R.id.add_from_map);
+        fab.setOnClickListener(view -> addGeofavoriteFromMap());
 
         toolbar = findViewById(R.id.toolbar);
         homeToolbar = findViewById(R.id.home_toolbar);
@@ -215,13 +226,22 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         updateGridIcon(gridViewEnabled);
     }
 
+    @Override
+    protected void onPause() {
+        openFab(false);
+        super.onPause();
+    }
+
     private void setupNavigationMenu() {
         ArrayList<NavigationItem> navItems = new ArrayList<>();
 
         navigationCommonAdapter = new NavigationAdapter(this, item -> {
             switch (item.id) {
-                case NAVIGATION_KEY_ADD_GEOFAVORITE:
-                    addGeofavorite();
+                case NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_GPS:
+                    addGeofavoriteFromGps();
+                    break;
+                case NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_MAP:
+                    addGeofavoriteFromMap();
                     break;
                 case NAVIGATION_KEY_SHOW_ABOUT:
                     show_about();
@@ -232,7 +252,8 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
             }
         });
 
-        navItems.add(new NavigationItem(NAVIGATION_KEY_ADD_GEOFAVORITE, getString(R.string.new_geobookmark), R.drawable.ic_add));
+        navItems.add(new NavigationItem(NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_GPS, getString(R.string.new_geobookmark_gps), R.drawable.ic_add_gps));
+        navItems.add(new NavigationItem(NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_MAP, getString(R.string.new_geobookmark_map), R.drawable.ic_add_map));
         navItems.add(new NavigationItem(NAVIGATION_KEY_SHOW_ABOUT, getString(R.string.about), R.drawable.ic_info_grey));
         navItems.add(new NavigationItem(NAVIGATION_KEY_SWITCH_ACCOUNT, getString(R.string.switch_account), R.drawable.ic_logout_grey));
         navigationCommonAdapter.setItems(navItems);
@@ -257,9 +278,15 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         SortingOrderDialogFragment.newInstance(sortOrder).show(fragmentTransaction, SortingOrderDialogFragment.SORTING_ORDER_FRAGMENT);
     }
 
-    private void addGeofavorite() {
+    private void addGeofavoriteFromGps() {
         startActivity(
                 new Intent(this, GeofavoriteDetailActivity.class)
+        );
+    }
+
+    private void addGeofavoriteFromMap() {
+        startActivity(
+                new Intent(this, MapPickerActivity.class)
         );
     }
 
@@ -334,6 +361,25 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
         Intent i = new Intent(this, GeofavoriteDetailActivity.class);
         i.putExtra(GeofavoriteDetailActivity.ARG_GEOFAVORITE, item.getId());
         startActivity(i);
+    }
+
+    private void openFab(boolean open) {
+        View fab = findViewById(R.id.open_fab);
+        View addFromGpsFab = findViewById(R.id.add_from_gps);
+        View addFromMapFab = findViewById(R.id.add_from_map);
+
+        if (open) {
+            this.isFabOpen = true;
+            fab.animate().rotation(45.0f);
+            addFromGpsFab.animate().translationY(-getResources().getDimension(R.dimen.fab_vertical_offset));
+            addFromMapFab.animate().translationY(-getResources().getDimension(R.dimen.fab_vertical_offset) * 2);
+        } else {
+            this.isFabOpen = false;
+            fab.animate().rotation(0f);
+            addFromGpsFab.animate().translationY(0);
+            addFromMapFab.animate().translationY(0);
+        }
+
     }
 
 }

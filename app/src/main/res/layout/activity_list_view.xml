@@ -154,8 +154,31 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <!-- Add from map FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add"
+        android:id="@+id/add_from_map"
+        android:layout_margin="24dp"
+        android:layout_gravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        android:src="@drawable/ic_add_map"
+        app:backgroundTint="@color/defaultBrand"/>
+
+    <!-- Add from current position FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_from_gps"
+        android:layout_margin="24dp"
+        android:layout_gravity="bottom|end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabSize="mini"
+        android:src="@drawable/ic_add_gps"
+        app:backgroundTint="@color/defaultBrand"/>
+
+    <!-- Main FAB -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/open_fab"
         android:layout_margin="16dp"
         android:layout_gravity="bottom|end"
         android:layout_width="wrap_content"
