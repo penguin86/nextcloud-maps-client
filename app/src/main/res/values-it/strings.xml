@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Nextcloud Maps Geofavorites for Android
+  ~
+  ~ This program is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ This program is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+
+<resources>
+    <!-- App strings -->
+    <string name="app_name">Maps Geobookmarks</string>
+    <string name="welcome">Benvenuto su Nextcloud Maps Geobookmarks</string>
+
+    <!-- Login Activity -->
+    <string name="choose_account">Scegli account</string>
+
+    <!-- Geobookmarks list -->
+    <string name="new_geobookmark">Nuovo geosegnalibro</string>
+    <string name="about">Informazioni</string>
+    <string name="switch_account">Cambia account</string>
+    <string name="list_mode">Lista</string>
+    <string name="search_in_all">Cerca per nome</string>
+    <string name="share_via">Condividi via</string>
+    <string name="share_message">Posizione condivisa: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
+    <string name="list_context_menu_share">Condividi</string>
+    <string name="list_context_menu_delete">Elimina</string>
+    <string name="dialog_delete_title">Elimina geosegnalibro</string>
+    <string name="dialog_delete_message">Stai per eliminare il geosegnalibro {name}. Procedere?</string>
+    <string name="dialog_delete_delete">Elimina</string>
+    <string name="dialog_delete_cancel">Mantieni</string>
+    <string name="list_geofavorite_deleted">Geosegnalibro eliminato</string>
+    <string name="list_geofavorite_connection_error">Impossibile ottenere la lista dei geosegnalibri</string>
+
+    <!-- Sort dialog -->
+    <string name="sort_by">Ordina per</string>
+    <string name="menu_item_sort_by_title_a_z">A - Z</string>
+    <string name="menu_item_sort_by_date_newest_first">Più recenti</string>
+    <string name="menu_item_sort_by_category_a_z">Categoria</string>
+    <string name="menu_item_sort_by_distance_nearest_first">Distanza</string>
+
+    <!-- Geobookmarks detail -->
+    <string name="name">Nome</string>
+    <string name="description">Descrizione</string>
+    <string name="created">Creato</string>
+    <string name="modified">Modificato</string>
+    <string name="category">Categoria</string>
+    <string name="coords">Coordinate</string>
+    <string name="accuracy">Accuratezza: {accuracy} m</string>
+    <string name="location_permission_required">Per creare un geosegnalibro è necessario consentire l\'accesso alla posizione.</string>
+    <string name="confirm">Salva</string>
+    <string name="error_saving_geofavorite">Impossibile salvare il geosegnalibro</string>
+    <string name="error_unsupported_uri">Impossibile ottenere le coordinate dai dati ricevuti</string>
+    <string name="geofavorite_saved">Geosegnalibro salvato</string>
+    <string name="incomplete_geofavorite">Geosegnalibro incompleto: nome e categoria sono obbligatori</string>
+
+    <!-- About -->
+    <string name="about_version_title">Versione</string>
+    <string name="about_version">Stai usando la versione &lt;strong>%1$s&lt;/strong></string>
+    <string name="about_source_title">Codice sorgente</string>
+    <string name="about_source">Questo progetto è disponibile su GitHub: &lt;a href="%1$s">%1$s&lt;/a></string>
+    <string name="about_issues_title">Segnalazioni</string>
+    <string name="about_issues">Puoi segnalare bugs, proporre migliorie o richiedere nuove funzionalità sul GitHub issue tracker: &lt;a href="%1$s">%1$s&lt;/a></string>
+    <string name="about_maps_title">Mappe</string>
+    <string name="about_maps">Questa app usa i server e le tiles di OpenStreetMap. Non accetto donazioni per questa app, ma raccomando piuttosto di donare a &lt;a href="%1$s">OpenStreetMap&lt;/a>, poiché questa applicazione non potrebbe esistere senza di loro.</string>
+    <string name="about_app_license_title">Licenza</string>
+    <string name="about_app_license">Questa applicazione è rilasciata sotto licenza GNU GENERAL PUBLIC LICENSE v3+.</string>
+    <string name="about_app_license_button">Mostra licenza</string>
+
+    <!-- Common strings -->
+    <string name="common_yes">Si</string>
+    <string name="common_cancel">Annulla</string>
+
+    <!-- URLs -->
+    <string name="url_source" translatable="false">https://github.com/penguin86/nextcloud-maps-client</string>
+    <string name="url_issues" translatable="false">https://github.com/penguin86/nextcloud-maps-client/issues</string>
+    <string name="url_license" translatable="false">https://raw.githubusercontent.com/penguin86/nextcloud-maps-client/master/LICENSE</string>
+    <string name="url_maps" translatable="false">https://donate.openstreetmap.org</string>
+
+    <!-- Settings -->
+    <string name="setting_sort_by">SETTING_SORT_BY</string>
+    <string name="setting_grid_view_enabled">SETTING_GRID_VIEW_ENABLED</string>
+
+    <!-- Menu -->
+    <string name="new_geobookmark_gps">Crea dalla posizione corrente</string>
+    <string name="new_geobookmark_map">Crea dalla mappa</string>
+
+</resources>
