@@ -37,6 +37,6 @@
     <dimen name="two_line_secondary_text_size">12sp</dimen>
 
     <!-- FAB dimensions -->
-    <dimen name="fab_vertical_offset">55dp</dimen>
+    <dimen name="fab_vertical_offset">75dp</dimen>
 
 </resources>

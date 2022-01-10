@@ -12,6 +12,13 @@
             android:layout_height="match_parent"/>
 
         <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="24dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_map_pin"/>
+
+        <ImageView
             android:id="@+id/back_bt"
             android:layout_width="?attr/actionBarSize"
             android:layout_height="?attr/actionBarSize"
@@ -41,17 +48,37 @@
             <EditText
                 android:id="@+id/lat_et"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
                 android:layout_marginEnd="10dp"
-                android:background="@color/whiteAlpha"/>
+                android:textAlignment="center"
+                android:background="@color/whiteAlpha"
+                android:lines="1"
+                android:maxLines="1"
+                android:inputType="numberDecimal"/>
 
             <EditText
                 android:id="@+id/lon_et"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:background="@color/whiteAlpha"/>
+                android:textAlignment="center"
+                android:background="@color/whiteAlpha"
+                android:lines="1"
+                android:maxLines="1"
+                android:inputType="numberDecimal"/>
+
+            <ImageView
+                android:id="@+id/latlon_confirm_btn"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginLeft="10dp"
+                android:padding="8dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_ok"
+                app:tint="@color/white"
+                android:background="@drawable/round_button_background"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
