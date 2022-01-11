@@ -62,6 +62,10 @@
     <string name="geofavorite_saved">Geofavorite saved</string>
     <string name="incomplete_geofavorite">Incomplete geofavorite: Name and category are mandatory</string>
 
+    <!-- Map picker activity -->
+    <string name="coordinates_parse_error">Coordinates should be in format xx.xxxxxx</string>
+    <string name="coordinates_invalid_error">Invalid coordinates</string>
+
     <!-- About -->
     <string name="about_version_title">Version</string>
     <string name="about_version">You are currently using &lt;strong>%1$s&lt;/strong></string>
