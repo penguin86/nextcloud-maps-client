@@ -28,4 +28,17 @@ public class GeoUriParser {
             throw new IllegalArgumentException("unable to parse uri");
         }
     }
+
+    public static Uri createUri(double lat, double lon, String name) {
+        // Check coords validity
+        if (lon <= -180 || lon >= 180 )
+            throw new IllegalArgumentException("Invalid longitude: " + lon);
+        if (lat <= -90 || lat >= 90)
+            throw new IllegalArgumentException("Invalid latitude: " + lat);
+
+        String uriStr = "geo:" + lat + "," + lon;
+        if (name != null)
+            uriStr += "(" + name + ")";
+        return Uri.parse(uriStr);
+    }
 }

@@ -36,6 +36,8 @@ import org.threeten.bp.ZoneId;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
+
 public class Geofavorite implements Serializable {
     public static final String DEFAULT_CATEGORY = "Personal";
     private static final double EARTH_RADIUS = 6371; // https://en.wikipedia.org/wiki/Earth_radius
@@ -162,7 +164,7 @@ public class Geofavorite implements Serializable {
     }
 
     public Uri getGeoUri() {
-        return Uri.parse("geo:" + this.lat + "," + this.lng + "(" + this.name + ")");
+        return GeoUriParser.createUri(this.lat, this.lng, this.name);
     }
 
     public boolean valid() {

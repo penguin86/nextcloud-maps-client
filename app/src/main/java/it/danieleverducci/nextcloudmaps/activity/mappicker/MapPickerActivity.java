@@ -2,13 +2,16 @@ package it.danieleverducci.nextcloudmaps.activity.mappicker;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -32,7 +35,9 @@ import java.util.Locale;
 
 import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityMapPickerBinding;
+import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 
 public class MapPickerActivity extends AppCompatActivity {
     public static final String TAG = "MapPickerActivity";
@@ -52,6 +57,21 @@ public class MapPickerActivity extends AppCompatActivity {
         osmdroidConfig.setUserAgentValue(BuildConfig.APPLICATION_ID);
 
         mViewHolder = new MapPickerActivity.ViewHolder(getLayoutInflater());
+        mViewHolder.setViewEventListener(new ViewEventListener() {
+            @Override
+            public void onExitButtonPressed() {
+                finish();
+            }
+
+            @Override
+            public void onConfirmButtonPressed() {
+                double[] coords = mViewHolder.getCurrentCoordinates();
+                Uri geoUri = GeoUriParser.createUri(coords[0], coords[1], null);
+                Intent i = new Intent(MapPickerActivity.this, GeofavoriteDetailActivity.class);
+                i.setData(geoUri);
+                startActivity(i);
+            }
+        });
         Location l = getLastKnownPosition();
         if (l != null)
             mViewHolder.centerMapOn(l.getLatitude(), l.getLongitude());
@@ -79,6 +99,8 @@ public class MapPickerActivity extends AppCompatActivity {
 
     private class ViewHolder implements View.OnClickListener {
         private final ActivityMapPickerBinding binding;
+        private ViewEventListener listener;
+
         private final MapView map;
         private boolean coordsEditMode = false;
 
@@ -125,7 +147,13 @@ public class MapPickerActivity extends AppCompatActivity {
 
             // Setup onClick
             this.binding.latlonConfirmBtn.setOnClickListener(this);
+            this.binding.backBt.setOnClickListener(this);
+            this.binding.okBt.setOnClickListener(this);
 
+        }
+
+        public void setViewEventListener(ViewEventListener listener) {
+            this.listener = listener;
         }
 
         public void centerMapOn(Double lat, Double lon ) {
@@ -159,6 +187,17 @@ public class MapPickerActivity extends AppCompatActivity {
                 // Move map to coordinates
                 this.centerMapOn(lat, lon);
             }
+
+            if (view == this.binding.backBt)
+                listener.onExitButtonPressed();
+
+            if (view == this.binding.okBt)
+                listener.onConfirmButtonPressed();
+        }
+
+        public double[] getCurrentCoordinates() {
+            IGeoPoint igp = (ViewHolder.this).map.getMapCenter();
+            return new double[]{igp.getLatitude(), igp.getLongitude()};
         }
 
         /**
@@ -174,9 +213,17 @@ public class MapPickerActivity extends AppCompatActivity {
                 this.binding.latEt.clearFocus();
                 this.binding.lonEt.clearFocus();
                 btn.setVisibility(View.GONE);
+                // Hide soft keyboard
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(btn.getWindowToken(), 0);
             }
         }
 
+    }
+
+    protected interface ViewEventListener {
+        public void onExitButtonPressed();
+        public void onConfirmButtonPressed();
     }
 
 }
