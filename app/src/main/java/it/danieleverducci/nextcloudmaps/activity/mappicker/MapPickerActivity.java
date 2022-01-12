@@ -108,9 +108,8 @@ public class MapPickerActivity extends AppCompatActivity {
                     // Disable edit mode
                     if ((ViewHolder.this).coordsEditMode)
                         (ViewHolder.this).coordsEditMode(false);
-                    // Convert XY coords to LatLng
-                    Projection p = (ViewHolder.this).map.getProjection();
-                    IGeoPoint igp = p.fromPixels(event.getX(), event.getY());
+                    // Write coords on edittext
+                    IGeoPoint igp = (ViewHolder.this).map.getMapCenter();
                     (ViewHolder.this).binding.latEt.setText(String.format(Locale.ENGLISH, "%.06f", igp.getLatitude()));
                     (ViewHolder.this).binding.lonEt.setText(String.format(Locale.ENGLISH, "%.06f", igp.getLongitude()));
                     return false;
