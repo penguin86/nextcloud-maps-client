@@ -53,6 +53,7 @@ import java.util.HashSet;
 
 import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
@@ -85,6 +86,11 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             @Override
             public void onBackPressed() {
                 finish();
+            }
+
+            @Override
+            public void onMapEditPressed() {
+                //TODO
             }
 
             @Override
@@ -407,6 +413,9 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             if (v.getId() == R.id.back_bt && this.listener != null) {
                 this.listener.onBackPressed();
             }
+            if (v.getId() == R.id.manual_pos_bt && this.listener != null) {
+                this.listener.onMapEditPressed();
+            }
 
             // Actions
             if (v.getId() == R.id.action_icon_share && this.listener != null) {
@@ -425,6 +434,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         void onSubmit();
         void onMapClicked();
         void onBackPressed();
+        void onMapEditPressed();
         void onActionIconShareClicked();
         void onActionIconNavClicked();
         void onActionIconDeleteClicked();

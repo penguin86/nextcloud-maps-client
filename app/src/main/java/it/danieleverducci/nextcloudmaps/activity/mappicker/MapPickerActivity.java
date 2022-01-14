@@ -70,6 +70,7 @@ public class MapPickerActivity extends AppCompatActivity {
                 Intent i = new Intent(MapPickerActivity.this, GeofavoriteDetailActivity.class);
                 i.setData(geoUri);
                 startActivity(i);
+                finish();
             }
         });
         Location l = getLastKnownPosition();
