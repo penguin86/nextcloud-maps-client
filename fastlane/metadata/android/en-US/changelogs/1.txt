@@ -1,1 +1,1 @@
-First alpha release: working geobookmarks list, open geobookmarks in other apps via geo link, add geobookmark on current location.
+First alpha release: working geobookmarks list, open geobookmarks in other apps via geo link, add geofavorite on current location.

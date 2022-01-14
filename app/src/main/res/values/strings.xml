@@ -24,7 +24,7 @@
     <string name="choose_account">Choose account</string>
 
     <!-- Geobookmarks list -->
-    <string name="new_geobookmark">New geobookmark</string>
+    <string name="new_geobookmark">New geofavorite</string>
     <string name="about">About</string>
     <string name="switch_account">Switch account</string>
     <string name="list_mode">List</string>
@@ -33,8 +33,8 @@
     <string name="share_message">Check out this place: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
     <string name="list_context_menu_share">Share</string>
     <string name="list_context_menu_delete">Delete</string>
-    <string name="dialog_delete_title">Delete geobookmark</string>
-    <string name="dialog_delete_message">You are about to delete geobookmark {name}. Proceed?</string>
+    <string name="dialog_delete_title">Delete geofavorite</string>
+    <string name="dialog_delete_message">You are about to delete geofavorite {name}. Proceed?</string>
     <string name="dialog_delete_delete">Delete</string>
     <string name="dialog_delete_cancel">Maintain</string>
     <string name="list_geofavorite_deleted">Geofavorite deleted</string>
