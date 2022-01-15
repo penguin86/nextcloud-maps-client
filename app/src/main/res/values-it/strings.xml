@@ -56,6 +56,7 @@
     <string name="category">Categoria</string>
     <string name="coords">Coordinate</string>
     <string name="accuracy">Accuratezza: {accuracy} m</string>
+    <string name="accuracy_nosignal">Nessun segnale GPS!</string>
     <string name="location_permission_required">Per creare un geosegnalibro è necessario consentire l\'accesso alla posizione.</string>
     <string name="confirm">Salva</string>
     <string name="error_saving_geofavorite">Impossibile salvare il geosegnalibro</string>

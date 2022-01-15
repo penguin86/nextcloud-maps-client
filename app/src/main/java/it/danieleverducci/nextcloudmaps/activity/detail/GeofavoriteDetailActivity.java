@@ -369,13 +369,12 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
         }
 
         public void setAccuracy(float accuracy) {
+            // Display accuracy in meters
             binding.accuracyTv.setText(getString(R.string.accuracy).replace("{accuracy}", ((int)accuracy) + ""));
-            // Color the accuracy background with a scale from red (MINIMUM_ACCEPTABLE_ACCURACY) to green (0 meters)
-            float red = accuracy / MINIMUM_ACCEPTABLE_ACCURACY;
-            if (red > 1.0f) red = 1.0f;
-            float green = 1.0f - red;
-            if (Build.VERSION.SDK_INT >= 26)
-                binding.accuracyTv.setBackgroundColor(Color.rgb(red, green, 0.0f));
+            // Display accuracy in progress bar
+            int accuracyPercent = (int)accuracy > 100 ? 0 : Math.abs((int)accuracy - 100);
+            binding.accuracyProgress.setIndeterminate(false);
+            binding.accuracyProgress.setProgress(accuracyPercent);
         }
 
         public void setCategories(HashSet<String> categories) {

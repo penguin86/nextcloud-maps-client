@@ -89,15 +89,42 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:src="@drawable/ic_accuracy_fail"
+                        app:tint="@color/disabled"/>
+                    <ProgressBar
+                        android:id="@+id/accuracy_progress"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center_vertical"
+                        android:indeterminate="true"
+                        style="@style/Widget.AppCompat.ProgressBar.Horizontal" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0"
+                        android:src="@drawable/ic_accuracy_ok"/>
+                </LinearLayout>
+                
                 <TextView
                     android:id="@+id/accuracy_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
                     android:textAlignment="center"
-                    android:text="@string/accuracy"
-                    android:textColor="@android:color/white"
-                    android:background="@android:color/darker_gray"/>
+                    android:text="@string/accuracy_nosignal"
+                    android:textColor="@color/defaultBrand"/>
 
                 <LinearLayout
                     android:id="@+id/action_icons"
@@ -112,7 +139,7 @@
                         android:layout_weight="1"
                         android:padding="10dp"
                         android:src="@drawable/ic_share"
-                        android:tint="@color/defaultBrand"/>
+                        app:tint="@color/defaultBrand"/>
 
                     <ImageView
                         android:id="@+id/action_icon_nav"
@@ -121,7 +148,7 @@
                         android:layout_weight="1"
                         android:padding="10dp"
                         android:src="@drawable/ic_nav"
-                        android:tint="@color/defaultBrand"/>
+                        app:tint="@color/defaultBrand"/>
 
                     <ImageView
                         android:id="@+id/action_icon_delete"
@@ -130,7 +157,7 @@
                         android:layout_weight="1"
                         android:padding="10dp"
                         android:src="@drawable/ic_delete_grey"
-                        android:tint="@color/defaultBrand"
+                        app:tint="@color/defaultBrand"
                         android:visibility="gone"/> <!-- TODO Implement delete -->
 
 
