@@ -58,6 +58,7 @@ import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBin
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
+import it.danieleverducci.nextcloudmaps.utils.MapUtils;
 
 public class GeofavoriteDetailActivity extends AppCompatActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -74,11 +75,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // OSMDroid config
-        IConfigurationProvider osmdroidConfig = Configuration.getInstance();
-        osmdroidConfig.load(getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-        osmdroidConfig.setUserAgentValue(BuildConfig.APPLICATION_ID);
+        MapUtils.configOsmdroid(this);
 
         mViewHolder = new ViewHolder(getLayoutInflater());
         setContentView(mViewHolder.getRootView());
@@ -321,6 +318,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
             // Set map properties
             this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
             this.binding.map.setMultiTouchControls(true);
+            MapUtils.setTheme(this.binding.map);
 //            this.binding.map.setTilesScaledToDpi(true);
 
             // Create marker
@@ -383,6 +381,7 @@ public class GeofavoriteDetailActivity extends AppCompatActivity implements Loca
 
         public void hideAccuracy() {
             binding.accuracyTv.setVisibility(View.GONE);
+            binding.accuracyProgressContainer.setVisibility(View.GONE);
         }
 
         public void hideActions() {

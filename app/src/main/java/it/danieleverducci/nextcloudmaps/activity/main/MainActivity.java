@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
             }
         };
 
-        geofavoriteAdapter = new GeofavoriteAdapter(getApplicationContext(), rvItemClickListener);
+        geofavoriteAdapter = new GeofavoriteAdapter(this, rvItemClickListener);
         recyclerView.setAdapter(geofavoriteAdapter);
         geofavoriteAdapter.setSortRule(sortRule);
 

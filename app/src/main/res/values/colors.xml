@@ -23,13 +23,11 @@
     <color name="transparent">#00000000</color>
     <color name="defaultBrand">#0082C9</color>
     <color name="defaultBrandAlpha">#550082C9</color>
-    <color name="appbar">@android:color/white</color>
-    <color name="defaultTint">#202124</color>
-    <color name="disabled">#666666</color>
+    <color name="disabled">#666</color>
 
 
     <!-- List Colors -->
-    <color name="text_color">#333333</color>
+    <color name="text_color">#333</color>
     <color name="secondary_text_color">@color/disabled</color>
 
     <!-- Selectors text/tint colors -->

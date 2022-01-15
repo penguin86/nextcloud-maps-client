@@ -91,6 +91,7 @@
                 android:padding="20dp">
 
                 <LinearLayout
+                    android:id="@+id/accuracy_progress_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"

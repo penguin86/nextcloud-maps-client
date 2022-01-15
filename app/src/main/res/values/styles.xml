@@ -18,35 +18,18 @@
 <resources>
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/primary</item>
-<!--        <item name="android:textColorPrimary">@color/white</item>-->
-        <item name="colorPrimaryDark">@color/primary</item>
         <item name="colorAccent">@color/defaultBrand</item>
-        <item name="android:actionModeBackground">?attr/colorPrimary</item>
         <item name="colorControlNormal">?attr/colorAccent</item>
         <item name="windowActionModeOverlay">true</item>
-        <item name="toolbarStyle">@style/toolbarStyle</item>
     </style>
 
     <style name="AppTheme" parent="BaseTheme"/>
 
-    <style name="EditorTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@android:color/transparent</item>
-        <item name="colorPrimaryDark">@color/accent</item>
-        <item name="colorAccent">@color/accent</item>
-    </style>
-
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SplashTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-    </style>
-
-    <style name="toolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
-        <item name="android:background">?attr/colorPrimary</item>
     </style>
 
     <!-- Geofavorite detail text appearances -->

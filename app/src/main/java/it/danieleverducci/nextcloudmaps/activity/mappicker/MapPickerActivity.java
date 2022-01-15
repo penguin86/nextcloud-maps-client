@@ -38,6 +38,7 @@ import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityMapPickerBinding;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
+import it.danieleverducci.nextcloudmaps.utils.MapUtils;
 
 public class MapPickerActivity extends AppCompatActivity {
     public static final String TAG = "MapPickerActivity";
@@ -50,11 +51,7 @@ public class MapPickerActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // OSMDroid config
-        IConfigurationProvider osmdroidConfig = Configuration.getInstance();
-        osmdroidConfig.load(getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext()));
-        osmdroidConfig.setUserAgentValue(BuildConfig.APPLICATION_ID);
+        MapUtils.configOsmdroid(this);
 
         mViewHolder = new MapPickerActivity.ViewHolder(getLayoutInflater());
         mViewHolder.setViewEventListener(new ViewEventListener() {
@@ -125,6 +122,7 @@ public class MapPickerActivity extends AppCompatActivity {
             this.map = this.binding.map;
             this.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
             this.map.setMultiTouchControls(true);
+            MapUtils.setTheme(this.map);
             this.map.addMapListener(new MapListener() {
                 @Override
                 public boolean onScroll(ScrollEvent event) {

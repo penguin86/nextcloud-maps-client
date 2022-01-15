@@ -49,8 +49,7 @@
         </activity>
 
         <activity
-            android:name=".activity.detail.GeofavoriteDetailActivity"
-            android:theme="@style/AppTheme">
+            android:name=".activity.detail.GeofavoriteDetailActivity">
             <!-- standard "geo" scheme -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
