@@ -68,7 +68,8 @@
                         android:padding="16dp"
                         android:src="@drawable/ic_manual_pos"
                         app:tint="@color/white"
-                        android:background="@drawable/floating_semitransparent_button_background"/>
+                        android:background="@drawable/floating_semitransparent_button_background"
+                        android:visibility="gone"/> <!-- TODO: Implement edit -->
 
                 </androidx.appcompat.widget.Toolbar>
                     
