@@ -32,6 +32,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.DialogFragment;
 
@@ -130,10 +131,10 @@ public class SortingOrderDialogFragment extends DialogFragment {
             if (view instanceof ImageButton) {
                 Drawable normalDrawable = ((ImageButton) view).getDrawable();
                 Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
-                DrawableCompat.setTint(wrapDrawable, this.getResources().getColor(R.color.defaultTint));
+                DrawableCompat.setTint(wrapDrawable, ContextCompat.getColor(getContext(), R.color.selector_item_selected));
             }
             if (view instanceof TextView) {
-                ((TextView)view).setTextColor(this.getResources().getColor(R.color.defaultTint));
+                ((TextView)view).setTextColor(ContextCompat.getColor(getContext(), R.color.selector_item_selected));
                 ((TextView)view).setTypeface(Typeface.DEFAULT_BOLD);
             }
         }

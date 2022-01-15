@@ -30,6 +30,10 @@
     <color name="text_color">#333333</color>
     <color name="secondary_text_color">#666666</color>
 
+    <!-- Selectors text/tint colors -->
+    <color name="selector_item_selected">@color/defaultBrand</color>
+    <color name="selector_item_unselected">#666666</color>
+
     <!-- Generic Colors -->
     <color name="white">#fff</color>
     <color name="whiteAlpha">#cfff</color>

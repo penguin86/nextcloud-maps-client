@@ -16,8 +16,9 @@
   ~ along with this program.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <LinearLayout
-    android:id="@+id/root"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minWidth="300dp"
@@ -29,7 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_margin"
-        android:text="@string/sort_by"/>
+        android:text="@string/sort_by"
+        android:textColor="@color/defaultBrand"/>
 
     <ScrollView
         android:id="@+id/scrollableSortings"
@@ -57,7 +59,8 @@
                     android:paddingEnd="@dimen/standard_half_padding"
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:contentDescription="@string/menu_item_sort_by_title_a_z"
-                    android:src="@drawable/ic_alphabetical_asc" />
+                    android:src="@drawable/ic_alphabetical_asc"
+                    app:tint="@color/selector_item_unselected"/>
 
                 <TextView
                     android:id="@+id/sortByTitleAscendingText"
@@ -72,7 +75,8 @@
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:singleLine="true"
                     android:text="@string/menu_item_sort_by_title_a_z"
-                    android:textSize="@dimen/two_line_primary_text_size"/>
+                    android:textSize="@dimen/two_line_primary_text_size"
+                    android:textColor="@color/selector_item_unselected"/>
 
             </TableRow>
 
@@ -92,7 +96,8 @@
                     android:paddingEnd="@dimen/standard_half_padding"
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:contentDescription="@string/menu_item_sort_by_date_newest_first"
-                    android:src="@drawable/ic_modification_asc"/>
+                    android:src="@drawable/ic_modification_asc"
+                    app:tint="@color/selector_item_unselected"/>
 
                 <TextView
                     android:id="@+id/sortByCreationDateDescendingText"
@@ -107,7 +112,8 @@
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:singleLine="true"
                     android:text="@string/menu_item_sort_by_date_newest_first"
-                    android:textSize="@dimen/two_line_primary_text_size" />
+                    android:textSize="@dimen/two_line_primary_text_size"
+                    android:textColor="@color/selector_item_unselected" />
 
             </TableRow>
 
@@ -127,7 +133,8 @@
                     android:paddingEnd="@dimen/standard_half_padding"
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:contentDescription="@string/menu_item_sort_by_category_a_z"
-                    android:src="@drawable/ic_category_asc"/>
+                    android:src="@drawable/ic_category_asc"
+                    app:tint="@color/selector_item_unselected"/>
 
                 <TextView
                     android:id="@+id/sortByCategoryAscendingText"
@@ -142,7 +149,8 @@
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:singleLine="true"
                     android:text="@string/menu_item_sort_by_category_a_z"
-                    android:textSize="@dimen/two_line_primary_text_size" />
+                    android:textSize="@dimen/two_line_primary_text_size"
+                    android:textColor="@color/selector_item_unselected" />
 
             </TableRow>
 
@@ -163,7 +171,8 @@
                     android:paddingEnd="@dimen/standard_half_padding"
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:contentDescription="@string/menu_item_sort_by_distance_nearest_first"
-                    android:src="@drawable/ic_distance_asc"/>
+                    android:src="@drawable/ic_distance_asc"
+                    app:tint="@color/selector_item_unselected"/>
 
                 <TextView
                     android:id="@+id/sortByDistanceAscendingText"
@@ -178,7 +187,8 @@
                     android:paddingBottom="@dimen/standard_half_padding"
                     android:singleLine="true"
                     android:text="@string/menu_item_sort_by_distance_nearest_first"
-                    android:textSize="@dimen/two_line_primary_text_size" />
+                    android:textSize="@dimen/two_line_primary_text_size"
+                    android:textColor="@color/selector_item_unselected" />
 
             </TableRow>
 
@@ -196,7 +206,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/common_cancel"
-            android:layout_marginTop="@dimen/standard_half_margin"/>
+            android:layout_marginTop="@dimen/standard_half_margin"
+            style="@style/Widget.AppCompat.Button.Colored"/>
 
     </LinearLayout>
 
