@@ -33,8 +33,9 @@
         android:layout_height="64dp"
         android:layout_marginStart="4dp"
         android:layout_weight="0"
-        android:background="@drawable/category_listitem_background"
-        android:gravity="center"
+        android:background="@drawable/ic_list_pin"
+        android:gravity="top|center"
+        android:paddingTop="5dp"
         android:textSize="28dp"
         android:textAllCaps="true"
         android:textColor="@color/white"/>
