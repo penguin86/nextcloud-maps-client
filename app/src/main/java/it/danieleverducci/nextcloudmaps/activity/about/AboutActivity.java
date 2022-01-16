@@ -30,8 +30,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
 
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends NextcloudMapsStyledActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

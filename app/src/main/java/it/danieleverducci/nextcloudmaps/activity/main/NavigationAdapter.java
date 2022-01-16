@@ -80,15 +80,12 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
         }
 
         private void bind(@NonNull NavigationItem item) {
-            int color = view.getResources().getColor(R.color.accent);
 
             currentItem = item;
             name.setText(item.label);
 
-            name.setTextColor(color);
 
             icon.setImageDrawable(DrawableCompat.wrap(icon.getResources().getDrawable(item.icon)));
-            icon.setColorFilter(color);
             icon.setVisibility(View.VISIBLE);
         }
 

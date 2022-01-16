@@ -67,6 +67,8 @@
     <!-- Map picker activity -->
     <string name="coordinates_parse_error">Le coordinate dovrebbero essere nel formato xx.xxxxxx</string>
     <string name="coordinates_invalid_error">Coordinate non valide</string>
+    <string name="coordinates_north">°N</string>
+    <string name="coordinates_east">°E</string>
 
     <!-- About -->
     <string name="about_version_title">Versione</string>

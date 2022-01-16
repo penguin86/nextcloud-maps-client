@@ -75,14 +75,15 @@
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/menu_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="?attr/actionBarSize"
+                        android:layout_height="?attr/actionBarSize"
                         android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_gravity="center_vertical|start"
                         android:paddingStart="@dimen/spacer_1x"
                         android:paddingTop="@dimen/spacer_2x"
                         android:paddingEnd="@dimen/spacer_1x"
                         android:paddingBottom="@dimen/spacer_2x"
-                        android:tint="?attr/colorAccent"
+                        android:tint="@color/text_color"
                         android:src="@drawable/ic_menu_grey"/>
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/search_text"
@@ -104,8 +105,11 @@
                         android:layout_gravity="center_vertical|end"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/list_mode"
-                        android:padding="@dimen/spacer_2x"
-                        android:tint="?attr/colorAccent"
+                        android:paddingStart="@dimen/spacer_1x"
+                        android:paddingTop="@dimen/spacer_2x"
+                        android:paddingEnd="@dimen/spacer_1x"
+                        android:paddingBottom="@dimen/spacer_2x"
+                        android:tint="@color/text_color"
                         android:translationX="@dimen/spacer_1x"
                         android:src="@drawable/ic_alphabetical_asc" />
                     <androidx.appcompat.widget.AppCompatImageView
@@ -115,10 +119,13 @@
                         android:layout_gravity="center_vertical|end"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/list_mode"
-                        android:padding="@dimen/spacer_2x"
-                        android:tint="?attr/colorAccent"
+                        android:paddingStart="@dimen/spacer_1x"
+                        android:paddingTop="@dimen/spacer_2x"
+                        android:paddingEnd="@dimen/spacer_1x"
+                        android:paddingBottom="@dimen/spacer_2x"                        android:tint="@color/text_color"
                         android:translationX="@dimen/spacer_1x"
-                        android:src="@drawable/ic_view_module" />
+                        android:src="@drawable/ic_view_module"
+                        android:visibility="gone"/> <!-- TODO: Replace with Map View icon -->
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>

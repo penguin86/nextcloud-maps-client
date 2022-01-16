@@ -39,10 +39,11 @@ import com.nextcloud.android.sso.model.SingleSignOnAccount;
 import com.nextcloud.android.sso.ui.UiExceptionManager;
 
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends NextcloudMapsStyledActivity {
 
     protected ApiProvider mApi;
     protected ProgressBar progress;

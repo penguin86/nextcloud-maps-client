@@ -51,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
 import it.danieleverducci.nextcloudmaps.activity.about.AboutActivity;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
@@ -68,7 +69,7 @@ import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_TITLE;
 import androidx.lifecycle.Observer;
 
-public class MainActivity extends AppCompatActivity implements OnSortingOrderListener {
+public class MainActivity extends NextcloudMapsStyledActivity implements OnSortingOrderListener {
 
     private static final String TAG = "MainActivity";
 
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements OnSortingOrderLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

@@ -30,8 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/standard_margin"
-        android:text="@string/sort_by"
-        android:textColor="@color/defaultBrand"/>
+        android:text="@string/sort_by"/>
 
     <ScrollView
         android:id="@+id/scrollableSortings"
@@ -76,7 +75,7 @@
                     android:singleLine="true"
                     android:text="@string/menu_item_sort_by_title_a_z"
                     android:textSize="@dimen/two_line_primary_text_size"
-                    android:textColor="@color/selector_item_unselected"/>
+                    android:textColor="@color/text_color"/>
 
             </TableRow>
 
@@ -206,8 +205,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/common_cancel"
+            android:textAllCaps="false"
             android:layout_marginTop="@dimen/standard_half_margin"
-            style="@style/Widget.AppCompat.Button.Colored"/>
+            style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"/>
 
     </LinearLayout>
 

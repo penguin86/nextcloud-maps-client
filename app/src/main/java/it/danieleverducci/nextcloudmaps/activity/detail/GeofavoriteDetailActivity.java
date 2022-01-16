@@ -53,6 +53,7 @@ import java.util.HashSet;
 
 import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
 import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
@@ -60,7 +61,7 @@ import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
 import it.danieleverducci.nextcloudmaps.utils.MapUtils;
 
-public class GeofavoriteDetailActivity extends AppCompatActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
+public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public static final String TAG = "GeofavDetail";
     public static final int MINIMUM_ACCEPTABLE_ACCURACY = 50;  // In meters

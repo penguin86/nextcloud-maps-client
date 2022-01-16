@@ -42,31 +42,48 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:padding="20dp"
-            android:orientation="horizontal">
+            android:padding="10dp"
+            android:orientation="horizontal"
+            android:background="@color/defaultBrandAlpha">
 
             <EditText
                 android:id="@+id/lat_et"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="10dp"
                 android:textAlignment="center"
-                android:background="@color/whiteAlpha"
                 android:lines="1"
                 android:maxLines="1"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:text="°N"
+                android:textColor="@color/white"/>
 
             <EditText
                 android:id="@+id/lon_et"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
+                android:layout_marginStart="10dp"
                 android:textAlignment="center"
-                android:background="@color/whiteAlpha"
                 android:lines="1"
                 android:maxLines="1"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:textStyle="bold"
+                android:text="°E"
+                android:textColor="@color/white"/>
 
             <ImageView
                 android:id="@+id/latlon_confirm_btn"

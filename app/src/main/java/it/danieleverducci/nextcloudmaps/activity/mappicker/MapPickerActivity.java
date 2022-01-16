@@ -35,12 +35,13 @@ import java.util.Locale;
 
 import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityMapPickerBinding;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.MapUtils;
 
-public class MapPickerActivity extends AppCompatActivity {
+public class MapPickerActivity extends NextcloudMapsStyledActivity {
     public static final String TAG = "MapPickerActivity";
     private static final int PERMISSION_REQUEST_CODE = 8888;
 

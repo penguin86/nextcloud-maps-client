@@ -21,6 +21,11 @@
         <item name="colorAccent">@color/defaultBrand</item>
         <item name="colorControlNormal">?attr/colorAccent</item>
         <item name="windowActionModeOverlay">true</item>
+        <!-- App bar -->
+        <item name="colorPrimary">@color/systemBar</item>
+        <!-- Generic background -->
+        <item name="android:windowBackground">@color/defaultBackground</item>
+
     </style>
 
     <style name="AppTheme" parent="BaseTheme"/>
