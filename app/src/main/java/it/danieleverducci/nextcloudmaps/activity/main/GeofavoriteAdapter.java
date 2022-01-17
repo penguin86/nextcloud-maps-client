@@ -109,7 +109,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         Geofavorite geofavorite = geofavoriteListFiltered.get(position);
 
         holder.tv_category.setText(geofavorite.categoryLetter());
-        holder.tv_category_background.setTint(
+        holder.setCategoryColor(
                 geofavorite.categoryColor() == 0 ? context.getColor(R.color.defaultBrand) : geofavorite.categoryColor());
         holder.tv_title.setText(Html.fromHtml(geofavorite.getName()));
         holder.tv_content.setText(geofavorite.getComment());
@@ -164,7 +164,6 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         TextView tv_category, tv_title, tv_content, tv_date;
         ImageView bt_context_menu;
         ImageView bt_nav;
-        Drawable tv_category_background;
 
         ItemClickListener itemClickListener;
 
@@ -178,7 +177,6 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
             tv_date = itemView.findViewById(R.id.date);
             bt_context_menu = itemView.findViewById(R.id.geofav_context_menu_bt);
             bt_nav = itemView.findViewById(R.id.geofav_nav_bt);
-            tv_category_background = DrawableCompat.wrap(tv_category.getBackground());
 
             this.itemClickListener = itemClickListener;
             itemView.setOnClickListener(this);
@@ -191,18 +189,25 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.geofav_context_menu_bt:
-                    onOverflowIconClicked(view, getAdapterPosition());
+                    onOverflowIconClicked(view, getBindingAdapterPosition());
                     break;
                 case R.id.geofav_nav_bt:
                     if (itemClickListener != null)
-                        itemClickListener.onItemNavClick(get(getAdapterPosition()));
+                        itemClickListener.onItemNavClick(get(getBindingAdapterPosition()));
                     break;
                 default:
                     if (itemClickListener != null)
-                        itemClickListener.onItemClick(get(getAdapterPosition()));
+                        itemClickListener.onItemClick(get(getBindingAdapterPosition()));
             }
         }
+
+        public void setCategoryColor(int ccTint) {
+            Drawable bg = DrawableCompat.wrap(this.tv_category.getContext().getDrawable(R.drawable.ic_list_pin));
+            this.tv_category.setBackground(bg);
+            DrawableCompat.setTint(bg, ccTint);
+        }
     }
+
 
     private void performSort() {
         if (sortRule == SORT_BY_TITLE) {

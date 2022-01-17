@@ -38,7 +38,8 @@
         android:paddingTop="5dp"
         android:textSize="28dp"
         android:textAllCaps="true"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        app:drawableTint="@color/defaultBrand" />
 
     <LinearLayout
         android:orientation="vertical"

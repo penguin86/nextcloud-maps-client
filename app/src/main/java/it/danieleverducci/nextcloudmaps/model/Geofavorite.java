@@ -197,7 +197,7 @@ public class Geofavorite implements Serializable {
      * @see "https://github.com/nextcloud/maps/blob/master/src/utils.js"
      * @return the generated color or null for the default category
      */
-    public int categoryColor() {
+    public int  categoryColor() {
         // If category is default, return null: will be used Nextcloud's accent
         if (this.category.equals(DEFAULT_CATEGORY))
             return 0;
