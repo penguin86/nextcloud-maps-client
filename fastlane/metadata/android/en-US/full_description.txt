@@ -1,6 +1,6 @@
 UNOFFICIAL and FOSS Nextcloud Maps client at its earliest stages of developement. Shows your Nextcloud Maps geobookmarks list.
 Geobookmarks can be opened in all apps supporting geo links (i.e. Google Maps, Organic Maps etc...).
-A new geofavorite can be created on current location or by sharing a geo: uri from another app.
+A new geofavorite can be created on current location, by sharing a "geo:" uri from another app or manually picking from the map.
 
 Requires Maps app to be installed on the Nextcloud instance.
 As per Nextcloud's guidelines, the login is implemented using Nextcloud's Single Sign On module and thus requires Nextcloud app installed.

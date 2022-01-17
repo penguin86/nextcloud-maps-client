@@ -1,0 +1,5 @@
+Add geofavorite from map or coordinates
+Night mode (dark theme)
+New, less ambiguous, category icons (the old circle with letter inside is conventionally associated with user accounts)
+Graphic fixes
+Italian translation

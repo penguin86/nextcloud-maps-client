@@ -8,8 +8,9 @@
 
 (Always prefer [F-Droid](https://f-droid.org) build, when possible).
 
-Android app to show your Nextcloud Maps geobookmarks list. Geobookmarks can be opened in all apps supporting geo links (i.e. Google Maps, Organic Maps etc...).
-A new geofavorite can be created on current location.
+UNOFFICIAL and FOSS Nextcloud Maps client at its earliest stages of developement. Shows your Nextcloud Maps geobookmarks list.
+Geobookmarks can be opened in all apps supporting geo links (i.e. Google Maps, Organic Maps etc...).
+A new geofavorite can be created on current location, by sharing a "geo:" uri from another app or manually picking from the map.
 
 **Requires Maps app to be installed on the Nextcloud instance.**
 
