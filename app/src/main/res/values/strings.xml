@@ -17,13 +17,13 @@
 
 <resources>
     <!-- App strings -->
-    <string name="app_name">Maps Geobookmarks</string>
-    <string name="welcome">Welcome to Nextcloud Maps Geobookmarks</string>
+    <string name="app_name">Maps Geofavorites</string>
+    <string name="welcome">Welcome to Nextcloud Maps Geofavorites</string>
 
     <!-- Login Activity -->
     <string name="choose_account">Choose account</string>
 
-    <!-- Geobookmarks list -->
+    <!-- Geofavorites list -->
     <string name="new_geobookmark">New geofavorite</string>
     <string name="about">About</string>
     <string name="switch_account">Switch account</string>
@@ -47,7 +47,7 @@
     <string name="menu_item_sort_by_category_a_z">Category</string>
     <string name="menu_item_sort_by_distance_nearest_first">Distance</string>
 
-    <!-- Geobookmarks detail -->
+    <!-- Geofavorites detail -->
     <string name="name">Name</string>
     <string name="description">Description</string>
     <string name="created">Created</string>

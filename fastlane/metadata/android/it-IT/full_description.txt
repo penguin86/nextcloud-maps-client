@@ -1,0 +1,3 @@
+Client per Nextcloud Maps non ufficiale e FOSS al suo stato iniziale di sviluppo.
+Mostra la lista dei geosegnalibri di Nextcloud Maps e permette di aprirli in qualunque app supporti i "geo:" urls (i.e. Google Maps, Organic Maps etc...).
+È possibile creare nuovi geosegnalibri nella posizione GPS attuale, scegliendo la posizione dalla mappa o condividendola da altre app sotto forma di "geo:" uri.

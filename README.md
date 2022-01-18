@@ -1,6 +1,6 @@
-![Nextcloud Maps Geobookmarks Logo](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+![Nextcloud Maps Geofavorites Logo](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
-# Nextcloud Maps Geobookmarks Android app
+# Nextcloud Maps Geofavorites Android app
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/it/packages/it.danieleverducci.nextcloudmaps)
 [<img src="https://cdn.rawgit.com/steverichey/google-play-badge-svg/master/img/en_get.svg" height="80">](https://play.google.com/store/apps/details?id=it.danieleverducci.nextcloudmaps)
@@ -8,8 +8,8 @@
 
 (Always prefer [F-Droid](https://f-droid.org) build, when possible).
 
-UNOFFICIAL and FOSS Nextcloud Maps client at its earliest stages of developement. Shows your Nextcloud Maps geobookmarks list.
-Geobookmarks can be opened in all apps supporting geo links (i.e. Google Maps, Organic Maps etc...).
+UNOFFICIAL and FOSS Nextcloud Maps client at its earliest stages of developement. Shows your Nextcloud Maps geofavorites list.
+Geofavorites can be opened in all apps supporting geo links (i.e. Google Maps, Organic Maps etc...).
 A new geofavorite can be created on current location, by sharing a "geo:" uri from another app or manually picking from the map.
 
 **Requires Maps app to be installed on the Nextcloud instance.**

@@ -1,1 +1,1 @@
-Manage Nextcloud Maps Geobookmarks on your phone
+Manage Nextcloud Maps Geofavorites on your phone
