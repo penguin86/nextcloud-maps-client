@@ -199,7 +199,7 @@ public class Geofavorite implements Serializable {
      */
     public int  categoryColor() {
         // If category is default, return null: will be used Nextcloud's accent
-        if (this.category.equals(DEFAULT_CATEGORY))
+        if (this.category == null || this.category.equals(DEFAULT_CATEGORY) || this.category.length() == 0)
             return 0;
 
         float letter1Index = this.category.toLowerCase().charAt(0);
@@ -212,9 +212,7 @@ public class Geofavorite implements Serializable {
     }
 
     public String categoryLetter() {
-        if (category == null || category.length() == 0)
-            return "";
-        if (category.equals(DEFAULT_CATEGORY))
+        if (category == null || category.length() == 0 || category.equals(DEFAULT_CATEGORY))
             return "\u2022";
         return category.substring(0,1);
     }
