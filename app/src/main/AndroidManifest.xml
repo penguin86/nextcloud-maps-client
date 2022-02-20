@@ -35,21 +35,24 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".activity.login.LoginActivity">
+        <activity android:name=".activity.login.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activity.main.MainActivity">
+        <activity android:name=".activity.main.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
 
         <activity
-            android:name=".activity.detail.GeofavoriteDetailActivity">
+            android:name=".activity.detail.GeofavoriteDetailActivity"
+            android:exported="true">
             <!-- standard "geo" scheme -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>
@@ -89,6 +92,7 @@
         </activity>
 
         <activity android:name=".activity.mappicker.MapPickerActivity"
+            android:exported="true"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />

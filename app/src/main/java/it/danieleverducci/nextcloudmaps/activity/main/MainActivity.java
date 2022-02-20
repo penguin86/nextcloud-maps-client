@@ -58,6 +58,7 @@ import it.danieleverducci.nextcloudmaps.activity.login.LoginActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.NavigationAdapter.NavigationItem;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment.OnSortingOrderListener;
 import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
+import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
@@ -140,7 +141,7 @@ public class MainActivity extends NextcloudMapsStyledActivity implements OnSorti
 
 
         mMainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mMainActivityViewModel.init();
+        mMainActivityViewModel.init(getApplicationContext());
         mMainActivityViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
@@ -155,7 +156,7 @@ public class MainActivity extends NextcloudMapsStyledActivity implements OnSorti
         mMainActivityViewModel.getOnFinished().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean success) {
-                if(!success){
+                if(success == null || !success){
                     Toast.makeText(MainActivity.this, R.string.list_geofavorite_connection_error, Toast.LENGTH_LONG).show();
                 }
             }
@@ -297,9 +298,11 @@ public class MainActivity extends NextcloudMapsStyledActivity implements OnSorti
     }
 
     private void switch_account() {
+        ApiProvider.logout();
         SingleAccountHelper.setCurrentAccount(this, null);
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override

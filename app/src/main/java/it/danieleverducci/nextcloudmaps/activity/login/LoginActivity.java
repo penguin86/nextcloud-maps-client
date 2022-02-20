@@ -41,11 +41,11 @@ import com.nextcloud.android.sso.ui.UiExceptionManager;
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
+import it.danieleverducci.nextcloudmaps.api.API;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 
 public class LoginActivity extends NextcloudMapsStyledActivity {
 
-    protected ApiProvider mApi;
     protected ProgressBar progress;
     protected Button button;
 
@@ -115,9 +115,6 @@ public class LoginActivity extends NextcloudMapsStyledActivity {
     }
 
     private void accountAccessDone() {
-        Context l_context = getApplicationContext();
-        mApi = new ApiProvider(l_context);
-
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
 

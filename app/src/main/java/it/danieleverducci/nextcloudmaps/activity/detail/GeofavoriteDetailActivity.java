@@ -119,7 +119,7 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
         });
 
         mViewModel = new ViewModelProvider(this).get(GeofavoriteDetailActivityViewModel.class);
-        mViewModel.init();
+        mViewModel.init(getApplicationContext());
         mViewModel.getCategories().observe(this, new Observer<HashSet<String>>() {
             @Override
             public void onChanged(HashSet<String> categories) {

@@ -1,9 +1,9 @@
 package it.danieleverducci.nextcloudmaps.repository;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
@@ -29,9 +29,15 @@ public class GeofavoriteRepository {
     private MutableLiveData<Boolean> mIsUpdating = new MutableLiveData<>(false);
     private SingleLiveEvent<Boolean> mOnFinished = new SingleLiveEvent<>();
 
-    public static GeofavoriteRepository getInstance() {
+    private Context applicationContext;
+
+    public GeofavoriteRepository(Context applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
+    public static GeofavoriteRepository getInstance(Context applicationContext) {
         if(instance == null){
-            instance = new GeofavoriteRepository();
+            instance = new GeofavoriteRepository(applicationContext);
         }
         return instance;
     }
@@ -59,7 +65,7 @@ public class GeofavoriteRepository {
     public void updateGeofavorites() {
         mIsUpdating.postValue(true);
         // Obtain geofavorites
-        Call<List<Geofavorite>> call = ApiProvider.getAPI().getGeofavorites();
+        Call<List<Geofavorite>> call = ApiProvider.getAPI(this.applicationContext).getGeofavorites();
         call.enqueue(new Callback<List<Geofavorite>>() {
             @Override
             public void onResponse(@NonNull Call<List<Geofavorite>> call, @NonNull Response<List<Geofavorite>> response) {
@@ -94,10 +100,10 @@ public class GeofavoriteRepository {
         Call<Geofavorite> call;
         if (geofav.getId() == 0) {
             // New geofavorite
-            call = ApiProvider.getAPI().createGeofavorite(geofav);
+            call = ApiProvider.getAPI(this.applicationContext).createGeofavorite(geofav);
         } else {
             // Update existing geofavorite
-            call = ApiProvider.getAPI().updateGeofavorite(geofav.getId(), geofav);
+            call = ApiProvider.getAPI(this.applicationContext).updateGeofavorite(geofav.getId(), geofav);
         }
         call.enqueue(new Callback<Geofavorite>() {
             @Override
@@ -129,7 +135,7 @@ public class GeofavoriteRepository {
     public void deleteGeofavorite(Geofavorite geofav) {
         mIsUpdating.postValue(true);
         // Delete Geofavorite
-        Call<Geofavorite> call = ApiProvider.getAPI().deleteGeofavorite(geofav.getId());
+        Call<Geofavorite> call = ApiProvider.getAPI(this.applicationContext).deleteGeofavorite(geofav.getId());
         call.enqueue(new Callback<Geofavorite>() {
             @Override
             public void onResponse(Call<Geofavorite> call, Response<Geofavorite> response) {

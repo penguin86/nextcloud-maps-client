@@ -24,6 +24,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.GsonBuilder;
 import com.nextcloud.android.sso.api.NextcloudAPI;
@@ -35,47 +36,27 @@ import com.nextcloud.android.sso.model.SingleSignOnAccount;
 import retrofit2.NextcloudRetrofitApiBuilder;
 
 public class ApiProvider {
-    private final String TAG = ApiProvider.class.getCanonicalName();
+    private static final String TAG = ApiProvider.class.getCanonicalName();
 
-    @NonNull
-    protected Context context;
     protected static API mApi;
 
-    protected static String ssoAccountName;
+    @Nullable
+    public static API getAPI(Context context) {
+        if (mApi == null) {
+            try {
+                SingleSignOnAccount ssoAccount = SingleAccountHelper.getCurrentSingleSignOnAccount(context);
+                NextcloudAPI nextcloudAPI = new NextcloudAPI(context, ssoAccount, new GsonBuilder().create());
 
-    public ApiProvider(Context context) {
-        this.context = context;
-        initSsoApi(new NextcloudAPI.ApiConnectedListener() {
-            @Override
-            public void onConnected() {
-                Log.d(TAG, "Connected to Nextcloud instance");
+                mApi = new NextcloudRetrofitApiBuilder(nextcloudAPI, API.mApiEndpoint).create(API.class);
+            } catch (NextcloudFilesAppAccountNotFoundException | NoCurrentAccountSelectedException e) {
+                Log.d(TAG, "setAccout() called with: ex = [" + e + "]");
             }
-
-            @Override
-            public void onError(Exception ex) {
-                Log.d(TAG, "Unable to connect to Nextcloud instance: " + ex.toString());
-            }
-        });
-    }
-
-    public void initSsoApi(final NextcloudAPI.ApiConnectedListener callback) {
-        try {
-            SingleSignOnAccount ssoAccount = SingleAccountHelper.getCurrentSingleSignOnAccount(context);
-            NextcloudAPI nextcloudAPI = new NextcloudAPI(context, ssoAccount, new GsonBuilder().create(), callback);
-
-            ssoAccountName = ssoAccount.name;
-            mApi = new NextcloudRetrofitApiBuilder(nextcloudAPI, API.mApiEndpoint).create(API.class);
-        } catch (NextcloudFilesAppAccountNotFoundException | NoCurrentAccountSelectedException e) {
-            Log.d(TAG, "setAccout() called with: ex = [" + e + "]");
         }
-    }
 
-    public static API getAPI() {
         return mApi;
     }
 
-    public static String getAccountName() {
-        return ssoAccountName;
+    public static void logout() {
+        mApi = null;
     }
-
 }

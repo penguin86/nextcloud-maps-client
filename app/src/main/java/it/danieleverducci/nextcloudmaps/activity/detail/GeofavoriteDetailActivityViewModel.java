@@ -1,5 +1,7 @@
 package it.danieleverducci.nextcloudmaps.activity.detail;
 
+import android.content.Context;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -14,8 +16,8 @@ import it.danieleverducci.nextcloudmaps.repository.GeofavoriteRepository;
 public class GeofavoriteDetailActivityViewModel extends ViewModel {
     private GeofavoriteRepository mRepo;
 
-    public void init() {
-        mRepo = GeofavoriteRepository.getInstance();
+    public void init(Context applicationContext) {
+        mRepo = GeofavoriteRepository.getInstance(applicationContext);
     }
 
     public Geofavorite getGeofavorite(int id) {
