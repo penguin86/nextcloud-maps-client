@@ -161,7 +161,7 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
             if (getIntent().getData() != null) {
                 // Opened by external generic intent: parse URI
                 try {
-                    double[] coords = GeoUriParser.parseUri(getIntent().getData());
+                    double[] coords = GeoUriParser.parseUri(getIntent().getData(), false);
                     mGeofavorite.setLat(coords[0]);
                     mGeofavorite.setLng(coords[1]);
                     mViewHolder.hideAccuracy();

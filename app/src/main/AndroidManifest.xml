@@ -21,10 +21,13 @@
     package="it.danieleverducci.nextcloudmaps">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <queries>
         <package android:name="com.nextcloud.client" />
+        <!-- To see if google maps is installed, as it needs a specific intent Uri) -->
+        <package android:name="com.google.android.apps.maps" />
     </queries>
 
     <application

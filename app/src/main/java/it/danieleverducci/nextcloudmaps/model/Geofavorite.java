@@ -164,7 +164,10 @@ public class Geofavorite implements Serializable {
     }
 
     public Uri getGeoUri() {
-        return GeoUriParser.createUri(this.lat, this.lng, this.name);
+        return GeoUriParser.createGeoUri(this.lat, this.lng, this.name);
+    }
+    public Uri getGmapsUri() {
+        return GeoUriParser.createGmapsUri(this.lat, this.lng);
     }
 
     public boolean valid() {

@@ -15,25 +15,19 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.preference.PreferenceManager;
 
 import org.osmdroid.api.IGeoPoint;
 import org.osmdroid.api.IMapController;
-import org.osmdroid.config.Configuration;
-import org.osmdroid.config.IConfigurationProvider;
 import org.osmdroid.events.MapListener;
 import org.osmdroid.events.ScrollEvent;
 import org.osmdroid.events.ZoomEvent;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
-import org.osmdroid.views.Projection;
 
 import java.util.Locale;
 
-import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
@@ -64,7 +58,7 @@ public class MapPickerActivity extends NextcloudMapsStyledActivity {
             @Override
             public void onConfirmButtonPressed() {
                 double[] coords = mViewHolder.getCurrentCoordinates();
-                Uri geoUri = GeoUriParser.createUri(coords[0], coords[1], null);
+                Uri geoUri = GeoUriParser.createGeoUri(coords[0], coords[1], null);
                 Intent i = new Intent(MapPickerActivity.this, GeofavoriteDetailActivity.class);
                 i.setData(geoUri);
                 startActivity(i);

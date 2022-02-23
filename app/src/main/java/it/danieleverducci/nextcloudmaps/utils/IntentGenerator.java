@@ -2,6 +2,7 @@ package it.danieleverducci.nextcloudmaps.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import it.danieleverducci.nextcloudmaps.R;
@@ -22,7 +23,16 @@ public class IntentGenerator {
     public static Intent newGeoUriIntent(Context context, Geofavorite item) {
         Intent i = new Intent();
         i.setAction(Intent.ACTION_VIEW);
-        i.setData(item.getGeoUri());
+        i.setData(isGoogleMapsInstalled(context) ? item.getGmapsUri() : item.getGeoUri());
         return i;
+    }
+    
+    public static boolean isGoogleMapsInstalled(Context context) {
+        try {
+            context.getPackageManager().getApplicationInfo("com.google.android.apps.maps", 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }
