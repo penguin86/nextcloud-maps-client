@@ -27,6 +27,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -64,7 +65,6 @@ import it.danieleverducci.nextcloudmaps.utils.MapUtils;
 public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public static final String TAG = "GeofavDetail";
-    public static final int MINIMUM_ACCEPTABLE_ACCURACY = 50;  // In meters
     public static final String ARG_GEOFAVORITE = "geofav";
     private static final int PERMISSION_REQUEST_CODE = 9999;
 
@@ -166,6 +166,7 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
                     mGeofavorite.setLng(coords[1]);
                     mViewHolder.hideAccuracy();
                 } catch (IllegalArgumentException e) {
+                    Log.e(TAG, e.getMessage());
                     Toast.makeText(this, R.string.error_unsupported_uri, Toast.LENGTH_SHORT).show();
                     finish();
                 }

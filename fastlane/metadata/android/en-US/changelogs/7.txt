@@ -1,4 +1,4 @@
 Fix crash when using corrupted dataset with null category (It may happen on imports from Google Maps)
 Reimplemented API Provider to try to fix NullPointerException on mApi reported in Play Store
 Open Google Maps on Google devices
-Support share from google maps and google maps urls
+Support share from: google maps urls, OpenStreetMap urls (only if containing coordinates)

@@ -12,7 +12,7 @@ public class GeoUriParser {
     private static final Pattern PATTERN_GEO = Pattern.compile("geo:(-?[\\d.]+),(-?[\\d.]+)");
     // Try to match not only geoUri but also Google Maps Uri
     private static final Pattern PATTERN_BROAD = Pattern.compile(
-        "(?:&query=|&center=|geo:)(-?\\d{1,2}\\.\\d{1,10})(?:,|%2C)(-?\\d{1,3}\\.\\d{1,10})"
+        "(?:@|&query=|&center=|geo:|#map=\\d{1,2}\\/)(-?\\d{1,2}\\.\\d+)(?:,|%2C|\\/)(-?\\d{1,3}\\.\\d{1,10})"
     );
 
     /**
