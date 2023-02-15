@@ -162,7 +162,9 @@ public class GeofavoriteRepository {
     private void updateCategories(List<Geofavorite> geofavs) {
         HashSet<String> categories = new HashSet<>();
         for (Geofavorite g : geofavs) {
-            categories.add(g.getCategory());
+            String cat = g.getCategory();
+            if (cat != null)
+                categories.add(cat);
         }
         mCategories.postValue(categories);
     }

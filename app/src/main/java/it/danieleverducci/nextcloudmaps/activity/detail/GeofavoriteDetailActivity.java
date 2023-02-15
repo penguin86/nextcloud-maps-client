@@ -336,11 +336,11 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
 
         public void updateView(Geofavorite item) {
             binding.collapsingToolbar.setTitle(item.getName() != null ? item.getName() : getString(R.string.new_geobookmark));
-            binding.nameEt.setText(item.getName());
-            binding.descriptionEt.setText(item.getComment());
+            binding.nameEt.setText(item.getName() != null ? item.getName() : "");
+            binding.descriptionEt.setText(item.getComment() != null ? item.getComment() : "");
             binding.createdTv.setText(item.getLocalDateCreated().format(dateFormatter));
             binding.modifiedTv.setText(item.getLocalDateCreated().format(dateFormatter));
-            binding.categoryAt.setText(item.getCategory());
+            binding.categoryAt.setText(item.getCategory() != null ? item.getCategory() : Geofavorite.DEFAULT_CATEGORY);
             updateViewCoords(item);
         }
 

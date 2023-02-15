@@ -345,7 +345,7 @@ public class MainActivity extends NextcloudMapsStyledActivity implements OnSorti
 
     private void showGeofavoriteDeteleDialog(Geofavorite item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-        builder.setMessage(getString(R.string.dialog_delete_message).replace("{name}", item.getName()))
+        builder.setMessage(getString(R.string.dialog_delete_message).replace("{name}", item.getName() != null ? item.getName() : ""))
                 .setTitle(R.string.dialog_delete_title)
                 .setPositiveButton(R.string.dialog_delete_delete, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
