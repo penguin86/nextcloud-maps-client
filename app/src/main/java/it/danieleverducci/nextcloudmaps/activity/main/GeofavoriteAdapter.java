@@ -111,8 +111,8 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
         holder.tv_category.setText(geofavorite.categoryLetter());
         holder.setCategoryColor(
                 geofavorite.categoryColor() == 0 ? context.getColor(R.color.defaultBrand) : geofavorite.categoryColor());
-        holder.tv_title.setText(Html.fromHtml(geofavorite.getName()));
-        holder.tv_content.setText(geofavorite.getComment());
+        holder.tv_title.setText(Html.fromHtml(geofavorite.getName() == null ? "" : geofavorite.getName()));
+        holder.tv_content.setText(geofavorite.getComment() == null ? "" : geofavorite.getComment());
         holder.tv_date.setText(geofavorite.getLocalDateCreated().format(dateFormatter));
     }
 
