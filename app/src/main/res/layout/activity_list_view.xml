@@ -64,7 +64,7 @@
                 android:layout_marginTop="@dimen/spacer_1hx"
                 android:layout_marginEnd="@dimen/spacer_2x"
                 android:layout_marginBottom="@dimen/spacer_1hx"
-                app:cardCornerRadius="@dimen/spacer_1x"
+                app:cardCornerRadius="30dp"
                 app:cardElevation="2dp"
                 app:strokeWidth="0dp">
 
@@ -102,6 +102,7 @@
                         android:id="@+id/sort_mode"
                         android:layout_width="?attr/actionBarSize"
                         android:layout_height="?attr/actionBarSize"
+                        android:layout_marginRight="@dimen/spacer_1x"
                         android:layout_gravity="center_vertical|end"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/list_mode"
