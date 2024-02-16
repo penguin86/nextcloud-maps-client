@@ -168,7 +168,8 @@
         android:layout_height="wrap_content"
         app:fabSize="mini"
         android:src="@drawable/ic_add_map"
-        app:backgroundTint="@color/defaultBrand"/>
+        app:backgroundTint="@color/defaultBrand"
+        app:tint="@color/white"/>
 
     <!-- Add from current position FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -179,7 +180,8 @@
         android:layout_height="wrap_content"
         app:fabSize="mini"
         android:src="@drawable/ic_add_gps"
-        app:backgroundTint="@color/defaultBrand"/>
+        app:backgroundTint="@color/defaultBrand"
+        app:tint="@color/white"/>
 
     <!-- Main FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -189,6 +191,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add"
-        app:backgroundTint="@color/defaultBrand"/>
+        app:backgroundTint="@color/defaultBrand"
+        app:tint="@color/white"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

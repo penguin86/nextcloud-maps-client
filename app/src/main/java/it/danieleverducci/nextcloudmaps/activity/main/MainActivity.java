@@ -41,7 +41,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -69,6 +68,7 @@ import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_CREATED;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_TITLE;
 import androidx.lifecycle.Observer;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class MainActivity extends NextcloudMapsStyledActivity implements OnSortingOrderListener {
 
@@ -299,7 +299,7 @@ public class MainActivity extends NextcloudMapsStyledActivity implements OnSorti
 
     private void switch_account() {
         ApiProvider.logout();
-        SingleAccountHelper.setCurrentAccount(this, null);
+        SingleAccountHelper.applyCurrentAccount(this, null);
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
