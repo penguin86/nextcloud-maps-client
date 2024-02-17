@@ -3,7 +3,6 @@ package it.danieleverducci.nextcloudmaps.activity.main;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.List;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.repository.GeofavoriteRepository;
 
-public class MainActivityViewModel extends ViewModel {
+public class GeofavoritesFragmentViewModel extends ViewModel {
     private GeofavoriteRepository mRepo;
 
     public void init(Context applicationContext) {

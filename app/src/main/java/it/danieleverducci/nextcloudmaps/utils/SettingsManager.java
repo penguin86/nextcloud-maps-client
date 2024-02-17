@@ -1,15 +1,11 @@
 package it.danieleverducci.nextcloudmaps.utils;
 
 import android.content.Context;
-
 import androidx.preference.PreferenceManager;
-
-import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter;
 
 public class SettingsManager {
     static private final String SETTING_SORT_BY = "SETTING_SORT_BY";
-    static private final String SETTING_GRID_VIEW_ENABLED = "SETTING_GRID_VIEW_ENABLED";
     static private final String SETTING_LAST_SELECTED_LIST_VIEW = "SETTING_LAST_SELECTED_LIST_VIEW";
 
     public static int getGeofavoriteListSortBy(Context context) {
@@ -20,16 +16,6 @@ public class SettingsManager {
     public static void setGeofavoriteListSortBy(Context context, int value) {
         PreferenceManager.getDefaultSharedPreferences(context)
             .edit().putInt(SETTING_SORT_BY, value).apply();
-    }
-
-    public static boolean isGeofavoriteListShownAsGrid(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(SETTING_GRID_VIEW_ENABLED, false);
-    }
-
-    public static void setGeofavoriteListShownAsGrid(Context context, boolean value) {
-        PreferenceManager.getDefaultSharedPreferences(context)
-            .edit().putBoolean(SETTING_GRID_VIEW_ENABLED, value).apply();
     }
 
     public static boolean isGeofavoriteListShownAsMap(Context context) {

@@ -39,4 +39,7 @@
     <!-- FAB dimensions -->
     <dimen name="fab_vertical_offset">75dp</dimen>
 
+    <!-- Floating bar below search bar -->
+    <dimen name="floating_bar_height">36dp</dimen>
+
 </resources>

@@ -48,6 +48,7 @@ public class SortingOrderDialogFragment extends DialogFragment {
     public static final String SORTING_ORDER_FRAGMENT = "SORTING_ORDER_FRAGMENT";
     private static final String KEY_SORT_ORDER = "SORT_ORDER";
 
+    private OnSortingOrderListener onSortingOrderListener;
     private View mView;
     private View[] mTaggedViews;
     private Button mCancel;
@@ -88,6 +89,10 @@ public class SortingOrderDialogFragment extends DialogFragment {
         setupListeners();
 
         return mView;
+    }
+
+    public void setOnSortingOrderListener(OnSortingOrderListener listener) {
+        this.onSortingOrderListener = listener;
     }
 
     /**
@@ -171,8 +176,8 @@ public class SortingOrderDialogFragment extends DialogFragment {
         @Override
         public void onClick(View v) {
             dismissAllowingStateLoss();
-            ((SortingOrderDialogFragment.OnSortingOrderListener) getActivity())
-                    .onSortingOrderChosen((int) v.getTag());
+            if (onSortingOrderListener != null)
+                onSortingOrderListener.onSortingOrderChosen((int) v.getTag());
         }
     }
 
