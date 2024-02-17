@@ -92,10 +92,6 @@
     <string name="url_license" translatable="false">https://raw.githubusercontent.com/penguin86/nextcloud-maps-client/master/LICENSE</string>
     <string name="url_maps" translatable="false">https://donate.openstreetmap.org</string>
 
-    <!-- Settings -->
-    <string name="setting_sort_by">SETTING_SORT_BY</string>
-    <string name="setting_grid_view_enabled">SETTING_GRID_VIEW_ENABLED</string>
-
     <!-- Menu -->
     <string name="new_geobookmark_gps">New from current position</string>
     <string name="new_geobookmark_map">New from map</string>

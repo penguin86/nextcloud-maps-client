@@ -61,6 +61,7 @@ import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
+import it.danieleverducci.nextcloudmaps.utils.SettingsManager;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -106,8 +107,9 @@ public class MainActivity extends NextcloudMapsStyledActivity implements OnSorti
 
         preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-        int sortRule = preferences.getInt(getString(R.string.setting_sort_by), SORT_BY_CREATED);
-        boolean gridViewEnabled = preferences.getBoolean(getString(R.string.setting_grid_view_enabled), false);
+
+        int sortRule = SettingsManager.getGeofavoriteListSortBy(this);
+        boolean gridViewEnabled = SettingsManager.isGeofavoriteListShownAsGrid(this);
 
         recyclerView = findViewById(R.id.recycler_view);
         layoutManager = new StaggeredGridLayoutManager(gridViewEnabled ? 2 : 1, StaggeredGridLayoutManager.VERTICAL);
