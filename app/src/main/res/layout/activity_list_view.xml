@@ -75,9 +75,9 @@
 
                     <androidx.appcompat.widget.AppCompatImageButton
                         android:id="@+id/menu_button"
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="?attr/actionBarSize"
-                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:layout_width="?android:attr/actionBarSize"
+                        android:layout_height="?android:attr/actionBarSize"
+                        android:background="?android:attr/selectableItemBackgroundBorderless"
                         android:layout_gravity="center_vertical|start"
                         android:paddingStart="@dimen/spacer_1x"
                         android:paddingTop="@dimen/spacer_2x"
@@ -116,14 +116,15 @@
     <!-- Add from map FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_from_map"
-        android:layout_margin="24dp"
-        android:layout_gravity="bottom|end"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:fabSize="mini"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
         android:src="@drawable/ic_add_map"
         app:backgroundTint="@color/defaultBrand"
-        app:tint="@color/white"/>
+        app:fabSize="mini"
+        app:tint="@color/white"
+        tools:ignore="DuplicateClickableBoundsCheck" />
 
     <!-- Add from current position FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

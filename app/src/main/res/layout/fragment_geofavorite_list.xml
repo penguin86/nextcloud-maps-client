@@ -18,7 +18,7 @@
             android:id="@+id/sort_mode"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/floating_bar_height"
-            android:background="?attr/selectableItemBackgroundBorderless"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/list_mode"
             android:paddingStart="@dimen/spacer_2x"
             android:paddingEnd="@dimen/spacer_2x"
