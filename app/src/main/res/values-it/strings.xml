@@ -97,4 +97,9 @@
     <string name="new_geobookmark_gps">Crea dalla posizione corrente</string>
     <string name="new_geobookmark_map">Crea dalla mappa</string>
 
+    <!-- Accessibility (content descriptions) -->
+    <string name="open_fab">Aggiungi</string>
+    <string name="add_from_gps">Crea dalla posizione corrente</string>
+    <string name="add_from_map">Crea dalla mappa</string>
+
 </resources>

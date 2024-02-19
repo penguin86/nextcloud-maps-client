@@ -96,4 +96,9 @@
     <string name="new_geobookmark_gps">New from current position</string>
     <string name="new_geobookmark_map">New from map</string>
 
+    <!-- Accessibility (content descriptions) -->
+    <string name="open_fab">Add geofavorite</string>
+    <string name="add_from_gps">Add geofavorite at current GPS position</string>
+    <string name="add_from_map">Add geofavorite from map</string>
+    <string name="menu">Open menu</string>
 </resources>
