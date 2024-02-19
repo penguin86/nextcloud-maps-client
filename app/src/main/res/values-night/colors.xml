@@ -3,4 +3,5 @@
     <color name="text_color">#eee</color>
     <color name="disabled">#888</color>
     <color name="defaultBackground">#000</color>
+    <color name="translucent">#C000</color>
 </resources>
