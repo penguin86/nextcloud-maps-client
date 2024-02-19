@@ -43,7 +43,7 @@
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
+                    android:layout_height="?android:attr/actionBarSize"
                     app:contentInsetStart="0dp"
                     app:layout_collapseMode="pin"
                     android:background="@android:color/transparent">
@@ -51,8 +51,8 @@
                     <!-- Back button -->
                     <ImageView
                         android:id="@+id/back_bt"
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="?attr/actionBarSize"
+                        android:layout_width="?android:attr/actionBarSize"
+                        android:layout_height="?android:attr/actionBarSize"
                         android:layout_gravity="start"
                         android:padding="16dp"
                         android:src="@drawable/ic_back_grey"
@@ -62,8 +62,8 @@
                     <!-- Manual position button -->
                     <ImageView
                         android:id="@+id/manual_pos_bt"
-                        android:layout_width="?attr/actionBarSize"
-                        android:layout_height="?attr/actionBarSize"
+                        android:layout_width="?android:attr/actionBarSize"
+                        android:layout_height="?android:attr/actionBarSize"
                         android:layout_gravity="end"
                         android:padding="16dp"
                         android:src="@drawable/ic_manual_pos"

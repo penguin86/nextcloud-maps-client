@@ -19,7 +19,7 @@
 <resources>
 
     <style name="AppTheme" parent="BaseTheme">
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">?android:attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

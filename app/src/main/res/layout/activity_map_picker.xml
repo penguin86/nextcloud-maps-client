@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/back_bt"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="start"
             android:padding="16dp"
             android:src="@drawable/ic_back_grey"
@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/ok_bt"
-            android:layout_width="?attr/actionBarSize"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_width="?android:attr/actionBarSize"
+            android:layout_height="?android:attr/actionBarSize"
             android:layout_gravity="end"
             android:padding="16dp"
             android:src="@drawable/ic_ok"

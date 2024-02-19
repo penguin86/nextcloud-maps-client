@@ -19,7 +19,7 @@
     <!-- Base application theme. -->
     <style name="BaseTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorAccent">@color/defaultBrand</item>
-        <item name="colorControlNormal">?attr/colorAccent</item>
+        <item name="colorControlNormal">?android:attr/colorAccent</item>
         <item name="windowActionModeOverlay">true</item>
         <!-- App bar -->
         <item name="colorPrimary">@color/systemBar</item>
