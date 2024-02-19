@@ -15,6 +15,7 @@ import androidx.lifecycle.Observer;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.infowindow.MarkerInfoWindow;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.MapUtils;
+import it.danieleverducci.nextcloudmaps.views.GeofavMarkerInfoWindow;
 
 public class GeofavoriteMapFragment extends GeofavoritesFragment {
     private MapView map;
@@ -86,6 +88,7 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment {
         m.setTitle(geofavorite.getName());
         m.setSnippet(geofavorite.getComment());
         m.setSubDescription(geofavorite.getCategory());
+        m.setInfoWindow(new GeofavMarkerInfoWindow(map));
         map.getOverlays().add(m);
     }
 }
