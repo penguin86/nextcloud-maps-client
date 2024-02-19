@@ -147,6 +147,9 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
         AppCompatImageView sortButton = v.findViewById(R.id.sort_mode);
         sortButton.setOnClickListener(view -> openSortingOrderDialogFragment(geofavoriteAdapter.getSortRule()));
 
+        View showMapButton = v.findViewById(R.id.view_mode_map);
+        showMapButton.setOnClickListener(View -> ((MainActivity)requireActivity()).showMap());
+
         return v;
     }
 

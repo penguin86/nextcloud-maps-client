@@ -56,6 +56,7 @@ import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment
 import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.fragments.GeofavoriteListFragment;
+import it.danieleverducci.nextcloudmaps.fragments.GeofavoriteMapFragment;
 import it.danieleverducci.nextcloudmaps.fragments.GeofavoritesFragment;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.SettingsManager;
@@ -87,6 +88,14 @@ public class MainActivity extends NextcloudMapsStyledActivity {
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
+    public void showMap() {
+        replaceFragment(new GeofavoriteMapFragment());
+    }
+
+    public void showList() {
+        replaceFragment(new GeofavoriteListFragment());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -94,15 +103,10 @@ public class MainActivity extends NextcloudMapsStyledActivity {
         setContentView(R.layout.activity_main);
 
         boolean showMap = SettingsManager.isGeofavoriteListShownAsMap(this);
-        if (showMap) {
-            // TODO: Map fragment
-        } else {
-            Fragment fragment = new GeofavoriteListFragment();
-            FragmentManager manager = getSupportFragmentManager();
-            FragmentTransaction transaction = manager.beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment);
-            transaction.commit();
-        }
+        if (showMap)
+            showMap();
+        else
+            showList();
 
         FloatingActionButton fab = findViewById(R.id.open_fab);
         fab.setOnClickListener(view -> openFab(!this.isFabOpen));
@@ -122,6 +126,13 @@ public class MainActivity extends NextcloudMapsStyledActivity {
     protected void onPause() {
         openFab(false);
         super.onPause();
+    }
+
+    private void replaceFragment(Fragment fragment) {
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment);
+        transaction.commit();
     }
 
     private void setupNavigationMenu() {
