@@ -1,11 +1,15 @@
 package it.danieleverducci.nextcloudmaps.fragments;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_CATEGORY;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_CREATED;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_DISTANCE;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_TITLE;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +17,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -22,6 +29,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
@@ -35,24 +44,57 @@ import it.danieleverducci.nextcloudmaps.utils.SettingsManager;
 public class GeofavoriteListFragment extends GeofavoritesFragment implements SortingOrderDialogFragment.OnSortingOrderListener {
 
     private SwipeRefreshLayout swipeRefresh;
-    private RecyclerView recyclerView;
-    private LinearLayoutManager layoutManager;
     private GeofavoriteAdapter geofavoriteAdapter;
-    private GeofavoriteAdapter.ItemClickListener rvItemClickListener;
+    private Toolbar toolbar;
+    private MaterialCardView homeToolbar;
+    private SearchView searchView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_geofavorite_list, container, false);
 
+        // Setup toolbar/searchbar
+        toolbar = v.findViewById(R.id.toolbar);
+        homeToolbar = v.findViewById(R.id.home_toolbar);
+
+        searchView = v.findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                onSearch(query);
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(() -> {
+            if (toolbar.getVisibility() == VISIBLE && TextUtils.isEmpty(searchView.getQuery())) {
+                updateToolbars(true);
+                return true;
+            }
+            return false;
+        });
+
+        //setSupportActionBar(toolbar);
+
+        homeToolbar.setOnClickListener(view -> updateToolbars(false));
+
+        AppCompatImageButton menuButton = v.findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(view -> ((MainActivity)requireActivity()).openDrawer());
+
         // Setup list
         int sortRule = SettingsManager.getGeofavoriteListSortBy(requireContext());
 
-        recyclerView = v.findViewById(R.id.recycler_view);
-        layoutManager = new LinearLayoutManager(requireContext());
+        RecyclerView recyclerView = v.findViewById(R.id.recycler_view);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        rvItemClickListener = new GeofavoriteAdapter.ItemClickListener() {
+        GeofavoriteAdapter.ItemClickListener rvItemClickListener = new GeofavoriteAdapter.ItemClickListener() {
             @Override
             public void onItemClick(Geofavorite item) {
                 openGeofavorite(item);
@@ -113,7 +155,6 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
         super.onViewCreated(view, savedInstanceState);
 
         // Set icons
-        // Setup list
         int sortRule = SettingsManager.getGeofavoriteListSortBy(requireContext());
         updateSortingIcon(sortRule);
     }
@@ -155,6 +196,15 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
                 sortButton.setImageResource(R.drawable.ic_distance_asc);
                 break;
         }
+    }
+
+    private void updateToolbars(boolean disableSearch) {
+        homeToolbar.setVisibility(disableSearch ? VISIBLE : GONE);
+        toolbar.setVisibility(disableSearch ? GONE : VISIBLE);
+        if (disableSearch) {
+            searchView.setQuery(null, true);
+        }
+        searchView.setIconified(disableSearch);
     }
 
 }

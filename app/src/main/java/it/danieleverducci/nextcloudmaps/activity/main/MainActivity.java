@@ -78,14 +78,14 @@ public class MainActivity extends NextcloudMapsStyledActivity {
     private static final String NAVIGATION_KEY_SWITCH_ACCOUNT = "switch_account";
 
     private DrawerLayout drawerLayout;
-    private Toolbar toolbar;
-    private MaterialCardView homeToolbar;
-    private SearchView searchView;
-    private FloatingActionButton fab;
 
     private boolean isFabOpen = false;
 
     NavigationAdapter navigationCommonAdapter;
+
+    public void openDrawer() {
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class MainActivity extends NextcloudMapsStyledActivity {
             transaction.commit();
         }
 
-        fab = findViewById(R.id.open_fab);
+        FloatingActionButton fab = findViewById(R.id.open_fab);
         fab.setOnClickListener(view -> openFab(!this.isFabOpen));
 
         fab = findViewById(R.id.add_from_gps);
@@ -113,44 +113,9 @@ public class MainActivity extends NextcloudMapsStyledActivity {
         fab = findViewById(R.id.add_from_map);
         fab.setOnClickListener(view -> addGeofavoriteFromMap());
 
-        toolbar = findViewById(R.id.toolbar);
-        homeToolbar = findViewById(R.id.home_toolbar);
-
-        searchView = findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                GeofavoritesFragment gff = (GeofavoritesFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-                if (gff == null) {
-                    Log.e(TAG, "onQueryTextChange: No fragment active!");
-                    return false;
-                }
-                gff.onSearch(query);
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            if (toolbar.getVisibility() == VISIBLE && TextUtils.isEmpty(searchView.getQuery())) {
-                updateToolbars(true);
-                return true;
-            }
-            return false;
-        });
-
-        setSupportActionBar(toolbar);
         setupNavigationMenu();
 
-        homeToolbar.setOnClickListener(view -> updateToolbars(false));
-
         drawerLayout = findViewById(R.id.drawerLayout);
-        AppCompatImageButton menuButton = findViewById(R.id.menu_button);
-        menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
     }
 
     @Override
@@ -187,15 +152,6 @@ public class MainActivity extends NextcloudMapsStyledActivity {
 
         RecyclerView navigationMenuCommon = findViewById(R.id.navigationCommon);
         navigationMenuCommon.setAdapter(navigationCommonAdapter);
-    }
-
-    private void updateToolbars(boolean disableSearch) {
-        homeToolbar.setVisibility(disableSearch ? VISIBLE : GONE);
-        toolbar.setVisibility(disableSearch ? GONE : VISIBLE);
-        if (disableSearch) {
-            searchView.setQuery(null, true);
-        }
-        searchView.setIconified(disableSearch);
     }
 
     private void addGeofavoriteFromGps() {
