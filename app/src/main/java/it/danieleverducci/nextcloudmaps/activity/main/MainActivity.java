@@ -17,10 +17,14 @@
 
 package it.danieleverducci.nextcloudmaps.activity.main;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -48,12 +52,14 @@ import it.danieleverducci.nextcloudmaps.utils.SettingsManager;
 public class MainActivity extends NextcloudMapsStyledActivity {
 
     private static final String TAG = "MainActivity";
+    private static final int PERMISSION_REQUEST_CODE = 3890;
 
     private static final String NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_GPS = "add_from_gps";
     private static final String NAVIGATION_KEY_ADD_GEOFAVORITE_FROM_MAP = "add_from_map";
     private static final String NAVIGATION_KEY_SHOW_ABOUT = "about";
     private static final String NAVIGATION_KEY_SWITCH_ACCOUNT = "switch_account";
 
+    private ArrayList<OnGpsPermissionGrantedListener> onGpsPermissionGrantedListener = new ArrayList<>();
     private DrawerLayout drawerLayout;
 
     private boolean isFabOpen = false;
@@ -66,11 +72,43 @@ public class MainActivity extends NextcloudMapsStyledActivity {
 
     public void showMap() {
         replaceFragment(new GeofavoriteMapFragment());
+        SettingsManager.setGeofavoriteListShownAsMap(this, true);
     }
 
     public void showList() {
         replaceFragment(new GeofavoriteListFragment());
+        SettingsManager.setGeofavoriteListShownAsMap(this, false);
     }
+
+    public void addOnGpsPermissionGrantedListener(OnGpsPermissionGrantedListener l) {
+        onGpsPermissionGrantedListener.add(l);
+    }
+
+    public void removeOnGpsPermissionGrantedListener(OnGpsPermissionGrantedListener l) {
+        onGpsPermissionGrantedListener.remove(l);
+    }
+
+    public void requestGpsPermissions() {
+        ActivityCompat.requestPermissions(
+            this,
+            new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+            PERMISSION_REQUEST_CODE
+        );
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == PERMISSION_REQUEST_CODE && permissions[0].equals(Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                for (OnGpsPermissionGrantedListener l : onGpsPermissionGrantedListener) {
+                    l.onGpsPermissionGranted();
+                }
+            }
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +220,10 @@ public class MainActivity extends NextcloudMapsStyledActivity {
             addFromMapFab.animate().translationY(0);
         }
 
+    }
+
+    public interface OnGpsPermissionGrantedListener {
+        public void onGpsPermissionGranted();
     }
 
 }

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.GeofavoritesFragmentViewModel;
+import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
 

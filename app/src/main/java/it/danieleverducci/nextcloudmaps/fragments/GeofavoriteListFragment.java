@@ -80,8 +80,6 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
             return false;
         });
 
-        //setSupportActionBar(toolbar);
-
         homeToolbar.setOnClickListener(view -> updateToolbars(false));
 
         AppCompatImageButton menuButton = v.findViewById(R.id.menu_button);
@@ -121,7 +119,7 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
         geofavoriteAdapter.setSortRule(sortRule);
 
         // Register for data source events
-        mGeofavoritesFragmentViewModel.getIsUpdating().observe(this, new Observer<Boolean>() {
+        mGeofavoritesFragmentViewModel.getIsUpdating().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean changed) {
                 if(Boolean.TRUE.equals(changed)){
@@ -132,7 +130,7 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
                 }
             }
         });
-        mGeofavoritesFragmentViewModel.getGeofavorites().observe(this, new Observer<List<Geofavorite>>() {
+        mGeofavoritesFragmentViewModel.getGeofavorites().observe(getViewLifecycleOwner(), new Observer<List<Geofavorite>>() {
             @Override
             public void onChanged(List<Geofavorite> geofavorites) {
                 geofavoriteAdapter.setGeofavoriteList(geofavorites);

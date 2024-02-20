@@ -72,6 +72,15 @@
                 android:src="@drawable/ic_delete_grey"
                 app:tint="@color/defaultBrand"/>
 
+            <ImageView
+                android:id="@+id/action_icon_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:padding="10dp"
+                android:src="@drawable/ic_edit"
+                app:tint="@color/defaultBrand"/>
+
         </LinearLayout>
 
         <ImageView
