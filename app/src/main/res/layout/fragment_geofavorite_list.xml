@@ -29,7 +29,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_marginTop="?android:attr/actionBarSize"
-                android:paddingTop="10dp">
+                android:paddingTop="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/sort_mode"

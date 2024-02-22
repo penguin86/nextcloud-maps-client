@@ -20,7 +20,7 @@
     <!-- Generic Colors -->
     <color name="primary">#ffffff</color>
     <color name="transparent">#00000000</color>
-    <color name="translucent">#CFFF</color>
+    <color name="translucent">#AEFFFFFF</color>
     <color name="defaultBrand">#0082C9</color>
     <color name="defaultBrandAlpha">#550082C9</color>
     <color name="disabled">#666</color>

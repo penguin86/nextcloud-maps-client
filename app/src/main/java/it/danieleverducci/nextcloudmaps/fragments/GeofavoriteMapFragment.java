@@ -19,6 +19,7 @@ import androidx.lifecycle.Observer;
 import org.osmdroid.api.IMapController;
 import org.osmdroid.events.MapEventsReceiver;
 import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
@@ -54,6 +55,9 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
 
         // Setup map
         map = v.findViewById(R.id.map);
+        map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
+        map.setMultiTouchControls(true);
+        MapUtils.setTheme(map);
         MapEventsOverlay meo = new MapEventsOverlay(requireContext(), new MapEventsReceiver() {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint p) {

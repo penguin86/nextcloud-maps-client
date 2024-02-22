@@ -37,17 +37,19 @@
 
         <include layout="@layout/app_toolbar"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/view_mode_list"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/floating_bar_height"
-                android:layout_gravity="right"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/list_mode"
-                android:paddingStart="@dimen/spacer_2x"
-                android:paddingEnd="@dimen/spacer_2x"
-                android:tint="@color/text_color"
-                android:src="@drawable/ic_view_list" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/view_mode_list"
+            android:layout_width="@dimen/floating_bar_height"
+            android:layout_height="@dimen/floating_bar_height"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="@dimen/spacer_2x"
+            android:layout_gravity="right"
+            android:background="@drawable/unselected_floating_semitransparent_button_background"
+            android:contentDescription="@string/list_mode"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:tint="@color/text_color"
+            android:src="@drawable/ic_view_list" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
