@@ -159,7 +159,7 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
 
         // Set icon and color
         Drawable icon = DrawableCompat.wrap(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_list_pin));
-        DrawableCompat.setTint(icon, geofavorite.categoryColor());
+        DrawableCompat.setTint(icon, geofavorite.categoryColor() == 0 ? requireContext().getColor(R.color.defaultBrand) : geofavorite.categoryColor());
 
         // Set infowindow (popup opened on marker click) and its listeners
         GeofavMarkerInfoWindow iw = new GeofavMarkerInfoWindow(map, geofavorite);

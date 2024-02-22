@@ -1,6 +1,11 @@
 package it.danieleverducci.nextcloudmaps.views;
 
+import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.View;
+
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
@@ -14,7 +19,14 @@ public class GeofavMarkerInfoWindow extends MarkerInfoWindow implements View.OnC
 
     public GeofavMarkerInfoWindow(MapView mapView, Geofavorite geofavorite) {
         super(R.layout.infowindow_geofav, mapView);
+        Context context = getView().getContext();
 
+        // Set category color
+        View category = getView().findViewById(R.id.bubble_subdescription);
+        Drawable backgroundDrawable = category.getBackground();
+        DrawableCompat.setTint(backgroundDrawable, geofavorite.categoryColor() == 0 ? context.getColor(R.color.defaultBrand) : geofavorite.categoryColor());
+
+        // Set listeners
         getView().findViewById(R.id.action_icon_share).setOnClickListener(this);
         getView().findViewById(R.id.action_icon_nav).setOnClickListener(this);
         getView().findViewById(R.id.action_icon_delete).setOnClickListener(this);
