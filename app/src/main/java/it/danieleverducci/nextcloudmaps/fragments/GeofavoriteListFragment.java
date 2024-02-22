@@ -82,9 +82,6 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
 
         homeToolbar.setOnClickListener(view -> updateToolbars(false));
 
-        AppCompatImageButton menuButton = v.findViewById(R.id.menu_button);
-        menuButton.setOnClickListener(view -> ((MainActivity)requireActivity()).openDrawer());
-
         // Setup list
         int sortRule = SettingsManager.getGeofavoriteListSortBy(requireContext());
 

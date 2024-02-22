@@ -3,10 +3,13 @@ package it.danieleverducci.nextcloudmaps.fragments;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -30,6 +33,7 @@ public abstract class GeofavoritesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Load data
         mGeofavoritesFragmentViewModel = new ViewModelProvider(this).get(GeofavoritesFragmentViewModel.class);
         mGeofavoritesFragmentViewModel.init(requireContext());
 
@@ -41,6 +45,15 @@ public abstract class GeofavoritesFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Set views
+        AppCompatImageButton menuButton = view.findViewById(R.id.menu_button);
+        menuButton.setOnClickListener(v -> ((MainActivity)requireActivity()).openDrawer());
     }
 
     @Override
