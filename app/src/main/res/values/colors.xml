@@ -26,6 +26,7 @@
     <color name="disabled">#666</color>
     <color name="systemBar">@color/defaultBackground</color>
     <color name="defaultBackground">#fff</color>
+    <color name="inactive">#ccc</color>
 
     <!-- List Colors -->
     <color name="text_color">#333</color>
