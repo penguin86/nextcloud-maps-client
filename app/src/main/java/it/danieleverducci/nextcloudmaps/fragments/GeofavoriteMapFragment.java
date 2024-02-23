@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Set;
 
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.MapUtils;
@@ -40,6 +41,7 @@ import it.danieleverducci.nextcloudmaps.views.GeofavMarkerInfoWindow;
 public class GeofavoriteMapFragment extends GeofavoritesFragment implements MainActivity.OnGpsPermissionGrantedListener {
 
     private MapView map;
+    private MyLocationNewOverlay mLocationOverlay;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_geofavorite_map, container, false);
+
+        // Register listeners
+        v.findViewById(R.id.center_position).setOnClickListener((cpv) -> moveToUserPosition());
 
         // Setup map
         map = v.findViewById(R.id.map);
@@ -147,19 +152,30 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
             return;
         }
 
-        MyLocationNewOverlay mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), map);
+        // Display user position on screen
+        mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), map);
+        // On first gps fix, show "center to my position" icon
+        mLocationOverlay.runOnFirstFix(() -> {
+            if(getActivity() != null) {
+                getActivity().runOnUiThread(() -> {
+                    getView().findViewById(R.id.center_position).setVisibility(View.VISIBLE);
+                });
+            }
+        });
         mLocationOverlay.enableMyLocation();
-        mLocationOverlay.runOnFirstFix(() -> requireActivity().runOnUiThread(() -> map.getController().animateTo(mLocationOverlay.getMyLocation())));
-
         map.getOverlays().add(mLocationOverlay);
+    }
 
+    void moveToUserPosition() {
+        if (mLocationOverlay != null)
+            map.getController().animateTo(mLocationOverlay.getMyLocation());
     }
 
     private void addMarker(Geofavorite geofavorite){
         GeoPoint pos = new GeoPoint(geofavorite.getLat(), geofavorite.getLng());
 
         // Set icon and color
-        Drawable icon = DrawableCompat.wrap(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_list_pin));
+        Drawable icon = DrawableCompat.wrap(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_map_pin));
         DrawableCompat.setTint(icon, geofavorite.categoryColor() == 0 ? requireContext().getColor(R.color.defaultBrand) : geofavorite.categoryColor());
 
         // Set infowindow (popup opened on marker click) and its listeners
