@@ -25,6 +25,7 @@ import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.MapEventsOverlay;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.infowindow.InfoWindow;
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider;
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay;
@@ -108,6 +109,7 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
         mGeofavoritesFragmentViewModel.getGeofavorites().observe(getViewLifecycleOwner(), new Observer<List<Geofavorite>>() {
             @Override
             public void onChanged(List<Geofavorite> geofavorites) {
+                clearAllMarkers();
                 for(Geofavorite gf : geofavorites)
                     addMarker(gf);
                 map.invalidate();
@@ -221,5 +223,16 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
         m.setSubDescription(geofavorite.getCategory());
         m.setInfoWindow(iw);
         map.getOverlays().add(m);
+    }
+
+    private void clearAllMarkers() {
+        // Close any open infowindow before removing related marker
+        InfoWindow.closeAllInfoWindowsOn(map);
+        // Remove all markers, leaving the other overlays (user position and tap listener ones)
+        for(Overlay o : map.getOverlays()) {
+            if (o instanceof Marker) {
+                map.getOverlays().remove(o);
+            }
+        }
     }
 }
