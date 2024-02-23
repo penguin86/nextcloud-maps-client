@@ -1,8 +1,10 @@
 package it.danieleverducci.nextcloudmaps.fragments;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +35,9 @@ import java.util.Set;
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
+import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 import it.danieleverducci.nextcloudmaps.utils.MapUtils;
 import it.danieleverducci.nextcloudmaps.utils.SettingsManager;
 import it.danieleverducci.nextcloudmaps.views.GeofavMarkerInfoWindow;
@@ -63,7 +67,7 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
         map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
         map.setMultiTouchControls(true);
         MapUtils.setTheme(map);
-        MapEventsOverlay meo = new MapEventsOverlay(requireContext(), new MapEventsReceiver() {
+        MapEventsOverlay meo = new MapEventsOverlay(new MapEventsReceiver() {
             @Override
             public boolean singleTapConfirmedHelper(GeoPoint p) {
                 InfoWindow.closeAllInfoWindowsOn(map);
@@ -71,7 +75,14 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
             }
 
             @Override
-            public boolean longPressHelper(GeoPoint p) {return false;}
+            public boolean longPressHelper(GeoPoint p) {
+                // Create new geofavorite (go to geofav creation activity)
+                Uri geoUri = GeoUriParser.createGeoUri(p.getLatitude(), p.getLongitude(), null);
+                Intent i = new Intent(requireActivity(), GeofavoriteDetailActivity.class);
+                i.setData(geoUri);
+                startActivity(i);
+                return true;
+            }
         });
         map.getOverlays().add(0, meo);
         showUserPosition();
