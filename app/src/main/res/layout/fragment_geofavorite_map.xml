@@ -8,6 +8,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <FrameLayout
         android:id="@+id/loading_wall"
         android:layout_width="match_parent"
@@ -22,11 +27,6 @@
             android:layout_gravity="center"/>
 
     </FrameLayout>
-
-    <org.osmdroid.views.MapView
-        android:id="@+id/map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/appBar"

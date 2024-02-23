@@ -94,6 +94,7 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
             public void onChanged(List<Geofavorite> geofavorites) {
                 for(Geofavorite gf : geofavorites)
                     addMarker(gf);
+                map.invalidate();
             }
         });
 
