@@ -16,27 +16,30 @@
             android:layout_height="48dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center"
-            android:src="@drawable/ic_map_pin"/>
+            android:src="@drawable/ic_map_pin"
+            app:tint="@color/defaultBrand"/>
 
         <ImageView
             android:id="@+id/back_bt"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="?android:attr/actionBarSize"
+            android:layout_margin="16dp"
             android:layout_gravity="start"
             android:padding="16dp"
             android:src="@drawable/ic_back_grey"
-            app:tint="@color/white"
-            android:background="@drawable/floating_semitransparent_button_background"/>
+            app:tint="@color/text_color"
+            android:background="@drawable/unselected_floating_semitransparent_button_background"/>
 
         <ImageView
             android:id="@+id/ok_bt"
             android:layout_width="?android:attr/actionBarSize"
             android:layout_height="?android:attr/actionBarSize"
+            android:layout_margin="16dp"
             android:layout_gravity="end"
             android:padding="16dp"
             android:src="@drawable/ic_ok"
             app:tint="@color/white"
-            android:background="@drawable/floating_semitransparent_button_background"/>
+            android:background="@drawable/round_button_background"/>
 
         <LinearLayout
             android:layout_width="match_parent"
