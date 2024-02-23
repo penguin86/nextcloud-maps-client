@@ -31,7 +31,8 @@
     <string name="list_mode">Lista</string>
     <string name="search_in_all">Cerca per nome</string>
     <string name="share_via">Condividi via</string>
-    <string name="share_message">Posizione condivisa: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
+    <string name="share_message">{title}: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
+    <string name="share_message_default_title">Posizione condivisa:</string>
     <string name="list_context_menu_share">Condividi</string>
     <string name="list_context_menu_delete">Elimina</string>
     <string name="dialog_delete_title">Elimina geosegnalibro</string>

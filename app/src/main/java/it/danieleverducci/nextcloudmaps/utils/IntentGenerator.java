@@ -14,6 +14,7 @@ public class IntentGenerator {
         i.setAction(Intent.ACTION_SEND);
         i.setType("text/plain");
         String shareMessage = context.getString(R.string.share_message)
+                .replace("{title}", item.getName() == null ? context.getString(R.string.share_message_default_title) : item.getName())
                 .replace("{lat}", ""+item.getLat())
                 .replace("{lng}", ""+item.getLng());
         i.putExtra(Intent.EXTRA_TEXT, shareMessage );

@@ -30,7 +30,8 @@
     <string name="list_mode">List</string>
     <string name="search_in_all">Search by name</string>
     <string name="share_via">Share via</string>
-    <string name="share_message">Check out this place: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
+    <string name="share_message">{title}: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
+    <string name="share_message_default_title">Check out this place:</string>
     <string name="list_context_menu_share">Share</string>
     <string name="list_context_menu_delete">Delete</string>
     <string name="dialog_delete_title">Delete geofavorite</string>
