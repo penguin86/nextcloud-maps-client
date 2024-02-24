@@ -3,6 +3,8 @@ package it.danieleverducci.nextcloudmaps.fragments;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -10,9 +12,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.nextcloud.android.sso.exceptions.NextcloudFilesAppAccountNotFoundException;
+import com.nextcloud.android.sso.exceptions.NoCurrentAccountSelectedException;
+import com.nextcloud.android.sso.helper.SingleAccountHelper;
+import com.nextcloud.android.sso.model.SingleSignOnAccount;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
@@ -26,6 +37,7 @@ import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
  * to communicate with the activity
  */
 public abstract class GeofavoritesFragment extends Fragment {
+    private final String TAG = "GeofavoritesFragment";
 
     protected GeofavoritesFragmentViewModel mGeofavoritesFragmentViewModel;
 
@@ -54,6 +66,24 @@ public abstract class GeofavoritesFragment extends Fragment {
         // Set views
         AppCompatImageButton menuButton = view.findViewById(R.id.menu_button);
         menuButton.setOnClickListener(v -> ((MainActivity)requireActivity()).openDrawer());
+
+        View userBadgeContainer = view.findViewById(R.id.user_badge_container);
+        userBadgeContainer.setOnClickListener(v -> showSwitchAccountDialog());
+
+        // Set user badge (async)
+        Handler h = new Handler();
+        h.post(() -> {
+            try {
+                SingleSignOnAccount ssoAccount = SingleAccountHelper.getCurrentSingleSignOnAccount(requireContext());
+                String userBadgePath = ssoAccount.url + "/index.php/avatar/" + ssoAccount.userId + "/64";
+                if (getActivity() != null)
+                    getActivity().runOnUiThread(
+                            () -> Picasso.get().load(userBadgePath).into((AppCompatImageView)userBadgeContainer.findViewById(R.id.user_badge))
+                    );
+            } catch (Exception e) {
+                Log.e(TAG, "Unable to load user image: " + e.toString());
+            }
+        });
     }
 
     @Override
@@ -106,6 +136,20 @@ public abstract class GeofavoritesFragment extends Fragment {
                         dialog.dismiss();
                     }
                 });
+        AlertDialog ad = builder.create();
+        ad.show();
+    }
+
+    private void showSwitchAccountDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setMessage(R.string.dialog_logout_message)
+                .setTitle(R.string.dialog_logout_title)
+                .setPositiveButton(android.R.string.yes, (dialog, id) -> {
+                    if (getActivity() != null)
+                        ((MainActivity) getActivity()).switch_account();
+                    dialog.dismiss();
+                })
+                .setNegativeButton(android.R.string.no, (dialog, id) -> dialog.dismiss());
         AlertDialog ad = builder.create();
         ad.show();
     }

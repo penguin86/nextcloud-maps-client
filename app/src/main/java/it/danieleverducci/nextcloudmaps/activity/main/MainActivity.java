@@ -195,7 +195,7 @@ public class MainActivity extends NextcloudMapsStyledActivity {
         startActivity(new Intent(this, AboutActivity.class));
     }
 
-    private void switch_account() {
+    public void switch_account() {
         ApiProvider.logout();
         SingleAccountHelper.applyCurrentAccount(this, null);
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);

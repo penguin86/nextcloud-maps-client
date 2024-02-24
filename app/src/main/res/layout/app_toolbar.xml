@@ -67,6 +67,22 @@
                 android:lines="1"
                 android:textSize="16sp"
                 android:text="@string/search_in_all"/>
+
+            <!-- User badge -->
+            <FrameLayout
+                android:id="@+id/user_badge_container"
+                android:layout_width="?android:attr/actionBarSize"
+                android:layout_height="?android:attr/actionBarSize">
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/user_badge"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"/>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/user_badge_mask"/>
+            </FrameLayout>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

@@ -38,6 +38,8 @@
     <string name="dialog_delete_message">You are about to delete geofavorite {name}. Proceed?</string>
     <string name="dialog_delete_delete">Delete</string>
     <string name="dialog_delete_cancel">Maintain</string>
+    <string name="dialog_logout_title">Switch account</string>
+    <string name="dialog_logout_message">Do you want to switch account?</string>
     <string name="list_geofavorite_deleted">Geofavorite deleted</string>
     <string name="list_geofavorite_connection_error">Unable to obtain geofavorites list</string>
 

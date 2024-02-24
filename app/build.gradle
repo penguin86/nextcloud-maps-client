@@ -85,6 +85,9 @@ dependencies {
     // https://mvnrepository.com/artifact/commons-io/commons-io
     implementation 'commons-io:commons-io:2.11.0'
 
+    // Picasso (image loader)
+    implementation 'com.squareup.picasso:picasso:2.8'
+
     configurations.all {
         resolutionStrategy {
             force 'commons-io:commons-io:2.11.0'

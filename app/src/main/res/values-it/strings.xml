@@ -39,6 +39,8 @@
     <string name="dialog_delete_message">Stai per eliminare il geosegnalibro {name}. Procedere?</string>
     <string name="dialog_delete_delete">Elimina</string>
     <string name="dialog_delete_cancel">Mantieni</string>
+    <string name="dialog_logout_title">Cambia account</string>
+    <string name="dialog_logout_message">Vuoi cambiare account?</string>
     <string name="list_geofavorite_deleted">Geosegnalibro eliminato</string>
     <string name="list_geofavorite_connection_error">Impossibile ottenere la lista dei geosegnalibri</string>
 
