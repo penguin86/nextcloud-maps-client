@@ -32,6 +32,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
@@ -39,12 +40,14 @@ import it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.SortingOrderDialogFragment;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.GeofavoritesFilter;
 import it.danieleverducci.nextcloudmaps.utils.SettingsManager;
 
 public class GeofavoriteListFragment extends GeofavoritesFragment implements SortingOrderDialogFragment.OnSortingOrderListener {
 
     private SwipeRefreshLayout swipeRefresh;
     private GeofavoriteAdapter geofavoriteAdapter;
+    private List<Geofavorite> geofavorites = new ArrayList<>();
 
     @Nullable
     @Override
@@ -99,6 +102,7 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
         mGeofavoritesFragmentViewModel.getGeofavorites().observe(getViewLifecycleOwner(), new Observer<List<Geofavorite>>() {
             @Override
             public void onChanged(List<Geofavorite> geofavorites) {
+                GeofavoriteListFragment.this.geofavorites = geofavorites;
                 geofavoriteAdapter.setGeofavoriteList(geofavorites);
             }
         });
@@ -127,7 +131,9 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
     }
 
     public void onSearch(String query) {
-        geofavoriteAdapter.getFilter().filter(query);
+        geofavoriteAdapter.setGeofavoriteList(
+                (new GeofavoritesFilter(geofavorites)).byText(query)
+        );
     }
 
     @Override

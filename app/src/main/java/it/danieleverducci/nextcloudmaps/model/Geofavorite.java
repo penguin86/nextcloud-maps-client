@@ -22,6 +22,7 @@ package it.danieleverducci.nextcloudmaps.model;
 
 import android.graphics.Color;
 import android.net.Uri;
+import android.widget.Filter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,7 +35,9 @@ import org.threeten.bp.LocalDate;
 import org.threeten.bp.ZoneId;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
 
