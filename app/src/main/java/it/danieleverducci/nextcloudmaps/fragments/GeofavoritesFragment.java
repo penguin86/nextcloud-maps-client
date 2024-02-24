@@ -31,12 +31,15 @@ import com.nextcloud.android.sso.model.SingleSignOnAccount;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.GeofavoritesFragmentViewModel;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
+import it.danieleverducci.nextcloudmaps.utils.GeofavoritesFilter;
 import it.danieleverducci.nextcloudmaps.utils.IntentGenerator;
 
 /**
@@ -50,6 +53,7 @@ public abstract class GeofavoritesFragment extends Fragment {
     private View toolbar;
     private View homeToolbar;
     private SearchView searchView;
+    private List<Geofavorite> geofavorites = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,8 +97,18 @@ public abstract class GeofavoritesFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String query) {
-                onSearch(query);
+                onDatasetChange(
+                    (new GeofavoritesFilter(geofavorites)).byText(query)
+                );
                 return false;
+            }
+        });
+
+        mGeofavoritesFragmentViewModel.getGeofavorites().observe(getViewLifecycleOwner(), new Observer<List<Geofavorite>>() {
+            @Override
+            public void onChanged(List<Geofavorite> geofavorites) {
+                GeofavoritesFragment.this.geofavorites = geofavorites;
+                onDatasetChange(geofavorites);
             }
         });
 
@@ -131,7 +145,7 @@ public abstract class GeofavoritesFragment extends Fragment {
     }
 
 
-    abstract public void onSearch(String query);
+    abstract public void onDatasetChange(List<Geofavorite> items);
 
 
     protected void openGeofavorite(Geofavorite item) {

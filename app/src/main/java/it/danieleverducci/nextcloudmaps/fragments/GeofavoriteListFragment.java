@@ -1,36 +1,23 @@
 package it.danieleverducci.nextcloudmaps.fragments;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_CATEGORY;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_CREATED;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_DISTANCE;
 import static it.danieleverducci.nextcloudmaps.activity.main.GeofavoriteAdapter.SORT_BY_TITLE;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
-import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +34,6 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
 
     private SwipeRefreshLayout swipeRefresh;
     private GeofavoriteAdapter geofavoriteAdapter;
-    private List<Geofavorite> geofavorites = new ArrayList<>();
 
     @Nullable
     @Override
@@ -99,13 +85,6 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
                 }
             }
         });
-        mGeofavoritesFragmentViewModel.getGeofavorites().observe(getViewLifecycleOwner(), new Observer<List<Geofavorite>>() {
-            @Override
-            public void onChanged(List<Geofavorite> geofavorites) {
-                GeofavoriteListFragment.this.geofavorites = geofavorites;
-                geofavoriteAdapter.setGeofavoriteList(geofavorites);
-            }
-        });
 
         // Setup view listeners
         swipeRefresh = v.findViewById(R.id.swipe_refresh);
@@ -130,10 +109,10 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
         updateSortingIcon(sortRule);
     }
 
-    public void onSearch(String query) {
-        geofavoriteAdapter.setGeofavoriteList(
-                (new GeofavoritesFilter(geofavorites)).byText(query)
-        );
+    @Override
+    public void onDatasetChange(List<Geofavorite> items) {
+        // Called when the items are loaded or a filtering happens
+        geofavoriteAdapter.setGeofavoriteList(items);
     }
 
     @Override

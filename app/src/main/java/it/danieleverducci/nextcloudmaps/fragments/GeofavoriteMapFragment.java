@@ -106,15 +106,6 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
                 }
             }
         });
-        mGeofavoritesFragmentViewModel.getGeofavorites().observe(getViewLifecycleOwner(), new Observer<List<Geofavorite>>() {
-            @Override
-            public void onChanged(List<Geofavorite> geofavorites) {
-                clearAllMarkers();
-                for(Geofavorite gf : geofavorites)
-                    addMarker(gf);
-                map.invalidate();
-            }
-        });
 
         return v;
     }
@@ -124,6 +115,14 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
         super.onStart();
 
         ((MainActivity)requireActivity()).addOnGpsPermissionGrantedListener(this);
+    }
+
+    @Override
+    public void onDatasetChange(List<Geofavorite> items) {
+        clearAllMarkers();
+        for(Geofavorite gf : items)
+            addMarker(gf);
+        map.invalidate();
     }
 
     @Override
@@ -137,11 +136,6 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
             map.getMapCenter().getLongitude(),
             map.getZoomLevelDouble()
         );
-    }
-
-    @Override
-    public void onSearch(String query) {
-        // TODO: filter
     }
 
     @Override
