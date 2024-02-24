@@ -45,42 +45,11 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
 
     private SwipeRefreshLayout swipeRefresh;
     private GeofavoriteAdapter geofavoriteAdapter;
-    private Toolbar toolbar;
-    private MaterialCardView homeToolbar;
-    private SearchView searchView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_geofavorite_list, container, false);
-
-        // Setup toolbar/searchbar
-        toolbar = v.findViewById(R.id.toolbar);
-        homeToolbar = v.findViewById(R.id.home_toolbar);
-
-        searchView = v.findViewById(R.id.search_view);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                onSearch(query);
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            if (toolbar.getVisibility() == VISIBLE && TextUtils.isEmpty(searchView.getQuery())) {
-                updateToolbars(true);
-                return true;
-            }
-            return false;
-        });
-
-        homeToolbar.setOnClickListener(view -> updateToolbars(false));
 
         // Setup list
         int sortRule = SettingsManager.getGeofavoriteListSortBy(requireContext());
@@ -194,15 +163,6 @@ public class GeofavoriteListFragment extends GeofavoritesFragment implements Sor
                 sortButton.setImageResource(R.drawable.ic_distance_asc);
                 break;
         }
-    }
-
-    private void updateToolbars(boolean disableSearch) {
-        homeToolbar.setVisibility(disableSearch ? VISIBLE : GONE);
-        toolbar.setVisibility(disableSearch ? GONE : VISIBLE);
-        if (disableSearch) {
-            searchView.setQuery(null, true);
-        }
-        searchView.setIconified(disableSearch);
     }
 
 }
