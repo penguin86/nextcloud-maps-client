@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -32,6 +33,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
@@ -53,7 +56,9 @@ public abstract class GeofavoritesFragment extends Fragment {
     private View toolbar;
     private View homeToolbar;
     private SearchView searchView;
+    private ImageButton filterButton;
     private List<Geofavorite> geofavorites = new ArrayList<>();
+    private HashSet<String> categories = new HashSet<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,6 +92,8 @@ public abstract class GeofavoritesFragment extends Fragment {
         // Setup toolbar/searchbar
         toolbar = view.findViewById(R.id.toolbar);
         homeToolbar = view.findViewById(R.id.home_toolbar);
+        filterButton = view.findViewById(R.id.search_filter);
+        filterButton.setOnClickListener(v -> showCategoryFilterDialog());
 
         searchView = view.findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -109,6 +116,12 @@ public abstract class GeofavoritesFragment extends Fragment {
             public void onChanged(List<Geofavorite> geofavorites) {
                 GeofavoritesFragment.this.geofavorites = geofavorites;
                 onDatasetChange(geofavorites);
+            }
+        });
+        mGeofavoritesFragmentViewModel.getCategories().observe(getViewLifecycleOwner(), new Observer<HashSet<String>>() {
+            @Override
+            public void onChanged(HashSet<String> categories) {
+                GeofavoritesFragment.this.categories = categories;
             }
         });
 
@@ -203,6 +216,26 @@ public abstract class GeofavoritesFragment extends Fragment {
                 .setNegativeButton(android.R.string.no, (dialog, id) -> dialog.dismiss());
         AlertDialog ad = builder.create();
         ad.show();
+    }
+
+    private void showCategoryFilterDialog() {
+        if (categories.isEmpty()) {
+            Toast.makeText(requireContext(), R.string.filtering_unavailable, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle(R.string.filtering_dialog_title);
+        String[] categoryNames = categories.toArray(new String[categories.size()]);
+        builder.setItems(categoryNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String category = categoryNames[which];
+                Log.d(TAG, "Selected category " + category);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void updateToolbars(boolean disableSearch) {

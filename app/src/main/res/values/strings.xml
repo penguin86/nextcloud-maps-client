@@ -42,6 +42,8 @@
     <string name="dialog_logout_message">Do you want to switch account?</string>
     <string name="list_geofavorite_deleted">Geofavorite deleted</string>
     <string name="list_geofavorite_connection_error">Unable to obtain geofavorites list</string>
+    <string name="filtering_unavailable">Category filtering is unavailable at the moment</string>
+    <string name="filtering_dialog_title">Filter by category</string>
 
     <!-- Sort dialog -->
     <string name="sort_by">Sort by</string>

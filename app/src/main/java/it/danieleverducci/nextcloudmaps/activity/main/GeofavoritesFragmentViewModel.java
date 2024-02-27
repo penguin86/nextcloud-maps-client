@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.HashSet;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
@@ -24,6 +25,10 @@ public class GeofavoritesFragmentViewModel extends ViewModel {
 
     public void updateGeofavorites() {
         mRepo.updateGeofavorites();
+    }
+
+    public LiveData<HashSet<String>> getCategories(){
+        return mRepo.getCategories();
     }
 
     public void deleteGeofavorite(Geofavorite geofav) {

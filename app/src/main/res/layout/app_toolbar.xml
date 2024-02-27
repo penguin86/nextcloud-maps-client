@@ -71,6 +71,15 @@
                 android:textSize="16sp"
                 android:text="@string/search_in_all"/>
 
+            <!-- Filter button -->
+            <ImageButton
+                android:id="@+id/search_filter"
+                android:layout_width="?android:attr/actionBarSize"
+                android:layout_height="?android:attr/actionBarSize"
+                android:src="@drawable/ic_filter_off"
+                app:tint="@color/inactive"
+                android:background="@color/transparent"/>
+
             <!-- User badge -->
             <FrameLayout
                 android:id="@+id/user_badge_container"
