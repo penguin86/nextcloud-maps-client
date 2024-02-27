@@ -47,6 +47,7 @@ import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 import it.danieleverducci.nextcloudmaps.fragments.GeofavoriteListFragment;
 import it.danieleverducci.nextcloudmaps.fragments.GeofavoriteMapFragment;
+import it.danieleverducci.nextcloudmaps.repository.GeofavoriteRepository;
 import it.danieleverducci.nextcloudmaps.utils.SettingsManager;
 
 public class MainActivity extends NextcloudMapsStyledActivity {
@@ -197,6 +198,7 @@ public class MainActivity extends NextcloudMapsStyledActivity {
 
     public void switch_account() {
         ApiProvider.logout();
+        GeofavoriteRepository.resetInstance();
         SingleAccountHelper.applyCurrentAccount(this, null);
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
