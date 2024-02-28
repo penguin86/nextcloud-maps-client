@@ -38,4 +38,7 @@
 
     <!-- Generic Colors -->
     <color name="white">#fff</color>
+
+    <!-- Toolbar -->
+    <color name="toolbar_background">@color/defaultBackground</color>
 </resources>

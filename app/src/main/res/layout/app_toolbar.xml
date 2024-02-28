@@ -35,6 +35,7 @@
         android:layout_marginTop="@dimen/spacer_1hx"
         android:layout_marginEnd="@dimen/spacer_2x"
         android:layout_marginBottom="@dimen/spacer_1hx"
+        app:cardBackgroundColor="@color/toolbar_background"
         app:cardCornerRadius="30dp"
         app:cardElevation="2dp"
         app:strokeWidth="0dp">

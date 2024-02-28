@@ -9,7 +9,7 @@
             <solid android:color="@android:color/transparent" />
             <stroke
                 android:width="10dp"
-                android:color="#fff" />
+                android:color="@color/toolbar_background" />
         </shape>
     </item>
 </layer-list>
