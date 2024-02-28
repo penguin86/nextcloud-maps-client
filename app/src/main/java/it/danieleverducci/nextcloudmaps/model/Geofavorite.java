@@ -204,17 +204,7 @@ public class Geofavorite implements Serializable {
      * @return the generated color or null for the default category
      */
     public int  categoryColor() {
-        // If category is default, return null: will be used Nextcloud's accent
-        if (this.category == null || this.category.equals(DEFAULT_CATEGORY) || this.category.length() == 0)
-            return 0;
-
-        float letter1Index = this.category.toLowerCase().charAt(0);
-        float letter2Index = this.category.toLowerCase().charAt(1);
-        float letterCoef = ((letter1Index * letter2Index) % 100) / 100;
-        float h = letterCoef * 360;
-        float s = 75 + letterCoef * 10;
-        float l = 50 + letterCoef * 10;
-        return Color.HSVToColor( new float[]{ Math.round(h), Math.round(s), Math.round(l) });
+        return categoryColorFromName(this.category);
     }
 
     public String categoryLetter() {
@@ -227,6 +217,29 @@ public class Geofavorite implements Serializable {
     @Override
     public String toString() {
         return "[" + getName() + " (" + getLat() + "," + getLng() + ")]";
+    }
+
+
+
+    /**
+     * Based on Nextcloud Maps's getLetterColor util.
+     * Assigns a color to a category based on its two first letters.
+     *
+     * @see "https://github.com/nextcloud/maps/blob/master/src/utils.js"
+     * @return the generated color or null for the default category
+     */
+    public static int categoryColorFromName(String category) {
+        // If category is default, return null: will be used Nextcloud's accent
+        if (category == null || category.equals(DEFAULT_CATEGORY) || category.length() == 0)
+            return 0;
+
+        float letter1Index = category.toLowerCase().charAt(0);
+        float letter2Index = category.toLowerCase().charAt(1);
+        float letterCoef = ((letter1Index * letter2Index) % 100) / 100;
+        float h = letterCoef * 360;
+        float s = 75 + letterCoef * 10;
+        float l = 50 + letterCoef * 10;
+        return Color.HSVToColor( new float[]{ Math.round(h), Math.round(s), Math.round(l) });
     }
 
 }

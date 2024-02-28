@@ -44,6 +44,7 @@
     <string name="list_geofavorite_connection_error">Unable to obtain geofavorites list</string>
     <string name="filtering_unavailable">Category filtering is unavailable at the moment</string>
     <string name="filtering_dialog_title">Filter by category</string>
+    <string name="filtering_dialog_cancel">Show all</string>
 
     <!-- Sort dialog -->
     <string name="sort_by">Sort by</string>

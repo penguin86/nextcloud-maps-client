@@ -5,6 +5,7 @@ import static android.view.View.VISIBLE;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -19,25 +20,20 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.google.android.material.card.MaterialCardView;
-import com.nextcloud.android.sso.exceptions.NextcloudFilesAppAccountNotFoundException;
-import com.nextcloud.android.sso.exceptions.NoCurrentAccountSelectedException;
 import com.nextcloud.android.sso.helper.SingleAccountHelper;
 import com.nextcloud.android.sso.model.SingleSignOnAccount;
 import com.squareup.picasso.Picasso;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
+import it.danieleverducci.nextcloudmaps.activity.detail.CategoriesAdapter;
 import it.danieleverducci.nextcloudmaps.activity.detail.GeofavoriteDetailActivity;
 import it.danieleverducci.nextcloudmaps.activity.main.GeofavoritesFragmentViewModel;
 import it.danieleverducci.nextcloudmaps.activity.main.MainActivity;
@@ -154,6 +150,8 @@ public abstract class GeofavoritesFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+        // Reset filter and update data
+        filterButton.setImageResource(R.drawable.ic_filter_off);
         mGeofavoritesFragmentViewModel.updateGeofavorites();
     }
 
@@ -226,13 +224,29 @@ public abstract class GeofavoritesFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
         builder.setTitle(R.string.filtering_dialog_title);
-        String[] categoryNames = categories.toArray(new String[categories.size()]);
-        builder.setItems(categoryNames, new DialogInterface.OnClickListener() {
+        CategoriesAdapter ca = new CategoriesAdapter(requireContext());
+        ca.setCategoriesList(categories);
+        builder.setAdapter(ca, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String category = categoryNames[which];
-                Log.d(TAG, "Selected category " + category);
+                // Set filter button enabled icon and color
+                String categoryName = ca.getItem(which);
+                filterButton.setImageResource(R.drawable.ic_filter);
+                Drawable d = filterButton.getDrawable();
+                DrawableCompat.setTint(
+                        d,
+                        Geofavorite.categoryColorFromName(categoryName) == 0
+                                ? requireContext().getColor(R.color.defaultBrand)
+                                : Geofavorite.categoryColorFromName(categoryName)
+                );
+                filterByCategory(categoryName);
             }
+        });
+
+        builder.setPositiveButton(R.string.filtering_dialog_cancel, (dialog, id) -> {
+            dialog.dismiss();
+            filterButton.setImageResource(R.drawable.ic_filter_off);
+            filterByCategory(null);
         });
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -245,6 +259,12 @@ public abstract class GeofavoritesFragment extends Fragment {
             searchView.setQuery(null, true);
         }
         searchView.setIconified(disableSearch);
+    }
+
+    private void filterByCategory(String category) {
+        onDatasetChange(
+                (new GeofavoritesFilter(geofavorites)).byCategory(category)
+        );
     }
 
 }

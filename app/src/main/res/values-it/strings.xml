@@ -45,6 +45,7 @@
     <string name="list_geofavorite_connection_error">Impossibile ottenere la lista dei geosegnalibri</string>
     <string name="filtering_unavailable">Il filtro per categoria non è disponibile al momento</string>
     <string name="filtering_dialog_title">Filtra per categoria</string>
+    <string name="filtering_dialog_cancel">Mostra tutti</string>
 
     <!-- Sort dialog -->
     <string name="sort_by">Ordina per</string>

@@ -32,7 +32,7 @@ public class GeofavoritesFilter {
     public List<Geofavorite> byCategory(String category) {
         List<Geofavorite> filteredGeofavorites = new ArrayList<>();
 
-        if (category.isEmpty()) {
+        if (category == null) {
             return items;
         } else {
             for (Geofavorite geofavorite : items) {
