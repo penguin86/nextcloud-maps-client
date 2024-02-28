@@ -98,3 +98,6 @@ lint/tmp/
 # lint/reports/
 
 app/release/output-metadata.json
+
+.idea/deploymentTargetDropDown.xml
+.idea/misc.xml
