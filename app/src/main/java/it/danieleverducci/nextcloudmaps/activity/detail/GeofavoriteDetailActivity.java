@@ -81,11 +81,6 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
             }
 
             @Override
-            public void onMapEditPressed() {
-                //TODO
-            }
-
-            @Override
             public void onActionIconShareClicked() {
                 startActivity(Intent.createChooser(IntentGenerator.newShareIntent(GeofavoriteDetailActivity.this, mGeofavorite), getString(R.string.share_via)));
             }
@@ -407,9 +402,6 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
             if (v.getId() == R.id.back_bt && this.listener != null) {
                 this.listener.onBackPressed();
             }
-            if (v.getId() == R.id.manual_pos_bt && this.listener != null) {
-                this.listener.onMapEditPressed();
-            }
 
             // Actions
             if (v.getId() == R.id.action_icon_share && this.listener != null) {
@@ -428,7 +420,6 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
         void onSubmit();
         void onMapClicked();
         void onBackPressed();
-        void onMapEditPressed();
         void onActionIconShareClicked();
         void onActionIconNavClicked();
         void onActionIconDeleteClicked();

@@ -51,25 +51,26 @@
                     <!-- Back button -->
                     <ImageView
                         android:id="@+id/back_bt"
-                        android:layout_width="?android:attr/actionBarSize"
-                        android:layout_height="?android:attr/actionBarSize"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="start"
-                        android:padding="16dp"
+                        android:layout_margin="8dp"
+                        android:padding="8dp"
                         android:src="@drawable/ic_back_grey"
                         app:tint="@color/white"
                         android:background="@drawable/floating_semitransparent_button_background"/>
 
-                    <!-- Manual position button -->
+                    <!-- Save button -->
                     <ImageView
-                        android:id="@+id/manual_pos_bt"
-                        android:layout_width="?android:attr/actionBarSize"
-                        android:layout_height="?android:attr/actionBarSize"
+                        android:id="@+id/submit_bt"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="end"
-                        android:padding="16dp"
-                        android:src="@drawable/ic_manual_pos"
+                        android:layout_margin="8dp"
+                        android:padding="8dp"
+                        android:src="@drawable/ic_ok"
                         app:tint="@color/white"
-                        android:background="@drawable/floating_semitransparent_button_background"
-                        android:visibility="gone"/> <!-- TODO: Implement edit -->
+                        android:background="@drawable/round_button_background"/>
 
                 </androidx.appcompat.widget.Toolbar>
                     
@@ -257,16 +258,6 @@
                     android:layout_height="wrap_content"
                     android:indeterminate="true"
                     android:visibility="gone"/>
-
-                <Button
-                    android:id="@+id/submit_bt"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:layout_margin="50dp"
-                    android:text="@string/confirm"
-                    app:backgroundTint="@color/defaultBrand"
-                    android:onClick="onSubmit"/>
 
             </LinearLayout>
 
