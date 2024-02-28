@@ -3,6 +3,8 @@ package it.danieleverducci.nextcloudmaps.fragments;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.lifecycle.Observer;
 
@@ -161,6 +164,11 @@ public class GeofavoriteMapFragment extends GeofavoritesFragment implements Main
 
         // Display user position on screen
         mLocationOverlay = new MyLocationNewOverlay(new GpsMyLocationProvider(requireContext()), map);
+        Bitmap personIcon = ((BitmapDrawable)AppCompatResources.getDrawable(requireContext(), R.mipmap.ic_person)).getBitmap();
+        mLocationOverlay.setPersonIcon(personIcon);
+        mLocationOverlay.setDirectionIcon(personIcon);
+        mLocationOverlay.setPersonAnchor(.5f, .5f);
+        mLocationOverlay.setDirectionAnchor(.5f, .5f);
         // On first gps fix, show "center to my position" icon
         mLocationOverlay.runOnFirstFix(() -> {
             if(getActivity() != null) {
