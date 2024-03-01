@@ -20,11 +20,13 @@
     <!-- Generic Colors -->
     <color name="primary">#ffffff</color>
     <color name="transparent">#00000000</color>
+    <color name="translucent">#AEFFFFFF</color>
     <color name="defaultBrand">#0082C9</color>
     <color name="defaultBrandAlpha">#550082C9</color>
     <color name="disabled">#666</color>
     <color name="systemBar">@color/defaultBackground</color>
     <color name="defaultBackground">#fff</color>
+    <color name="inactive">#ccc</color>
 
     <!-- List Colors -->
     <color name="text_color">#333</color>
@@ -36,4 +38,7 @@
 
     <!-- Generic Colors -->
     <color name="white">#fff</color>
+
+    <!-- Toolbar -->
+    <color name="toolbar_background">@color/defaultBackground</color>
 </resources>

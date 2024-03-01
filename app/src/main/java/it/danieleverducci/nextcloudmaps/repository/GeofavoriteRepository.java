@@ -42,6 +42,10 @@ public class GeofavoriteRepository {
         return instance;
     }
 
+    public static void resetInstance() {
+        instance = null;
+    }
+
     public MutableLiveData<List<Geofavorite>> getGeofavorites(){
         if (mGeofavorites == null) {
             mGeofavorites = new MutableLiveData<>();

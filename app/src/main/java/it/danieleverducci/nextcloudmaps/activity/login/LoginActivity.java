@@ -20,6 +20,8 @@ package it.danieleverducci.nextcloudmaps.activity.login;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -45,6 +47,7 @@ import it.danieleverducci.nextcloudmaps.api.API;
 import it.danieleverducci.nextcloudmaps.api.ApiProvider;
 
 public class LoginActivity extends NextcloudMapsStyledActivity {
+    private static final String TAG = "LoginActivity";
 
     protected ProgressBar progress;
     protected Button button;
@@ -63,18 +66,25 @@ public class LoginActivity extends NextcloudMapsStyledActivity {
             openAccountChooser();
         });
 
-        try {
-            ssoAccount = SingleAccountHelper.getCurrentSingleSignOnAccount(getApplicationContext());
-            SingleAccountHelper.setCurrentAccount(getApplicationContext(), ssoAccount.name);
-            accountAccessDone();
-        } catch (NextcloudFilesAppAccountNotFoundException | NoCurrentAccountSelectedException e) {
-        }
+        Handler h = new Handler();
+        h.post(() -> {
+            try {
+                ssoAccount = SingleAccountHelper.getCurrentSingleSignOnAccount(getApplicationContext());
+                SingleAccountHelper.applyCurrentAccount(getApplicationContext(), ssoAccount.name);
+                accountAccessDone();
+            } catch (NextcloudFilesAppAccountNotFoundException | NoCurrentAccountSelectedException e) {
+                Log.e(TAG, "Autologin: " + e.toString());
+            }
+        });
     }
     private void openAccountChooser() {
         try {
             AccountImporter.pickNewAccount(this);
         } catch (NextcloudFilesAppNotInstalledException | AndroidGetAccountsPermissionNotGranted e) {
             UiExceptionManager.showDialogForException(this, e);
+
+            Log.e(TAG, "openAccountChooser: " + e.toString());
+            progress.setVisibility(View.GONE);
         }
     }
 
@@ -98,7 +108,7 @@ public class LoginActivity extends NextcloudMapsStyledActivity {
                 @Override
                 public void accountAccessGranted(SingleSignOnAccount account) {
                     Context l_context = getApplicationContext();
-                    SingleAccountHelper.setCurrentAccount(l_context, account.name);
+                    SingleAccountHelper.applyCurrentAccount(l_context, account.name);
 
                     accountAccessDone();
                 }

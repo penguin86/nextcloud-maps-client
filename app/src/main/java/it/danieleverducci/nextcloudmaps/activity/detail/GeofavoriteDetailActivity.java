@@ -18,14 +18,14 @@
 package it.danieleverducci.nextcloudmaps.activity.detail;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +34,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.Observer;
@@ -43,7 +42,6 @@ import androidx.preference.PreferenceManager;
 
 import org.osmdroid.api.IMapController;
 import org.osmdroid.config.Configuration;
-import org.osmdroid.config.IConfigurationProvider;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.CustomZoomButtonsController;
 import org.osmdroid.views.overlay.Marker;
@@ -52,10 +50,8 @@ import org.threeten.bp.format.FormatStyle;
 
 import java.util.HashSet;
 
-import it.danieleverducci.nextcloudmaps.BuildConfig;
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.activity.NextcloudMapsStyledActivity;
-import it.danieleverducci.nextcloudmaps.activity.mappicker.MapPickerActivity;
 import it.danieleverducci.nextcloudmaps.databinding.ActivityGeofavoriteDetailBinding;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.utils.GeoUriParser;
@@ -84,11 +80,6 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
             @Override
             public void onBackPressed() {
                 finish();
-            }
-
-            @Override
-            public void onMapEditPressed() {
-                //TODO
             }
 
             @Override
@@ -313,9 +304,15 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
             this.binding.actionIconNav.setOnClickListener(this);
 
             // Set categories adapter
-            CategoriesSpinnerAdapter categoriesAdapter = new CategoriesSpinnerAdapter(binding.root.getContext());
+            CategoriesAdapter categoriesAdapter = new CategoriesAdapter(binding.root.getContext());
             this.binding.categoryAt.setAdapter(categoriesAdapter);
             this.binding.categoryAt.setText(Geofavorite.DEFAULT_CATEGORY);
+            this.binding.categoryAtClear.setOnClickListener((v) -> {
+                if (this.binding.categoryAt.getText().toString().isEmpty())
+                    this.binding.categoryAt.setText(Geofavorite.DEFAULT_CATEGORY);
+                else
+                    this.binding.categoryAt.setText("");
+            });
 
             // Set map properties
             this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
@@ -346,6 +343,12 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
 
         public void updateViewCoords(Geofavorite item) {
             binding.coordsTv.setText(item.getCoordinatesString());
+            binding.coordsTv.setOnClickListener((v) -> {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText(item.getCoordinatesString(), item.getCoordinatesString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(GeofavoriteDetailActivity.this, R.string.coords_copied, Toast.LENGTH_SHORT).show();
+            });
 
             // Center map
             GeoPoint position = new GeoPoint(item.getLat(), item.getLng());
@@ -378,7 +381,7 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
         }
 
         public void setCategories(HashSet<String> categories) {
-            ((CategoriesSpinnerAdapter)binding.categoryAt.getAdapter()).setCategoriesList(categories);
+            ((CategoriesAdapter)binding.categoryAt.getAdapter()).setCategoriesList(categories);
         }
 
         public void hideAccuracy() {
@@ -413,9 +416,6 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
             if (v.getId() == R.id.back_bt && this.listener != null) {
                 this.listener.onBackPressed();
             }
-            if (v.getId() == R.id.manual_pos_bt && this.listener != null) {
-                this.listener.onMapEditPressed();
-            }
 
             // Actions
             if (v.getId() == R.id.action_icon_share && this.listener != null) {
@@ -434,7 +434,6 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
         void onSubmit();
         void onMapClicked();
         void onBackPressed();
-        void onMapEditPressed();
         void onActionIconShareClicked();
         void onActionIconNavClicked();
         void onActionIconDeleteClicked();

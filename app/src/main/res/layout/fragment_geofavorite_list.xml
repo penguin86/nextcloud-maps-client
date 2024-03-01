@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?android:attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:toolbarId="@+id/toolbar" >
+
+            <include layout="@layout/app_toolbar"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="?android:attr/actionBarSize"
+                android:paddingTop="20dp"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/sort_mode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/floating_bar_height"
+                    android:layout_alignParentLeft="true"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/list_mode"
+                    android:paddingStart="@dimen/spacer_2x"
+                    android:paddingEnd="@dimen/spacer_2x"
+                    android:tint="@color/text_color"
+                    android:src="@drawable/ic_alphabetical_asc" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/view_mode_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/floating_bar_height"
+                    android:layout_alignParentRight="true"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/list_mode"
+                    android:paddingStart="@dimen/spacer_2x"
+                    android:paddingEnd="@dimen/spacer_2x"
+                    android:tint="@color/text_color"
+                    android:src="@drawable/ic_view_map" />
+
+            </RelativeLayout>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                app:spanCount="1"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_geofav">
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

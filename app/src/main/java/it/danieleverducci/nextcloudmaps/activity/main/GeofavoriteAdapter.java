@@ -28,8 +28,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -42,14 +40,13 @@ import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.format.FormatStyle;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.R;
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 
-public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.GeofavoriteViewHolder> implements Filterable {
+public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.GeofavoriteViewHolder> {
 
     public static final String TAG = "GeofavoriteAdapter";
 
@@ -58,12 +55,11 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     public static final int SORT_BY_CATEGORY = 2;
     public static final int SORT_BY_DISTANCE = 3;
 
-    private Context context;
-    private ItemClickListener itemClickListener;
-    private DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
+    private final Context context;
+    private final ItemClickListener itemClickListener;
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.SHORT);
 
-    private List<Geofavorite> geofavoriteList = new ArrayList<>();
-    private List<Geofavorite> geofavoriteListFiltered = new ArrayList<>();
+    private List<Geofavorite> items = new ArrayList<>();
     private int sortRule = SORT_BY_CREATED;
 
     // Contains the position of the element containing the overflow menu clicked
@@ -75,15 +71,15 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
     }
 
     public void setGeofavoriteList(@NonNull List<Geofavorite> geofavoriteList) {
-        this.geofavoriteList = geofavoriteList;
-        this.geofavoriteListFiltered = new ArrayList<>(geofavoriteList);
+        this.items.clear();
+        this.items.addAll(geofavoriteList);
 
         performSort();
         notifyDataSetChanged();
     }
 
     public Geofavorite get(int position) {
-        return geofavoriteListFiltered.get(position);
+        return items.get(position);
     }
 
     public int getSortRule() {
@@ -106,7 +102,7 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull GeofavoriteViewHolder holder, int position) {
-        Geofavorite geofavorite = geofavoriteListFiltered.get(position);
+        Geofavorite geofavorite = items.get(position);
 
         holder.tv_category.setText(geofavorite.categoryLetter());
         holder.setCategoryColor(
@@ -118,47 +114,8 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
     @Override
     public int getItemCount() {
-        return geofavoriteListFiltered.size();
+        return items.size();
     }
-
-    @Override
-    public Filter getFilter() {
-        return filter;
-    }
-
-    Filter filter = new Filter() {
-        @Override
-        // Run on Background thread.
-        protected FilterResults performFiltering(CharSequence charSequence) {
-            FilterResults filterResults = new FilterResults();
-            List <Geofavorite> filteredGeofavorites = new ArrayList<>();
-
-            if (charSequence.toString().isEmpty()) {
-                filteredGeofavorites.addAll(geofavoriteList);
-            } else {
-                for (Geofavorite geofavorite : geofavoriteList) {
-                    String query = charSequence.toString().toLowerCase();
-                    if (geofavorite.getName() != null && geofavorite.getName().toLowerCase().contains(query)) {
-                        filteredGeofavorites.add(geofavorite);
-                    } else if (geofavorite.getComment() != null && geofavorite.getComment().toLowerCase().contains(query)) {
-                        filteredGeofavorites.add(geofavorite);
-                    }
-                }
-            }
-
-            filterResults.values = filteredGeofavorites;
-            return filterResults;
-        }
-        //Run on ui thread
-        @Override
-        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-            geofavoriteListFiltered.clear();
-            geofavoriteListFiltered.addAll((Collection<? extends Geofavorite>) filterResults.values);
-
-            performSort();
-            notifyDataSetChanged();
-        }
-    };
 
     class GeofavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView tv_category, tv_title, tv_content, tv_date;
@@ -211,13 +168,13 @@ public class GeofavoriteAdapter extends RecyclerView.Adapter<GeofavoriteAdapter.
 
     private void performSort() {
         if (sortRule == SORT_BY_TITLE) {
-            Collections.sort(geofavoriteListFiltered, Geofavorite.ByTitleAZ);
+            Collections.sort(items, Geofavorite.ByTitleAZ);
         } else if (sortRule == SORT_BY_CREATED) {
-            Collections.sort(geofavoriteListFiltered, Geofavorite.ByLastCreated);
+            Collections.sort(items, Geofavorite.ByLastCreated);
         } else if (sortRule == SORT_BY_CATEGORY) {
-            Collections.sort(geofavoriteListFiltered, Geofavorite.ByCategory);
+            Collections.sort(items, Geofavorite.ByCategory);
         } else if (sortRule == SORT_BY_DISTANCE) {
-            Collections.sort(geofavoriteListFiltered, Geofavorite.ByDistance);
+            Collections.sort(items, Geofavorite.ByDistance);
         }
     }
 

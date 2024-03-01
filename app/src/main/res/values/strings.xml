@@ -30,15 +30,21 @@
     <string name="list_mode">List</string>
     <string name="search_in_all">Search by name</string>
     <string name="share_via">Share via</string>
-    <string name="share_message">Check out this place: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
+    <string name="share_message">{title}: {lat}°N, {lng}°E    https://www.openstreetmap.org/#map=17/{lat}/{lng}</string>
+    <string name="share_message_default_title">Check out this place:</string>
     <string name="list_context_menu_share">Share</string>
     <string name="list_context_menu_delete">Delete</string>
     <string name="dialog_delete_title">Delete geofavorite</string>
     <string name="dialog_delete_message">You are about to delete geofavorite {name}. Proceed?</string>
     <string name="dialog_delete_delete">Delete</string>
     <string name="dialog_delete_cancel">Maintain</string>
+    <string name="dialog_logout_title">Switch account</string>
+    <string name="dialog_logout_message">Do you want to switch account?</string>
     <string name="list_geofavorite_deleted">Geofavorite deleted</string>
     <string name="list_geofavorite_connection_error">Unable to obtain geofavorites list</string>
+    <string name="filtering_unavailable">Category filtering is unavailable at the moment</string>
+    <string name="filtering_dialog_title">Filter by category</string>
+    <string name="filtering_dialog_cancel">Show all</string>
 
     <!-- Sort dialog -->
     <string name="sort_by">Sort by</string>
@@ -57,11 +63,12 @@
     <string name="accuracy">Accuracy: {accuracy} m</string>
     <string name="accuracy_nosignal">No GPS signal!</string>
     <string name="location_permission_required">Location permission is required to create a geofavorite.</string>
-    <string name="confirm">Save</string>
+    <string name="category_hint">Write the name to create a new category</string>
     <string name="error_saving_geofavorite">Unable to save geofavorite</string>
     <string name="error_unsupported_uri">Unable to obtain coordinates from shared data</string>
     <string name="geofavorite_saved">Geofavorite saved</string>
     <string name="incomplete_geofavorite">Incomplete geofavorite: Name and category are mandatory</string>
+    <string name="coords_copied">Coordinates have been copied to the clipboard</string>
 
     <!-- Map picker activity -->
     <string name="coordinates_parse_error">Coordinates should be in format xx.xxxxxx</string>
@@ -92,12 +99,13 @@
     <string name="url_license" translatable="false">https://raw.githubusercontent.com/penguin86/nextcloud-maps-client/master/LICENSE</string>
     <string name="url_maps" translatable="false">https://donate.openstreetmap.org</string>
 
-    <!-- Settings -->
-    <string name="setting_sort_by">SETTING_SORT_BY</string>
-    <string name="setting_grid_view_enabled">SETTING_GRID_VIEW_ENABLED</string>
-
     <!-- Menu -->
     <string name="new_geobookmark_gps">New from current position</string>
     <string name="new_geobookmark_map">New from map</string>
 
+    <!-- Accessibility (content descriptions) -->
+    <string name="open_fab">Add geofavorite</string>
+    <string name="add_from_gps">Add geofavorite at current GPS position</string>
+    <string name="add_from_map">Add geofavorite from map</string>
+    <string name="menu">Open menu</string>
 </resources>

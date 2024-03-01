@@ -19,9 +19,9 @@
 <resources>
 
     <style name="AppTheme" parent="BaseTheme">
-        <item name="android:statusBarColor">?attr/colorPrimary</item>
+        <item name="android:statusBarColor">?android:attr/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:navigationBarColor">?attr/colorPrimary</item>
+        <item name="android:navigationBarColor">?android:attr/colorPrimary</item>
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 

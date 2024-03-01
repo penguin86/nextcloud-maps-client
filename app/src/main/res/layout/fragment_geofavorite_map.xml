@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <FrameLayout
+        android:id="@+id/loading_wall"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/translucent"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center"/>
+
+    </FrameLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:orientation="vertical">
+
+        <include layout="@layout/app_toolbar"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/view_mode_list"
+            android:layout_width="@dimen/floating_bar_height"
+            android:layout_height="@dimen/floating_bar_height"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="@dimen/spacer_2x"
+            android:layout_gravity="right"
+            android:background="@drawable/unselected_floating_semitransparent_button_background"
+            android:contentDescription="@string/list_mode"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:tint="@color/text_color"
+            android:src="@drawable/ic_view_list" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/center_position"
+        android:layout_width="@dimen/floating_bar_height"
+        android:layout_height="@dimen/floating_bar_height"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="25dp"
+        android:layout_gravity="bottom|right"
+        android:background="@drawable/unselected_floating_semitransparent_button_background"
+        android:padding="5dp"
+        android:tint="@color/text_color"
+        android:src="@drawable/ic_add_gps"
+        android:visibility="gone"/>
+
+</FrameLayout>

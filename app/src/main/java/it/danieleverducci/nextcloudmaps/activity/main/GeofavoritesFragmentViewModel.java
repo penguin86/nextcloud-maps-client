@@ -3,15 +3,15 @@ package it.danieleverducci.nextcloudmaps.activity.main;
 import android.content.Context;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.HashSet;
 import java.util.List;
 
 import it.danieleverducci.nextcloudmaps.model.Geofavorite;
 import it.danieleverducci.nextcloudmaps.repository.GeofavoriteRepository;
 
-public class MainActivityViewModel extends ViewModel {
+public class GeofavoritesFragmentViewModel extends ViewModel {
     private GeofavoriteRepository mRepo;
 
     public void init(Context applicationContext) {
@@ -25,6 +25,10 @@ public class MainActivityViewModel extends ViewModel {
 
     public void updateGeofavorites() {
         mRepo.updateGeofavorites();
+    }
+
+    public LiveData<HashSet<String>> getCategories(){
+        return mRepo.getCategories();
     }
 
     public void deleteGeofavorite(Geofavorite geofav) {
