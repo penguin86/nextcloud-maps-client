@@ -307,6 +307,12 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
             CategoriesAdapter categoriesAdapter = new CategoriesAdapter(binding.root.getContext());
             this.binding.categoryAt.setAdapter(categoriesAdapter);
             this.binding.categoryAt.setText(Geofavorite.DEFAULT_CATEGORY);
+            this.binding.categoryAtClear.setOnClickListener((v) -> {
+                if (this.binding.categoryAt.getText().toString().isEmpty())
+                    this.binding.categoryAt.setText(Geofavorite.DEFAULT_CATEGORY);
+                else
+                    this.binding.categoryAt.setText("");
+            });
 
             // Set map properties
             this.binding.map.getZoomController().setVisibility(CustomZoomButtonsController.Visibility.NEVER);
