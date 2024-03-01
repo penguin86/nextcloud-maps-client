@@ -1,0 +1,5 @@
+Map view
+Filter by category
+Button to copy coordinates to clipboard
+Faster autocomplete
+Graphics restyling to match new Nextcloud style
