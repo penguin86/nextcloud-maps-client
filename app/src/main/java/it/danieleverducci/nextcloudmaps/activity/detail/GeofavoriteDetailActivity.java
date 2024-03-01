@@ -18,6 +18,8 @@
 package it.danieleverducci.nextcloudmaps.activity.detail;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -335,6 +337,12 @@ public class GeofavoriteDetailActivity extends NextcloudMapsStyledActivity imple
 
         public void updateViewCoords(Geofavorite item) {
             binding.coordsTv.setText(item.getCoordinatesString());
+            binding.coordsTv.setOnClickListener((v) -> {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText(item.getCoordinatesString(), item.getCoordinatesString());
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(GeofavoriteDetailActivity.this, R.string.coords_copied, Toast.LENGTH_SHORT).show();
+            });
 
             // Center map
             GeoPoint position = new GeoPoint(item.getLat(), item.getLng());

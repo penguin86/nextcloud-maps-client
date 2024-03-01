@@ -63,11 +63,12 @@
     <string name="accuracy">Accuracy: {accuracy} m</string>
     <string name="accuracy_nosignal">No GPS signal!</string>
     <string name="location_permission_required">Location permission is required to create a geofavorite.</string>
-    <string name="confirm">Save</string>
+    <string name="category_hint">Write the name to create a new category</string>
     <string name="error_saving_geofavorite">Unable to save geofavorite</string>
     <string name="error_unsupported_uri">Unable to obtain coordinates from shared data</string>
     <string name="geofavorite_saved">Geofavorite saved</string>
     <string name="incomplete_geofavorite">Incomplete geofavorite: Name and category are mandatory</string>
+    <string name="coords_copied">Coordinates have been copied to the clipboard</string>
 
     <!-- Map picker activity -->
     <string name="coordinates_parse_error">Coordinates should be in format xx.xxxxxx</string>

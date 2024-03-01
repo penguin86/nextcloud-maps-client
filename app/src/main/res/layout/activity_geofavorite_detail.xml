@@ -211,7 +211,14 @@
                     android:drawableLeft="@drawable/ic_category_asc"
                     android:drawablePadding="5dp"
                     android:drawableTint="@color/defaultBrand"
-                    android:hint="@string/category"/>
+                    android:hint="@string/category"
+                    android:completionThreshold="0"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="@string/category_hint"
+                    android:textSize="12sp"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -250,7 +257,9 @@
                     android:id="@+id/coords_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAlignment="textEnd" />
+                    android:textAlignment="textEnd"
+                    app:drawableEndCompat="@drawable/ic_copy"
+                    android:drawablePadding="10sp"/>
 
                 <ProgressBar
                     android:id="@+id/progress"

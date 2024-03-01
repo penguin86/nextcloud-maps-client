@@ -64,11 +64,12 @@
     <string name="accuracy">Accuratezza: {accuracy} m</string>
     <string name="accuracy_nosignal">Nessun segnale GPS!</string>
     <string name="location_permission_required">Per creare un geosegnalibro è necessario consentire l\'accesso alla posizione.</string>
-    <string name="confirm">Salva</string>
+    <string name="category_hint">Scrivi il nome per creare una nuova categoria</string>
     <string name="error_saving_geofavorite">Impossibile salvare il geosegnalibro</string>
     <string name="error_unsupported_uri">Impossibile ottenere le coordinate dai dati ricevuti</string>
     <string name="geofavorite_saved">Geosegnalibro salvato</string>
     <string name="incomplete_geofavorite">Geosegnalibro incompleto: nome e categoria sono obbligatori</string>
+    <string name="coords_copied">Coordinate copiate nella clipboard</string>
 
     <!-- Map picker activity -->
     <string name="coordinates_parse_error">Le coordinate dovrebbero essere nel formato xx.xxxxxx</string>
