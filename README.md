@@ -1,5 +1,7 @@
 ![Nextcloud Maps Geofavorites Logo](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
+> This project was moved to [my private git server](https://git.ichibi.eu/penguin86/nextcloud-maps-client) . This repository may not be up to date.
+
 # Nextcloud Maps Geofavorites Android app
 
 [<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" alt="Get it on F-Droid" height="80">](https://f-droid.org/it/packages/it.danieleverducci.nextcloudmaps)
@@ -18,3 +20,13 @@ This work is heavily based on [matiasdelellis's Nextcloud SSO example](https://g
 
 ![Screenshot 1](screenshots/1.png)      ![Screenshot 2](screenshots/2.png)      ![Screenshot 3](screenshots/3.png)
 
+
+## How to contribute
+
+The project is open to contribution, but with some limits:
+
+- I'm sorry I can't accept AI-generated contributions. Reviewing a contribution requires time and effort from my side, while generating code with AI requires very little time and produces non reliable code that must be reviewed in detail. This is effectively shifting the work on my side, and in a forced way. If you feel you need a feature but you're not able to implement it by yourself, I prefer you to create an issue in the repository so I can implement it when I can, in a more mantainable way.
+- Before implementing a big change, please contact me to ensure it goes in the project's direction.
+
+To contribute, you'll have to create an account on the git instance https://git.ichibi.eu. Unfortunately, I had to disable registration to avoid huge waves of fake accounts created by bots.
+You can request an account writing to daniele.verducci@ichibi.eu
